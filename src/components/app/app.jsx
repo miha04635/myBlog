@@ -1,5 +1,7 @@
 import SignUpForm from '../signUpForm/signUpform'
 import SignInForm from '../signInForm/signInForm'
+import EditProfile from '../editProfile/editProfile'
+import NewArticle from '../newArticle/newArticle'
 import Header from '../header/header'
 
 import styles from './app.module.css'
@@ -10,7 +12,9 @@ function App() {
     <div className={styles.app}>
       <Header />
       {/* <SignUpForm /> */}
-      <SignInForm />
+      {/* <SignInForm /> */}
+      {/* <EditProfile /> */}
+      <NewArticle />
     </div>
   )
 }
