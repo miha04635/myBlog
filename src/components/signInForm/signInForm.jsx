@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import styles from './signInForm.module.css'
 
 const SignInForm = () => {
@@ -19,10 +21,10 @@ const SignInForm = () => {
       <button className={styles.login}>Login</button>
 
       <p className={styles.alreadyHaveAccount}>
-        Don’t have an account?{' '}
-        <a href="/login" className={styles.signInLink}>
+        Don’t have an account?
+        <Link to="/signUp" className={styles.signInLink}>
           Sign Up.
-        </a>
+        </Link>
       </p>
     </div>
   )

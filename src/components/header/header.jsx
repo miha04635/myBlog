@@ -1,12 +1,20 @@
+import { Link } from 'react-router-dom'
+
 import styles from './header.module.css'
 
 const Header = () => {
   return (
     <div className={styles.header}>
-      <div className={styles.blog}>Realworld Blog</div>
+      <Link to={'/'} className={styles.blog}>
+        Realworld Blog
+      </Link>
       <div className={styles.userAuth}>
-        <button className={styles.signIn}>Sign in</button>
-        <button className={styles.signUp}>Sign up</button>
+        <Link to="/SignIn">
+          <button className={styles.signIn}>Sign in</button>
+        </Link>
+        <Link to="/signUp">
+          <button className={styles.signUp}>Sign up</button>
+        </Link>
       </div>
     </div>
   )
