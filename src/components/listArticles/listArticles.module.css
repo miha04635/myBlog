@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 .container {
   box-sizing: border-box;
   display: flex;
@@ -13,6 +13,9 @@
   border-radius: 5px;
   padding: 16px;
   font-family: Inter;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  cursor: pointer;
 }
 .containerText {
   display: flex;
@@ -22,4 +25,61 @@
 
 .text {
   max-width: 682px;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.title {
+  font-size: 20px;
+  line-height: 28px;
+  text-align: left;
+  color: rgba(24, 144, 255, 1);
+}
+
+.avatarImg {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+
+.containerАuthor {
+  display: flex;
+  align-items: center;
+}
+
+.tags {
+  margin-bottom: 8px;
+}
+
+.tag {
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  margin-right: 8px;
+  padding: 2px 6px 3px 5px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  text-align: left;
+}
+
+.dateCreate {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.containerFlex {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 8px;
+}
+
+.name {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.paginationArticles {
+  padding-bottom: 16px;
 }

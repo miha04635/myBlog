@@ -1,24 +1,52 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { Pagination } from 'antd'
 
 import styles from './listArticles.module.css'
 
 const ListArticles = () => {
-  return (
-    <div className={styles.container}>
-      <div className={styles.containerText}>
-        <div className={styles.title}>Title</div>
-        <div className={styles.tags}>Tags</div>
-        <div className={styles.text}>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi nulla quos alias voluptatum et ducimus,
-          neque tempore, suscipit accusamus placeat perspiciatis dolorum, quidem quasi. Nesciunt veniam facilis
-          laudantium et eligendi.
+  const articles = useSelector(state => state.articles)
+
+  const renderArticles = article => {
+    const { title, tagList, body, slug, author } = article
+    const { username, image } = author
+
+    const truncatedBody = body.length > 150 ? `${body.substring(0, 150)}...` : body
+    return (
+      <div key={slug} className={styles.container}>
+        <div className={styles.containerText}>
+          <div className={styles.title}>{title}</div>
+          {tagList && tagList.length > 0 && (
+            <div className={styles.tags}>
+              {tagList.map((tag, index) =>
+                tag.trim() ? (
+                  <span key={index} className={styles.tag}>
+                    {tag}
+                  </span>
+                ) : null
+              )}
+            </div>
+          )}
+          <div className={styles.text}>{truncatedBody}</div>
+        </div>
+        <div className={styles.containerАuthor}>
+          <div className={styles.containerFlex}>
+            <div className={styles.name}>{username}</div>
+            <div className={styles.dateCreate}>March 5, 2020</div>
+          </div>
+          <img src={image} alt="avatar" className={styles.avatarImg} />
         </div>
       </div>
-      <div className={styles.containerАuthor}>
-        <div className={styles.name}>John Doe</div>
-        <div className={styles.dateCreate}>March 5, 2020</div>
-      </div>
-    </div>
+    )
+  }
+  if (!Array.isArray(articles)) {
+    return <div>Loading...</div>
+  }
+  return (
+    <>
+      {articles.map(article => renderArticles(article))}
+      <Pagination defaultCurrent={1} total={50} className={styles.paginationArticles} align="center" />
+    </>
   )
 }
 
