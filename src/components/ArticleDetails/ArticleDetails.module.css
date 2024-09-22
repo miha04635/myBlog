@@ -68,6 +68,10 @@ h3 {
   align-items: center;
 }
 
+.containerFlexAuthor {
+  margin-right: 8px;
+}
+
 .avatarImg {
   width: 46px;
   height: 46px;
