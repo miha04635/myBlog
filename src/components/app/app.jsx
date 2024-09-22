@@ -7,6 +7,7 @@ import EditProfile from '../editProfile/editProfile'
 import NewArticle from '../newArticle/newArticle'
 import Header from '../header/header'
 import ListArticles from '../listArticles/listArticles'
+import ArticleDetails from '../ArticleDetails/ArticleDetails'
 
 import styles from './app.module.css'
 import './reset.css'
@@ -19,6 +20,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<ListArticles />} />
+          <Route path="/:slug" element={<ArticleDetails />} />
           <Route path="/signUp" element={<SignUpForm />} />
           <Route path="/SignIn" element={<SignInForm />} />
           <Route path="/EditProfile" element={<EditProfile />} />

@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+.container {
+  width: 938px;
+  min-height: 807px;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+  margin: 0 auto;
+  margin-top: 24px;
+  font-family: 'Inter UI', sans-serif;
+  margin-bottom: 24px;
+  padding: 25px 42px 16px 16px;
+  box-sizing: border-box;
+}
+
+.body {
+  color: rgba(0, 0, 0, 0.75);
+  font-family: Inter;
+  font-size: 20px;
+  line-height: 28px;
+  text-align: left;
+}
+
+.body p {
+  font-size: 14px;
+  line-height: 22px;
+  text-align: left;
+}
+.body h1 {
+  font-size: 20px;
+  line-height: 28px;
+  text-align: left;
+}
+
+.body h2,
+h3 {
+  font-size: 18px;
+  line-height: 28px;
+  text-align: left;
+}
+
+.body h1,
+h2,
+h3 {
+  margin-top: 25px !important;
+}
+
+.description {
+  font-size: 12px;
+  line-height: 22px;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.title {
+  font-size: 20px;
+  line-height: 28px;
+  text-align: left;
+  color: rgba(24, 144, 255, 1);
+}
+
+.containerFlex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.containerАuthor {
+  display: flex;
+  align-items: center;
+}
+
+.avatarImg {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+
+.name {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.dateCreate {
+  color: rgba(0, 0, 0, 0.5);
+}

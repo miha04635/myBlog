@@ -8,7 +8,7 @@ const GetArticles = () => {
   const getApi = 'https://blog.kata.academy/api'
 
   const apiGet = async () => {
-    const response = await fetch(`${getApi}/articles/?limit=5`).then(results => results.json())
+    const response = await fetch(`${getApi}/articles/?limit=20`).then(results => results.json())
 
     const data = await response
     return data
