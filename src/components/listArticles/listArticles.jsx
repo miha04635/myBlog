@@ -16,14 +16,12 @@ const ListArticles = () => {
   const navigate = useNavigate()
 
   const [currentPage, setCurrentPage] = useState(1)
-  const pageSize = 20
 
   const handleClick = slug => {
     navigate(`/${slug}`)
   }
 
-  // Вызов хука для загрузки статей с текущими параметрами
-  useGetArticles(pageSize, (currentPage - 1) * pageSize)
+  useGetArticles((currentPage - 1) * 20)
 
   const handlePageChange = page => {
     setCurrentPage(page)
@@ -31,26 +29,32 @@ const ListArticles = () => {
 
   const renderArticles = article => {
     if (!article || !article.title || !article.body || !article.author) {
-      return null // Или вернуть сообщение об ошибке
+      return null
     }
     const { title, tagList, body, slug, author, createdAt, favoritesCount } = article
 
     const { username, image } = author
 
-    const truncatedBody = body.length > 150 ? `${body.substring(0, 150)}...` : body
+    const truncatedText = text => {
+      if (!text) {
+        return null
+      }
+      return text.length > 150 ? `${text.substring(0, 150)}...` : text
+    }
+
     return (
       <div key={slug} className={styles.container} onClick={() => handleClick(slug)}>
         <div className={styles.containerText}>
           <div className={styles.containerTitle}>
-            <div className={styles.title}>{title}</div>
+            <div className={styles.title}>{truncatedText(title)}</div>
             <div className={styles.heartContainer}>
               <div className={styles.heartImg}></div>
               <span className={styles.heartCount}>{favoritesCount}</span>
             </div>
           </div>
 
-          <TagList tagList={tagList} />
-          <div className={styles.text}>{truncatedBody}</div>
+          <TagList tagList={truncatedText(tagList)} />
+          <div className={styles.text}>{truncatedText(body)}</div>
         </div>
         <div className={styles.containerAuthor}>
           <div className={styles.containerFlex}>
@@ -67,9 +71,9 @@ const ListArticles = () => {
     <>
       {articles.map(article => renderArticles(article))}
       <Pagination
-        current={currentPage} // Указываем текущую страницу
+        current={currentPage}
         total={countArticles}
-        pageSize={pageSize} // Указываем размер страницы
+        pageSize={20}
         className={styles.paginationArticles}
         onChange={handlePageChange}
         align="center"

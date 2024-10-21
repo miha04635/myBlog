@@ -3,13 +3,13 @@ import { useDispatch } from 'react-redux'
 
 import { saveDataArticles, saveDataCountArticles } from '../actions/actions'
 
-const useGetArticles = (limit, offset) => {
+const useGetArticles = offset => {
   const dispatch = useDispatch()
   const getApi = 'https://blog-platform.kata.academy/api/'
 
   const apiGet = async () => {
     try {
-      const response = await fetch(`${getApi}/articles?limit=${limit}&offset=${offset}`)
+      const response = await fetch(`${getApi}/articles?limit=20&offset=${offset}`)
 
       if (!response.ok) {
         throw new Error('Failed to fetch articles')
@@ -33,7 +33,7 @@ const useGetArticles = (limit, offset) => {
     }
 
     handleArticlesFetch()
-  }, [dispatch, limit, offset])
+  }, [dispatch, offset])
 }
 
 export default useGetArticles
