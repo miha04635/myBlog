@@ -1,4 +1,6 @@
 const registerUsers = async (username, password, email) => {
+  console.log(username)
+
   try {
     const response = await fetch('https://blog-platform.kata.academy/api/users', {
       method: 'POST',
@@ -15,6 +17,7 @@ const registerUsers = async (username, password, email) => {
     })
 
     const data = await response.json()
+
     if (response.ok) {
       console.log('User registered:', data)
     } else {

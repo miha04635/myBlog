@@ -39,6 +39,8 @@
     "linebreak-style": [0, "unix"],
     "quotes": ["error", "single"],
     "semi": ["error", "never"],
+    "no-else-return": "off",
+    "no-console": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": 0,
     "import/no-unresolved": [2, { "caseSensitive": false }],

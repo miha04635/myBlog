@@ -127,3 +127,11 @@ p {
 .agreementCheckbox {
   width: 20px;
 }
+
+.error {
+  border: 1px solid red;
+}
+
+.errorMessage.errorMessage {
+  color: red;
+}

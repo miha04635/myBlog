@@ -13,17 +13,20 @@ const SignUpForm = () => {
   const [isCheckboxAgreement, setisCheckboxAgreement] = useState(false)
   const [errorPassword, setErrorPassword] = useState('')
   const [errorAgreement, setErrorAgreement] = useState('')
+  const [passwordError, setpasswordError] = useState('')
 
   const handleSubmit = e => {
     e.preventDefault()
 
-    if (password.length < 7 || password.length > 40) {
-      setErrorPassword('Пароль должен быть от 7 до 40 символов')
+    if (password.length < 6 || password.length > 40) {
+      setErrorPassword('Your password needs to be at least 6 characters.')
+      setpasswordError(true)
 
       return
     }
 
     if (password !== passwordRepeat) {
+      setpasswordError(true)
       setErrorPassword('Пароли не совпадают')
 
       return
@@ -37,6 +40,7 @@ const SignUpForm = () => {
 
     setErrorPassword('')
     setErrorAgreement('')
+    setpasswordError(false)
 
     registerUsers(username, password, email)
   }
@@ -47,23 +51,43 @@ const SignUpForm = () => {
       <div className={styles.loginDetails}>
         <div className={styles.userName}>
           <div>Username</div>
-          <input type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            required
+          />
         </div>
 
         <div className={styles.emailAddress}>
           <div>Email address</div>
-          <input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} />
+          <input
+            type="email"
+            placeholder="Email address"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+          />
         </div>
 
-        <div className={styles.password}>
+        <div className={`${styles.password} `}>
           <div>Password</div>
-          <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+          <input
+            className={`${passwordError ? styles.error : ''}`}
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+          />
           {errorPassword && <div className={styles.errorMessage}>{errorPassword}</div>}
         </div>
 
-        <div className={styles.passwordAgain}>
+        <div className={`${styles.passwordAgain} `}>
           <div>Repeat Password</div>
           <input
+            className={`${passwordError ? styles.error : ''}`}
             type="password"
             placeholder="Repeat Password"
             value={passwordRepeat}
@@ -80,7 +104,7 @@ const SignUpForm = () => {
           checked={isCheckboxAgreement}
           onChange={e => setisCheckboxAgreement(e.target.checked)}
         />
-        <div>{errorAgreement && <div className={styles.errorMessage}>{errorAgreement}</div>}</div>
+        <div>{errorAgreement && <div className={`${styles.errorMessage} ${styles.test}`}>{errorAgreement}</div>}</div>
       </div>
 
       <button type="submit" className={styles.create}>
