@@ -129,9 +129,13 @@ p {
 }
 
 .error {
-  border: 1px solid red;
+  border: 1px solid tomato;
 }
 
 .errorMessage.errorMessage {
-  color: red;
+  color: tomato;
+}
+
+.errorAll.errorAll {
+  color: tomato;
 }

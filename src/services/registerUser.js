@@ -1,6 +1,4 @@
-const registerUsers = async (username, password, email) => {
-  console.log(username)
-
+const registerUsers = async ({ username, password, email }) => {
   try {
     const response = await fetch('https://blog-platform.kata.academy/api/users', {
       method: 'POST',
@@ -18,13 +16,14 @@ const registerUsers = async (username, password, email) => {
 
     const data = await response.json()
 
-    if (response.ok) {
-      console.log('User registered:', data)
-    } else {
-      console.error('Error:', data) // Вывод ошибки с сервера
+    if (!response.ok) {
+      return { success: false, errors: data.errors }
     }
+
+    return { success: true, user: data.user }
   } catch (err) {
     console.error('Network error:', err)
+    return { success: false, errors: { general: 'Network error. Please try again.' } }
   }
 }
 
