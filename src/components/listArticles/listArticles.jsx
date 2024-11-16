@@ -27,7 +27,11 @@ const ListArticles = () => {
   }
 
   const renderArticles = article => {
+    if (!article || !article.title || !article.body || !article.author) {
+      return null
+    }
     const { title, tagList, body, slug, author, createdAt, favoritesCount } = article
+
     const { username, image } = author
 
     const truncatedText = text => {
@@ -41,15 +45,15 @@ const ListArticles = () => {
       <div key={slug} className={styles.container} onClick={() => handleClick(slug)}>
         <div className={styles.containerText}>
           <div className={styles.containerTitle}>
-            <div className={styles.title}>{title}</div>
+            <div className={styles.title}>{truncatedText(title)}</div>
             <div className={styles.heartContainer}>
               <div className={styles.heartImg}></div>
               <span className={styles.heartCount}>{favoritesCount}</span>
             </div>
           </div>
 
-          <TagList tagList={tagList} />
-          <div className={styles.text}>{truncatedBody}</div>
+          <TagList tagList={truncatedText(tagList)} />
+          <div className={styles.text}>{truncatedText(body)}</div>
         </div>
         <div className={styles.containerAuthor}>
           <div className={styles.containerFlex}>
