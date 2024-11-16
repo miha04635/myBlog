@@ -1,7 +1,8 @@
-import { SAVE_DATA_ARTICLES } from '../actions/actions'
+import { SAVE_DATA_ARTICLES, SAVE_DATA_COUNTARTICLES } from '../actions/actions'
 
 const initialState = {
   articles: [],
+  countArticles: 0,
 }
 
 const reducer = (state = initialState, actions = {}) => {
@@ -10,6 +11,12 @@ const reducer = (state = initialState, actions = {}) => {
       return {
         ...state,
         articles: actions.payload,
+      }
+    }
+    case SAVE_DATA_COUNTARTICLES: {
+      return {
+        ...state,
+        countArticles: actions.payload,
       }
     }
     default:

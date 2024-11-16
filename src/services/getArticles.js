@@ -1,26 +1,39 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { saveDataArticles } from '../actions/actions'
+import { saveDataArticles, saveDataCountArticles } from '../actions/actions'
 
-const GetArticles = () => {
+const useGetArticles = offset => {
   const dispatch = useDispatch()
-  const getApi = 'https://blog.kata.academy/api'
+  const getApi = 'https://blog-platform.kata.academy/api/'
 
   const apiGet = async () => {
-    const response = await fetch(`${getApi}/articles/?limit=20`).then(results => results.json())
+    try {
+      const response = await fetch(`${getApi}/articles?limit=20&offset=${offset}`)
 
-    const data = await response
-    return data
+      if (!response.ok) {
+        throw new Error('Failed to fetch articles')
+      }
+
+      const data = await response.json()
+      return data
+    } catch (error) {
+      console.error('Error fetching articles:', error)
+      return null
+    }
   }
 
   useEffect(() => {
     const handleArticlesFetch = async () => {
       const articlesData = await apiGet()
-      dispatch(saveDataArticles(articlesData.articles))
+      if (articlesData) {
+        dispatch(saveDataArticles(articlesData.articles))
+        dispatch(saveDataCountArticles(articlesData.articlesCount))
+      }
     }
+
     handleArticlesFetch()
-  }, [dispatch])
+  }, [dispatch, offset])
 }
 
-export default GetArticles
+export default useGetArticles

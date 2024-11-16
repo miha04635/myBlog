@@ -1,47 +1,155 @@
+import React from 'react'
+import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+
+import registerUsers from '../../services/registerUser'
 
 import styles from './signUpForm.module.css'
 
+const {
+  signUpForm,
+  newAccount,
+  loginDetails,
+  userName,
+  emailAddress,
+  password,
+  passwordAgain,
+  agreementContainer,
+  agreementText,
+  agreementCheckbox,
+  create,
+  alreadyHaveAccount,
+  signInLink,
+  errorAll,
+} = styles
+
 const SignUpForm = () => {
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    setError,
+    formState: { errors },
+  } = useForm({
+    mode: 'onChange',
+  })
+  const emailError = errors.email?.message
+  const userNameError = errors.username?.message
+  const passwordError = errors.password?.message
+
+  const onSubmit = async data => {
+    const result = await registerUsers(data)
+
+    if (result.success) {
+      alert('Registration successful!')
+    } else {
+      Object.entries(result.errors).forEach(([field]) => {
+        setError(field, {
+          type: 'server',
+          message: 'Уже занято',
+        })
+      })
+    }
+  }
+
   return (
-    <div className={styles.signUpForm}>
-      <div className={styles.newAccount}>Create new account</div>
-      <div className={styles.loginDetails}>
-        <div className={styles.userName}>
+    <form onSubmit={handleSubmit(onSubmit)} className={signUpForm}>
+      <div className={newAccount}>Create new account</div>
+      <div className={loginDetails}>
+        <div className={userName}>
           <div>Username</div>
-          <input type="text" placeholder="Username" />
+          <input
+            className={userName}
+            type="text"
+            placeholder="Username"
+            {...register('username', {
+              required: 'Filed username',
+              pattern: {
+                message: 'Invalid username address',
+              },
+            })}
+          />
+          {userNameError && <p className={errorAll}>{userNameError}</p>}
         </div>
 
-        <div className={styles.emailAddress}>
+        <div className={emailAddress}>
           <div>Email address</div>
-          <input type="text" placeholder="Email address" />
+          <input
+            className={emailAddress}
+            type="email"
+            placeholder="Email address"
+            {...register('email', {
+              required: 'Filed email',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'Invalid email address',
+              },
+            })}
+          />
+          {emailError && <p className={errorAll}>{emailError}</p>}
         </div>
 
-        <div className={styles.password}>
+        <div className={`${password} `}>
           <div>Password</div>
-          <input type="password" placeholder="Password" />
+          <input
+            className={password}
+            type="password"
+            placeholder="Password"
+            {...register('password', {
+              required: 'Filed password',
+              minLength: {
+                value: 6,
+                message: 'Минимум 6 символов',
+              },
+              maxLength: {
+                value: 48,
+                message: 'Максимум 48 символов',
+              },
+            })}
+          />
+
+          {passwordError && <p className={errorAll}>{passwordError}</p>}
         </div>
 
-        <div className={styles.passwordAgain}>
+        <div className={`${passwordAgain} `}>
           <div>Repeat Password</div>
-          <input type="password" placeholder="Password" />
+          <input
+            className={passwordAgain}
+            type="password"
+            placeholder="Repeat Password"
+            {...register('passwordRepeat', {
+              required: 'Please confirm your password',
+              validate: value => value === getValues('password') || 'Пароли не совпадают',
+            })}
+          />
+          {errors.passwordRepeat && <p className={errorAll}>{errors.passwordRepeat.message}</p>}
         </div>
+        <div className={agreementContainer}>
+          <label>
+            <input
+              type="checkbox"
+              className={agreementCheckbox}
+              {...register('agreement', {
+                required: 'Нажми на чекбокс Черт.',
+              })}
+            />
+            I agree to the processing of my personal information
+          </label>
+        </div>
+        {errors.agreement && <p className={errorAll}>{errors.agreement.message}</p>}
+        <button type="submit" className={create}>
+          Create
+        </button>
+
+        <p className={alreadyHaveAccount}>
+          Already have an account?{' '}
+          <Link to="/signIn" className={signInLink}>
+            Sign In
+          </Link>
+          .
+        </p>
       </div>
-
-      <div>
-        <p className={styles.agreementText}>I agree to the processing of my personal information</p>
-      </div>
-
-      <button className={styles.create}>Create</button>
-
-      <p className={styles.alreadyHaveAccount}>
-        Already have an account?{' '}
-        <Link to="/signIn" className={styles.signInLink}>
-          Sign In
-        </Link>
-        .
-      </p>
-    </div>
+    </form>
   )
 }
 
