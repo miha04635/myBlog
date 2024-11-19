@@ -1,7 +1,9 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
+import { setAuth } from '../../actions/actions'
 import registerUsers from '../../services/registerUser'
 
 import styles from './signUpForm.module.css'
@@ -24,6 +26,7 @@ const {
 } = styles
 
 const SignUpForm = () => {
+  const dispatch = useDispatch()
   const {
     register,
     handleSubmit,
@@ -39,9 +42,11 @@ const SignUpForm = () => {
 
   const onSubmit = async data => {
     const result = await registerUsers(data)
+    console.log(result)
 
     if (result.success) {
       alert('Registration successful!')
+      dispatch(setAuth(result.user.username, result.user.token))
     } else {
       Object.entries(result.errors).forEach(([field]) => {
         setError(field, {
