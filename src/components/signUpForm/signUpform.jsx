@@ -49,6 +49,8 @@ const SignUpForm = () => {
       dispatch(setAuth(result.user.username, result.user.token))
     } else {
       Object.entries(result.errors).forEach(([field]) => {
+        console.log(field)
+
         setError(field, {
           type: 'server',
           message: 'Уже занято',
