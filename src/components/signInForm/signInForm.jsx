@@ -22,6 +22,7 @@ const SignInForm = () => {
     register,
     handleSubmit,
     setError,
+
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -29,23 +30,17 @@ const SignInForm = () => {
 
   const onSubmit = async data => {
     const result = await loginUser(data)
+    console.log(result)
 
     if (result.success) {
       alert('Login successful!')
     } else {
       const error = result.errors
 
-      if (error['email or password']) {
-        setError('general', {
+      if (error) {
+        setError('password', {
           type: 'server',
           message: 'Неверный email или пароль',
-        })
-      } else {
-        Object.entries(error).forEach(([field, message]) => {
-          setError(field, {
-            type: 'server',
-            message,
-          })
         })
       }
     }
@@ -61,13 +56,14 @@ const SignInForm = () => {
             type="email"
             placeholder="Email address"
             {...register('email', {
-              required: 'Filed email',
+              required: 'Поле email обязательно',
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Invalid email address',
+                message: 'Некорректный email',
               },
             })}
           />
+
           {errors.general && <p className={errorAll}>{errors.general.message}</p>}
           {errors.email && <p className={errorAll}>{errors.email.message}</p>}
         </div>
@@ -79,6 +75,7 @@ const SignInForm = () => {
             placeholder="Password"
             {...register('password', {
               required: 'Filed password',
+
               minLength: {
                 value: 6,
                 message: 'Минимум 6 символов',

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 import TagList from '../tagList/tagList'
 import useGetArticles from '../../services/getArticles'
+import servicesDate from '../../services/servisesDate'
 
 import styles from './listArticles.module.css'
 
@@ -33,7 +34,7 @@ const ListArticles = () => {
     const { title, tagList, body, slug, author, createdAt, favoritesCount } = article
 
     const { username, image } = author
-
+    const createDate = servicesDate(createdAt)
     const truncatedText = text => {
       if (!text) {
         return null
@@ -58,7 +59,7 @@ const ListArticles = () => {
         <div className={styles.containerAuthor}>
           <div className={styles.containerFlex}>
             <div className={styles.name}>{username}</div>
-            <div className={styles.dateCreate}>March 5, 2020</div>
+            <div className={styles.dateCreate}>{createDate}</div>
           </div>
           <img src={image} alt="avatar" className={styles.avatarImg} />
         </div>
