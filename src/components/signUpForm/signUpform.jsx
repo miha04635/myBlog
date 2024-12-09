@@ -42,18 +42,25 @@ const SignUpForm = () => {
   const passwordError = errors.password?.message
 
   const onSubmit = async data => {
-    const result = await registerUsers(data)
-    console.log(result)
+    try {
+      const result = await registerUsers(data)
 
-    if (result.success) {
-      dispatch(setAuth(result.user.username, result.user.token))
-      navigate('/')
-    } else {
-      Object.entries(result.errors).forEach(([field]) => {
-        setError(field, {
-          type: 'server',
-          message: 'Уже занято',
+      if (result.success) {
+        dispatch(setAuth(result.user.username, result.user.token))
+        navigate('/')
+      } else if (result.errors) {
+        Object.entries(result.errors).forEach(([field, messages]) => {
+          setError(field, {
+            type: 'server',
+            message: Array.isArray(messages) ? messages.join(', ') : String(messages),
+          })
         })
+      }
+    } catch (error) {
+      console.error('Ошибка сети:', error)
+      setError('server', {
+        type: 'server',
+        message: 'Не удалось зарегистрироваться. Попробуйте позже.',
       })
     }
   }
@@ -69,12 +76,14 @@ const SignUpForm = () => {
             type="text"
             placeholder="Username"
             {...register('username', {
-              required: 'Filed username',
+              required: 'Введите имя пользователя',
               pattern: {
-                message: 'Invalid username address',
+                value: /^[a-zA-Z0-9]{0,20}$/,
+                message: 'только латинские буквы, цифры. До 20 симвалов',
               },
             })}
           />
+
           {userNameError && <p className={errorAll}>{userNameError}</p>}
         </div>
 
