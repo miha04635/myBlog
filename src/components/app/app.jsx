@@ -17,15 +17,16 @@ function App() {
     <div className={styles.app}>
       <Router>
         <Header />
-
-        <Routes>
-          <Route path="/" element={<ListArticles />} />
-          <Route path="/:slug" element={<ArticleDetails />} />
-          <Route path="/signUp" element={<SignUpForm />} />
-          <Route path="/SignIn" element={<SignInForm />} />
-          <Route path="/EditProfile" element={<EditProfile />} />
-          <Route path="/NewArticle" element={<NewArticle />} />
-        </Routes>
+        <div className={styles.container}>
+          <Routes>
+            <Route path="/" element={<ListArticles />} />
+            <Route path="/:slug" element={<ArticleDetails />} />
+            <Route path="/signUp" element={<SignUpForm />} />
+            <Route path="/SignIn" element={<SignInForm />} />
+            <Route path="/EditProfile" element={<EditProfile />} />
+            <Route path="/NewArticle" element={<NewArticle />} />
+          </Routes>
+        </div>
       </Router>
       <GetArticles />
     </div>

@@ -48,6 +48,7 @@
   position: relative;
 }
 .text textarea {
+  box-sizing: border-box;
   padding: 6px;
   border: 1px solid rgba(217, 217, 217, 1);
   border-radius: 4px;
@@ -57,6 +58,7 @@
   font-weight: 400;
   color: rgba(0, 0, 0, 0.75);
   resize: none;
+  width: 874px;
 }
 
 .text textarea::placeholder {
@@ -142,4 +144,39 @@ p {
   padding: 8px 16px 8px 16px;
 
   border-radius: 4px;
+}
+
+.buttonDel {
+  background: none;
+  color: #ff4d4f;
+  border: 1px solid #ff4d4f;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 120px;
+  height: 40px;
+}
+
+.buttonDel:hover {
+  background: #ff4d4f;
+  color: white;
+}
+
+.buttonAddTag {
+  background: none;
+  color: #1890ff;
+  border: 1px solid #1890ff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  margin: 5px 17px;
+  width: 120px;
+  height: 40px;
+}
+
+.buttonAddTag:hover {
+  background: #1890ff;
+  color: white;
 }

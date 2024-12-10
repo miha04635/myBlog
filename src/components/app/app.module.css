@@ -2,6 +2,9 @@
 
 .app {
   min-width: 400px;
-
   background-color: rgba(235, 238, 243, 1);
+}
+
+.container {
+  padding: 16px 16px;
 }

@@ -1,6 +1,22 @@
+import { useState } from 'react'
+
 import styles from './newArticle.module.css'
 
 const NewArticle = () => {
+  const [tags, setTags] = useState([])
+  const [tagInput, setTagInput] = useState('')
+
+  const handleAddTag = () => {
+    if (tagInput.trim()) {
+      setTags([...tags, tagInput.trim()])
+      setTagInput('')
+    }
+  }
+
+  const handleDeleteTag = indexToDelete => {
+    setTags(tags.filter((_, index) => index !== indexToDelete))
+  }
+
   return (
     <div className={styles.createNewArticle}>
       <div className={styles.article}>Create new article</div>
@@ -13,19 +29,38 @@ const NewArticle = () => {
 
         <div className={styles.shortDescription}>
           <div>Short description</div>
-          <input type="text" placeholder="Title" />
+          <input type="text" placeholder="Short description" />
         </div>
 
         <div className={styles.text}>
           <div>Text</div>
-          <textarea type="text" placeholder="Text" />
+          <textarea placeholder="Text" />
         </div>
+
         <div className={styles.tags}>
-          <div className={styles.containerTags}>Tag</div>
-          <input type="text" placeholder="Tag" />
-          <button className={styles.buttonDel}>Delete</button>
-          <button className={styles.buttonAddTag}>Add tag</button>
+          <div className={styles.containerTags}>Tags</div>
+          {tags.map((tag, index) => (
+            <div key={index} className={styles.tagRow}>
+              <input type="text" value={tag} readOnly className={styles.tagInput} />
+              <button className={styles.buttonDel} onClick={() => handleDeleteTag(index)}>
+                Delete
+              </button>
+            </div>
+          ))}
+          <div className={styles.addTagRow}>
+            <input
+              type="text"
+              placeholder="Tag"
+              value={tagInput}
+              onChange={e => setTagInput(e.target.value)}
+              className={styles.tagInput}
+            />
+            <button className={styles.buttonAddTag} onClick={handleAddTag}>
+              Add tag
+            </button>
+          </div>
         </div>
+
         <button className={styles.send}>Send</button>
       </div>
     </div>
