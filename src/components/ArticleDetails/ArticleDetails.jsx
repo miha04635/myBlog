@@ -11,7 +11,7 @@ const ArticleDetails = () => {
   const { slug } = useParams()
   const articles = useSelector(state => state.articles)
   const article = articles.find(el => el.slug === slug)
-  console.log(article)
+
   const { username, image } = article.author
 
   if (!article) {

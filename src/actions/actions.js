@@ -15,3 +15,8 @@ export const setAuth = (username, token) => ({
   type: SET_AUTH,
   payload: { username, token },
 })
+
+export const LOGOUT = 'LOGOUT'
+export const logout = () => ({
+  type: LOGOUT,
+})

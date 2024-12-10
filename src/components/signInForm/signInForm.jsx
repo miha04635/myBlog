@@ -1,7 +1,9 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 
 import loginUser from '../../services/loginUser'
+import { setAuth } from '../../actions/actions'
 
 import styles from './signInForm.module.css'
 
@@ -27,13 +29,15 @@ const SignInForm = () => {
   } = useForm({
     mode: 'onChange',
   })
-
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const onSubmit = async data => {
     const result = await loginUser(data)
-    console.log(result)
 
     if (result.success) {
-      alert('Login successful!')
+      dispatch(setAuth(result.user.username, result.user.token))
+
+      navigate('/')
     } else {
       const error = result.errors
 

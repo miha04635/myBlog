@@ -1,4 +1,4 @@
-import { SAVE_DATA_ARTICLES, SAVE_DATA_COUNTARTICLES, SET_AUTH } from '../actions/actions'
+import { SAVE_DATA_ARTICLES, SAVE_DATA_COUNTARTICLES, SET_AUTH, LOGOUT } from '../actions/actions'
 
 const initialState = {
   articles: [],
@@ -28,6 +28,14 @@ const reducer = (state = initialState, actions = {}) => {
         token: actions.payload.token,
         username: actions.payload.username,
         isAuthenticated: true,
+      }
+    }
+    case LOGOUT: {
+      return {
+        ...state,
+        isAuthenticated: false,
+        username: null,
+        token: null,
       }
     }
     default:

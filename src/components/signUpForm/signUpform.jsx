@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import { setAuth } from '../../actions/actions'
@@ -27,6 +27,7 @@ const {
 
 const SignUpForm = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -45,12 +46,10 @@ const SignUpForm = () => {
     console.log(result)
 
     if (result.success) {
-      alert('Registration successful!')
       dispatch(setAuth(result.user.username, result.user.token))
+      navigate('/')
     } else {
       Object.entries(result.errors).forEach(([field]) => {
-        console.log(field)
-
         setError(field, {
           type: 'server',
           message: 'Уже занято',
