@@ -1,19 +1,21 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
-import { logout } from '../../actions/actions'
+import useAuth from '../../hooks/useAuth'
 
 import styles from './header.module.css'
 
 const Header = () => {
+  const { clearAuth } = useAuth()
   const isAuthenticated = useSelector(state => state.isAuthenticated)
   const username = useSelector(state => state.username)
+  const avatarImg = useSelector(state => state.image)
+  console.log(avatarImg)
 
-  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleLogOut = () => {
-    dispatch(logout())
+    clearAuth()
     navigate('/')
   }
   return (
@@ -29,6 +31,7 @@ const Header = () => {
             </Link>
             <Link to="/EditProfile">
               <button className={styles.editProfile}>{username}</button>
+              <img className={styles.avatarImg} src={avatarImg} alt="logo" />
             </Link>
             <button className={styles.logOut} onClick={handleLogOut}>
               Log out

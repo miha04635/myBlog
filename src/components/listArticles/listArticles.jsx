@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Pagination } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
 import TagList from '../tagList/tagList'
 import useGetArticles from '../../services/getArticles'
 import servicesDate from '../../services/servisesDate'
+import setFavorited from '../../services/setFavorited'
+import setDeleteFavorited from '../../services/deleteLikeArticle'
+import { likeArticle, deleteLikeArticle } from '../../actions/actions'
 
 import styles from './listArticles.module.css'
 
 const ListArticles = () => {
   const articles = useSelector(state => state.articles)
   const countArticles = useSelector(state => state.countArticles)
+  const token = useSelector(state => state.token)
 
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const [currentPage, setCurrentPage] = useState(1)
@@ -27,11 +32,24 @@ const ListArticles = () => {
     setCurrentPage(page)
   }
 
+  const setLiked = async (e, slug, favorited) => {
+    e.stopPropagation()
+
+    if (!favorited) {
+      const { data } = await setFavorited(slug, token)
+      dispatch(likeArticle(data.article))
+    }
+    if (favorited) {
+      const { data } = await setDeleteFavorited(slug, token)
+      dispatch(deleteLikeArticle(data.article))
+    }
+  }
+
   const renderArticles = article => {
     if (!article || !article.title || !article.body || !article.author) {
       return null
     }
-    const { title, tagList, body, slug, author, createdAt, favoritesCount } = article
+    const { title, tagList, body, slug, author, createdAt, favoritesCount, favorited } = article
 
     const { username, image } = author
     const createDate = servicesDate(createdAt)
@@ -47,10 +65,10 @@ const ListArticles = () => {
         <div className={styles.containerText}>
           <div className={styles.containerTitle}>
             <div className={styles.title}>{truncatedText(title)}</div>
-            <div className={styles.heartContainer}>
-              <div className={styles.heartImg}></div>
+            <button onClick={e => setLiked(e, slug, favorited)} className={styles.heartContainer}>
+              <div className={!favorited ? styles.heartImg : styles.HeartImgRed}></div>
               <span className={styles.heartCount}>{favoritesCount}</span>
-            </div>
+            </button>
           </div>
 
           <TagList tagList={truncatedText(tagList)} />

@@ -1,9 +1,8 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 
-import { setAuth } from '../../actions/actions'
+import useAuth from '../../hooks/useAuth'
 import registerUsers from '../../services/registerUser'
 
 import styles from './signUpForm.module.css'
@@ -17,7 +16,6 @@ const {
   password,
   passwordAgain,
   agreementContainer,
-  agreementText,
   agreementCheckbox,
   create,
   alreadyHaveAccount,
@@ -26,8 +24,9 @@ const {
 } = styles
 
 const SignUpForm = () => {
-  const dispatch = useDispatch()
+  const { login } = useAuth()
   const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -46,7 +45,7 @@ const SignUpForm = () => {
       const result = await registerUsers(data)
 
       if (result.success) {
-        dispatch(setAuth(result.user.username, result.user.token))
+        login(result.user.username, result.user.token)
         navigate('/')
       } else if (result.errors) {
         Object.entries(result.errors).forEach(([field, messages]) => {
@@ -79,7 +78,7 @@ const SignUpForm = () => {
               required: 'Введите имя пользователя',
               pattern: {
                 value: /^[a-zA-Z0-9]{0,20}$/,
-                message: 'только латинские буквы, цифры. До 20 симвалов',
+                message: 'только латинские буквы, цифры. До 20 символов',
               },
             })}
           />

@@ -1,4 +1,12 @@
-import { SAVE_DATA_ARTICLES, SAVE_DATA_COUNTARTICLES, SET_AUTH, LOGOUT } from '../actions/actions'
+import {
+  SAVE_DATA_ARTICLES,
+  SAVE_DATA_COUNTARTICLES,
+  SET_AUTH,
+  LOGOUT,
+  SAVE_EDIT_PROFILE,
+  LIKE_ARTICLE,
+  DELETE_LIKE_ARTICLE,
+} from '../actions/actions'
 
 const initialState = {
   articles: [],
@@ -36,6 +44,26 @@ const reducer = (state = initialState, actions = {}) => {
         isAuthenticated: false,
         username: null,
         token: null,
+      }
+    }
+    case SAVE_EDIT_PROFILE: {
+      return {
+        ...state,
+        username: actions.payload.username,
+        password: actions.payload.password,
+        image: actions.payload.image,
+      }
+    }
+    case LIKE_ARTICLE: {
+      return {
+        ...state,
+        articles: state.articles.map(article => (article.slug === actions.payload.slug ? actions.payload : article)),
+      }
+    }
+    case DELETE_LIKE_ARTICLE: {
+      return {
+        ...state,
+        articles: state.articles.map(article => (article.slug === actions.payload.slug ? actions.payload : article)),
       }
     }
     default:

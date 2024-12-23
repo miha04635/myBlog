@@ -1,19 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
 
+import useAuth from '../../hooks/useAuth'
 import loginUser from '../../services/loginUser'
-import { setAuth } from '../../actions/actions'
 
 import styles from './signInForm.module.css'
 
 const SignInForm = () => {
+  const { login } = useAuth()
   const {
     signInForm,
     loginAccount,
     SignInDetails,
     emailAddress,
-    login,
+    BthLogin,
     alreadyHaveAccount,
     signInLink,
     password,
@@ -29,14 +29,13 @@ const SignInForm = () => {
   } = useForm({
     mode: 'onChange',
   })
-  const dispatch = useDispatch()
+
   const navigate = useNavigate()
   const onSubmit = async data => {
     const result = await loginUser(data)
 
     if (result.success) {
-      dispatch(setAuth(result.user.username, result.user.token))
-
+      login(result.user.username, result.user.token)
       navigate('/')
     } else {
       const error = result.errors
@@ -94,7 +93,7 @@ const SignInForm = () => {
         </div>
       </div>
 
-      <button type="submit" className={login}>
+      <button type="submit" className={BthLogin}>
         Login
       </button>
 

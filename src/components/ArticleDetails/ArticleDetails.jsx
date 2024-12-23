@@ -4,13 +4,17 @@ import { useSelector } from 'react-redux'
 import ReactMarkdown from 'react-markdown'
 
 import TagList from '../tagList/tagList'
+import formatDate from '../../services/servisesDate'
 
 import styles from './ArticleDetails.module.css'
 
 const ArticleDetails = () => {
   const { slug } = useParams()
   const articles = useSelector(state => state.articles)
+
   const article = articles.find(el => el.slug === slug)
+
+  const date = formatDate(article.updatedAt)
 
   const { username, image } = article.author
 
@@ -28,7 +32,7 @@ const ArticleDetails = () => {
         <div className={styles.containerАuthor}>
           <div className={styles.containerFlexAuthor}>
             <div className={styles.name}>{username}</div>
-            <div className={styles.dateCreate}>March 5, 2020</div>
+            <div className={styles.dateCreate}>{date}</div>
           </div>
           <img src={image} alt="avatar" className={styles.avatarImg} />
         </div>
