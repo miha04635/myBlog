@@ -1,29 +1,22 @@
-const putUserEdit = async ({ username, email, password, image }, token) => {
+const getUser = async token => {
   try {
     const response = await fetch('https://blog-platform.kata.academy/api/user', {
-      method: 'PUT',
+      method: 'GET',
       headers: { 'Content-Type': 'application/json', Authorization: `Token ${token}` },
-      body: JSON.stringify({
-        user: {
-          username,
-          email,
-          password,
-          image,
-        },
-      }),
+      token,
     })
 
     const data = await response.json()
+    console.log('data', data)
 
     if (!response.ok) {
       return { success: false, errors: data.errors }
     }
 
-    return { success: true, user: data.user }
+    return { success: true, data }
   } catch (err) {
-    console.error('Network error:', err)
     return { success: false, errors: { general: 'Network error. Please try again.' } }
   }
 }
 
-export default putUserEdit
+export default getUser

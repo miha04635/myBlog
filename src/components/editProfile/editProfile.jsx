@@ -19,11 +19,10 @@ const EditProfile = () => {
   const submit = async data => {
     try {
       const { errors, success, user } = await putUserEdit(data, token)
-      console.log('>>>>>', user)
 
       if (success) {
         dispatch(saveEditProfile(user))
-        localStorage.setItem('user', JSON.stringify(user.username))
+
         navigate('/')
       } else if (errors) {
         Object.entries(errors).forEach(([field, messages]) => {
@@ -96,7 +95,7 @@ const EditProfile = () => {
         <div className={styles.avatarImg}>
           <div>Avatar image (url)</div>
           <input
-            {...register('avatarImg', {
+            {...register('image', {
               pattern: {
                 value: /^(ftp|http|https):\/\/[^ "]+$/,
                 message: 'Введите корректный URL',

@@ -56,7 +56,6 @@ const SignUpForm = () => {
         })
       }
     } catch (error) {
-      console.error('Ошибка сети:', error)
       setError('server', {
         type: 'server',
         message: 'Не удалось зарегистрироваться. Попробуйте позже.',

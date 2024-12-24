@@ -38,3 +38,9 @@ export const deleteLikeArticle = updateArticle => ({
   type: DELETE_LIKE_ARTICLE,
   payload: updateArticle,
 })
+
+export const SET_GET_USER = 'SET_GET_USER'
+export const setGetUser = ({ username, image }) => ({
+  type: SET_GET_USER,
+  payload: { username, image },
+})

@@ -20,7 +20,6 @@ const loginUser = async ({ email, password }) => {
 
     return { success: true, user: data.user }
   } catch (err) {
-    console.error('Network error:', err)
     return { success: false, errors: { general: 'Network error. Please try again.' } }
   }
 }

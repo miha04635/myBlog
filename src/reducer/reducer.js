@@ -6,6 +6,7 @@ import {
   SAVE_EDIT_PROFILE,
   LIKE_ARTICLE,
   DELETE_LIKE_ARTICLE,
+  SET_GET_USER,
 } from '../actions/actions'
 
 const initialState = {
@@ -64,6 +65,13 @@ const reducer = (state = initialState, actions = {}) => {
       return {
         ...state,
         articles: state.articles.map(article => (article.slug === actions.payload.slug ? actions.payload : article)),
+      }
+    }
+    case SET_GET_USER: {
+      return {
+        ...state,
+        username: actions.payload.username,
+        token: actions.payload.token,
       }
     }
     default:
