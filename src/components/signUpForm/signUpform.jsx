@@ -45,7 +45,8 @@ const SignUpForm = () => {
       const result = await registerUsers(data)
 
       if (result.success) {
-        login(result.user.username, result.user.token)
+        login(result.user.token)
+        // login(result.user.username, result.user.token)
         navigate('/')
       } else if (result.errors) {
         Object.entries(result.errors).forEach(([field, messages]) => {

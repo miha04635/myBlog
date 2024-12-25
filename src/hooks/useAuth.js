@@ -9,21 +9,18 @@ function useAuth() {
   const token = useSelector(state => state.token)
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user')
     const storedToken = localStorage.getItem('token')
-
-    if (storedUser && storedToken) {
+    if (storedToken) {
       try {
-        dispatch(setAuth(JSON.parse(storedUser), storedToken))
+        dispatch(setAuth(storedToken))
       } catch (error) {
         dispatch(logout())
       }
     }
   }, [dispatch])
 
-  const login = (username, tokenUser) => {
-    dispatch(setAuth(username, tokenUser))
-    localStorage.setItem('user', JSON.stringify(username))
+  const login = (tokenUser, username) => {
+    dispatch(setAuth(tokenUser, username))
     localStorage.setItem('token', tokenUser)
   }
   const clearAuth = () => {

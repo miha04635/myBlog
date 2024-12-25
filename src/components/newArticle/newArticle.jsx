@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+
+import postArticles from '../../services/postArticle'
 
 import styles from './newArticle.module.css'
 
@@ -6,10 +9,24 @@ const NewArticle = () => {
   const [tags, setTags] = useState([])
   const [tagInput, setTagInput] = useState('')
 
-  const handleAddTag = () => {
+  const {
+    handleSubmit,
+    register,
+    setError,
+    formState: { errors },
+  } = useForm({
+    mode: 'onChange',
+  })
+
+  const handleAddTag = e => {
+    e.preventDefault()
     if (tagInput.trim()) {
-      setTags([...tags, tagInput.trim()])
-      setTagInput('')
+      if (tags.includes(tagInput.trim())) {
+        setError('tag', { type: 'duplicate', message: 'Tag already exists' })
+      } else {
+        setTags([...tags, tagInput.trim()])
+        setTagInput('')
+      }
     }
   }
 
@@ -17,32 +34,47 @@ const NewArticle = () => {
     setTags(tags.filter((_, index) => index !== indexToDelete))
   }
 
+  const onSubmit = data => {
+    const articleData = { ...data, tags }
+    const token = window.localStorage.getItem('token')
+
+    console.log('Submitted data:', articleData)
+    postArticles(articleData, token)
+  }
+
   return (
-    <div className={styles.createNewArticle}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.createNewArticle}>
       <div className={styles.article}>Create new article</div>
 
       <div className={styles.container}>
         <div className={styles.title}>
           <div>Title</div>
-          <input type="text" placeholder="Title" />
+          <input type="text" placeholder="Title" {...register('title', { required: 'Title is required' })} />
+          {errors.title && <span className={styles.error}>{errors.title.message}</span>}
         </div>
 
         <div className={styles.shortDescription}>
           <div>Short description</div>
-          <input type="text" placeholder="Short description" />
+          <input
+            type="text"
+            placeholder="Short description"
+            {...register('description', { required: 'Short description is required' })}
+          />
+          {errors.description && <span className={styles.error}>{errors.description.message}</span>}
         </div>
 
         <div className={styles.text}>
           <div>Text</div>
-          <textarea placeholder="Text" />
+          <textarea placeholder="Text" {...register('text', { required: 'Text is required' })} />
+          {errors.text && <span className={styles.error}>{errors.text.message}</span>}
         </div>
 
         <div className={styles.tags}>
           <div className={styles.containerTags}>Tags</div>
           {tags.map((tag, index) => (
-            <div key={index} className={styles.tagRow}>
+            <div key={tag} className={styles.tagRow}>
               <input type="text" value={tag} readOnly className={styles.tagInput} />
-              <button className={styles.buttonDel} onClick={() => handleDeleteTag(index)}>
+              <button type="button" className={styles.buttonDel} onClick={() => handleDeleteTag(index)}>
                 Delete
               </button>
             </div>
@@ -55,15 +87,18 @@ const NewArticle = () => {
               onChange={e => setTagInput(e.target.value)}
               className={styles.tagInput}
             />
-            <button className={styles.buttonAddTag} onClick={handleAddTag}>
+            <button type="button" className={styles.buttonAddTag} onClick={handleAddTag}>
               Add tag
             </button>
           </div>
+          {errors.tag && <span className={styles.error}>{errors.tag.message}</span>}
         </div>
 
-        <button className={styles.send}>Send</button>
+        <button type="submit" className={styles.send}>
+          Send
+        </button>
       </div>
-    </div>
+    </form>
   )
 }
 

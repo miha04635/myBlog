@@ -60,5 +60,13 @@
 
 .avatarImg {
   width: 40px;
+  text-align: center;
   height: 40px;
+  border-radius: 50%;
+}
+
+.author {
+  display: flex;
+  padding-right: 16px;
+  text-decoration: none;
 }

@@ -15,6 +15,8 @@ const initialState = {
   username: null,
   token: null,
   isAuthenticated: false,
+  image: null,
+  email: null,
 }
 
 const reducer = (state = initialState, actions = {}) => {
@@ -71,6 +73,8 @@ const reducer = (state = initialState, actions = {}) => {
       return {
         ...state,
         username: actions.payload.username,
+        email: actions.payload.email,
+        image: actions.payload.image,
         token: actions.payload.token,
       }
     }

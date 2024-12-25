@@ -180,3 +180,14 @@ p {
   background: #1890ff;
   color: white;
 }
+.error {
+  color: red;
+  padding-top: 8px;
+}
+
+.title,
+.shortDescription,
+.text {
+  display: flex;
+  flex-direction: column;
+}

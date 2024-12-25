@@ -37,6 +37,7 @@ const ListArticles = () => {
 
     if (!favorited) {
       const { data } = await setFavorited(slug, token)
+
       dispatch(likeArticle(data.article))
     }
     if (favorited) {

@@ -12,24 +12,27 @@ const Header = () => {
   const { clearAuth } = useAuth()
   const isAuthenticated = useSelector(state => state.isAuthenticated)
   const name = useSelector(state => state.username)
-  const token = useSelector(state => state.token)
   const avatarImg = useSelector(state => state.image)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  if (token) {
-    const fetchUser = async () => {
-      try {
-        const user = await getUser(token)
-        console.log(user)
-        dispatch(setGetUser(user))
-      } catch (error) {
-        console.error('Error fetching user:', error)
+  useEffect(() => {
+    const tok = window.localStorage.getItem('token')
+
+    if (tok) {
+      const fetchUser = async () => {
+        try {
+          const user = await getUser(tok)
+
+          dispatch(setGetUser(user.data.user))
+        } catch (error) {
+          console.error('Error fetching user:', error)
+        }
       }
+      fetchUser()
     }
-    fetchUser()
-  }
+  }, [])
 
   const handleLogOut = () => {
     clearAuth()
@@ -46,7 +49,7 @@ const Header = () => {
             <Link to="/NewArticle">
               <button className={styles.createArticle}>Create Article</button>
             </Link>
-            <Link to="/EditProfile">
+            <Link to="/EditProfile" className={styles.author}>
               <button className={styles.editProfile}>{name}</button>
               <img className={styles.avatarImg} src={avatarImg} alt="logo" />
             </Link>

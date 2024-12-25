@@ -11,9 +11,9 @@ export const saveDataCountArticles = countArticles => ({
 })
 
 export const SET_AUTH = 'SET_AUTH'
-export const setAuth = (username, token) => ({
+export const setAuth = (token, username) => ({
   type: SET_AUTH,
-  payload: { username, token },
+  payload: { token, username },
 })
 
 export const LOGOUT = 'LOGOUT'
@@ -40,7 +40,7 @@ export const deleteLikeArticle = updateArticle => ({
 })
 
 export const SET_GET_USER = 'SET_GET_USER'
-export const setGetUser = ({ username, image }) => ({
+export const setGetUser = ({ username, image, email, token }) => ({
   type: SET_GET_USER,
-  payload: { username, image },
+  payload: { username, image, email, token },
 })

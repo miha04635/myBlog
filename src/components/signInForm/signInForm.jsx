@@ -35,7 +35,7 @@ const SignInForm = () => {
     const result = await loginUser(data)
 
     if (result.success) {
-      login(result.user.username, result.user.token)
+      login(result.user.token, result.user.username)
       navigate('/')
     } else {
       const error = result.errors
