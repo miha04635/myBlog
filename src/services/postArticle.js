@@ -1,4 +1,5 @@
-const postArticles = async ({ description, tags, text, title }, token) => {
+const postArticles = async ({ description, body, title }, token, tagList) => {
+  console.log('tagList>>>', tagList)
   try {
     const response = await fetch('https://blog-platform.kata.academy/api/articles', {
       method: 'POST',
@@ -7,8 +8,8 @@ const postArticles = async ({ description, tags, text, title }, token) => {
         article: {
           title,
           description,
-          text,
-          tags,
+          body,
+          tagList,
         },
       }),
     })

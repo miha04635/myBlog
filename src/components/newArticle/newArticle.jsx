@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import postArticles from '../../services/postArticle'
 
 import styles from './newArticle.module.css'
 
 const NewArticle = () => {
+  const navigate = useNavigate()
+
   const [tags, setTags] = useState([])
   const [tagInput, setTagInput] = useState('')
 
@@ -35,11 +38,13 @@ const NewArticle = () => {
   }
 
   const onSubmit = data => {
-    const articleData = { ...data, tags }
     const token = window.localStorage.getItem('token')
+    console.log('tags>>>>', tags)
 
-    console.log('Submitted data:', articleData)
+    const articleData = { ...data, token, tags }
+
     postArticles(articleData, token)
+    navigate('/')
   }
 
   return (
@@ -65,7 +70,7 @@ const NewArticle = () => {
 
         <div className={styles.text}>
           <div>Text</div>
-          <textarea placeholder="Text" {...register('text', { required: 'Text is required' })} />
+          <textarea placeholder="Text" {...register('body', { required: 'Text is required' })} />
           {errors.text && <span className={styles.error}>{errors.text.message}</span>}
         </div>
 
