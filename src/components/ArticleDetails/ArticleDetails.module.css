@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 .container {
+  position: relative; /* Чтобы кнопки с position: absolute располагались относительно этого контейнера */
+
   width: 938px;
   min-height: 807px;
   background-color: rgba(255, 255, 255, 1);
@@ -9,6 +11,7 @@
   font-family: 'Inter UI', sans-serif;
   margin-bottom: 24px;
   padding: 25px 42px 16px 16px;
+
   box-sizing: border-box;
 }
 
@@ -21,9 +24,13 @@
 }
 
 .body p {
+  word-wrap: break-word; /* Перенос длинных слов */
+  word-break: break-word; /* Разрыв слов, если они слишком длинные */
+  white-space: pre-wrap; /* Сохраняет переносы строк */
   font-size: 14px;
   line-height: 22px;
   text-align: left;
+  padding-right: 120px;
 }
 .body h1 {
   font-size: 20px;
@@ -88,4 +95,48 @@ h3 {
 
 .dateCreate {
   color: rgba(0, 0, 0, 0.5);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column; /* Вертикальное расположение кнопок */
+  gap: 10px; /* Расстояние между кнопками */
+  position: absolute; /* Абсолютное позиционирование */
+  top: 100px; /* Отступ сверху */
+  right: 20px; /* Отступ справа */
+  z-index: 10; /* Убедитесь, что кнопки перекрывают текст */
+}
+
+.editButton,
+.deleteButton {
+  color: #fff; /* Цвет текста */
+  border: none; /* Убираем границы */
+  padding: 10px 20px; /* Внутренние отступы */
+  border-radius: 5px; /* Закругленные края */
+  cursor: pointer; /* Изменение курсора при наведении */
+  font-size: 14px; /* Размер текста */
+  background-color: white; /* Более темный синий при наведении */
+  color: rgba(82, 196, 26, 1);
+  border: 1px solid rgba(82, 196, 26, 1);
+}
+
+.deleteButton {
+  background-color: white; /* Красный цвет для кнопки удаления */
+  color: rgba(245, 34, 45, 1);
+  border: 1px solid rgba(245, 34, 45, 1);
+}
+.editButton {
+  color: rgba(82, 196, 26, 1);
+  border: 1px solid rgba(82, 196, 26, 1);
+  background-color: white; /* Красный цвет для кнопки удаления */
+}
+
+.editButton:hover {
+  background-color: rgba(82, 196, 26, 1); /* Более темный синий при наведении */
+  color: white;
+}
+
+.deleteButton:hover {
+  background-color: rgba(245, 34, 45, 1); /* Более темный красный при наведении */
+  color: white;
 }

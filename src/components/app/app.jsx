@@ -8,6 +8,8 @@ import NewArticle from '../newArticle/newArticle'
 import Header from '../header/header'
 import ListArticles from '../listArticles/listArticles'
 import ArticleDetails from '../ArticleDetails/ArticleDetails'
+import ArticleForm from '../ArticleForm/ArticleForm'
+import EditSlug from '../EditSlug/EditSlug'
 
 import styles from './app.module.css'
 import './reset.css'
@@ -24,6 +26,8 @@ function App() {
             <Route path="/signUp" element={<SignUpForm />} />
             <Route path="/SignIn" element={<SignInForm />} />
             <Route path="/EditProfile" element={<EditProfile />} />
+            <Route path="/articles/:slug/edit" element={<EditSlug />} />
+
             <Route path="/NewArticle" element={<NewArticle />} />
           </Routes>
         </div>

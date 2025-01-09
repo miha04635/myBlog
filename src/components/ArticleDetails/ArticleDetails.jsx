@@ -1,8 +1,9 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import ReactMarkdown from 'react-markdown'
 
+import deleteArticles from '../../services/deleteArticles'
 import TagList from '../tagList/tagList'
 import formatDate from '../../services/servisesDate'
 
@@ -11,6 +12,10 @@ import styles from './ArticleDetails.module.css'
 const ArticleDetails = () => {
   const { slug } = useParams()
   const articles = useSelector(state => state.articles)
+  const user = useSelector(state => state.username)
+  const token = useSelector(state => state.token)
+
+  const navigate = useNavigate()
 
   const article = articles.find(el => el.slug === slug)
 
@@ -21,6 +26,20 @@ const ArticleDetails = () => {
   if (!article) {
     return <div> Article not found</div>
   }
+
+  const handleEdit = () => {
+    navigate(`/articles/${article.slug}/edit`)
+  }
+  const handleDelete = () => {
+    const isConfirmed = window.confirm('Вы уверены, что хотите удалить эту статью?')
+    if (!isConfirmed) {
+      return
+    }
+    deleteArticles(article.slug, token)
+    navigate('/')
+  }
+  const isAuthor = username === user
+
   return (
     <div className={styles.container}>
       <div className={styles.containerFlex}>
@@ -40,6 +59,16 @@ const ArticleDetails = () => {
 
       <div className={styles.description}>{article.description}</div>
       <ReactMarkdown className={styles.body}>{article.body}</ReactMarkdown>
+      {isAuthor && (
+        <div className={styles.buttons}>
+          <button className={styles.editButton} onClick={handleEdit}>
+            Edit
+          </button>
+          <button className={styles.deleteButton} onClick={handleDelete}>
+            Delete
+          </button>
+        </div>
+      )}
     </div>
   )
 }
