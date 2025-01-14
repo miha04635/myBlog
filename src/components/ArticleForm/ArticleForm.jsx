@@ -34,8 +34,6 @@ const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
   }
 
   const handleFormSubmit = data => {
-    console.log('ArticleForm >>> ', data)
-
     onSubmit({ ...data, tags })
   }
 

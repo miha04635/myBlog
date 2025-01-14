@@ -1,5 +1,4 @@
 const postArticles = async ({ description, body, title }, token, tagList) => {
-  console.log('tagList>>>', tagList)
   try {
     const response = await fetch('https://blog-platform.kata.academy/api/articles', {
       method: 'POST',
@@ -15,7 +14,6 @@ const postArticles = async ({ description, body, title }, token, tagList) => {
     })
 
     const data = await response.json()
-    console.log(data)
 
     if (!response.ok) {
       return { success: false, errors: data.errors }

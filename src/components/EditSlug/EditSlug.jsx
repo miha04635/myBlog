@@ -8,7 +8,6 @@ const EditArticle = () => {
   const { slug } = useParams()
   const navigate = useNavigate()
   const articles = useSelector(state => state.articles)
-  console.log('Slug >>>', slug)
 
   const article = articles.find(el => el.slug === slug)
 
@@ -19,7 +18,6 @@ const EditArticle = () => {
   const handleSubmit = async data => {
     const token = window.localStorage.getItem('token')
     await updateArticles(slug, data, token)
-    console.log(123123123123)
 
     navigate('/')
   }
