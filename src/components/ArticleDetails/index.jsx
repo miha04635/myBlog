@@ -6,7 +6,7 @@ import ReactMarkdown from 'react-markdown'
 import { setLiked } from '../../services/setLiked'
 import deleteArticles from '../../services/deleteArticles'
 import { TagList } from '../tagList'
-import formatDate from '../../services/servisesDate'
+import formatDate from '../../services/servicesDate'
 
 import styles from './index.module.css'
 

@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom'
 
 import { TagList } from '../tagList'
 import useGetArticles from '../../services/getArticles'
-import servicesDate from '../../services/servisesDate'
+import servicesDate from '../../services/servicesDate'
 import { setLiked } from '../../services/setLiked'
+import avatar from '../../img/imgAvatar/avatar.png'
 
 import styles from './index.module.css'
 
@@ -37,6 +38,7 @@ export const ListArticles = () => {
     const { title, tagList, body, slug, author, createdAt, favoritesCount, favorited } = article
 
     const { username, image } = author
+
     const createDate = servicesDate(createdAt)
     const truncatedText = text => {
       if (!text) {
@@ -46,7 +48,7 @@ export const ListArticles = () => {
     }
 
     return (
-      <a key={slug} className={styles.container} onClick={() => handleClick(slug)}>
+      <div key={slug} className={styles.container} onClick={() => handleClick(slug)}>
         <div className={styles.containerText}>
           <div className={styles.containerTitle}>
             <div className={styles.title}>{truncatedText(title)}</div>
@@ -66,7 +68,7 @@ export const ListArticles = () => {
           </div>
           <img src={image} alt="avatar" className={styles.avatarImg} />
         </div>
-      </a>
+      </div>
     )
   }
 

@@ -10,7 +10,9 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -23,6 +25,7 @@
   "rules": {
     "import/prefer-default-export": "off",
     "import/no-unresolved": ["error", { "caseSensitive": true }],
+    "no-unused-vars": ["warn", { "vars": "all", "args": "none" }],
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -43,7 +46,6 @@
     "class-methods-use-this": "off",
     "consistent-return": "off",
     "no-plusplus": 0,
-    "no-unused-vars": "off",
     "indent": ["error"],
     "prettier/prettier": "error",
     "linebreak-style": [0, "unix"],
@@ -53,7 +55,6 @@
     "no-console": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": 0,
-    "import/no-unresolved": [2, { "caseSensitive": false }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "import/order": [
       2,
