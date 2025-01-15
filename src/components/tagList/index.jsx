@@ -1,8 +1,8 @@
 import React from 'react'
 
-import styles from './tagList.module.css'
+import styles from './index.module.css'
 
-const TagList = ({ tagList }) => {
+export const TagList = ({ tagList }) => {
   const renderTags = () => {
     return (
       <div className={styles.tags}>
@@ -22,5 +22,3 @@ const TagList = ({ tagList }) => {
   }
   return <>{renderTags()}</>
 }
-
-export default TagList

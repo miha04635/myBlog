@@ -4,9 +4,9 @@ import { useForm } from 'react-hook-form'
 import useAuth from '../../hooks/useAuth'
 import loginUser from '../../services/loginUser'
 
-import styles from './signInForm.module.css'
+import styles from './index.module.css'
 
-const SignInForm = () => {
+export const SignInForm = () => {
   const { login } = useAuth()
   const {
     signInForm,
@@ -106,5 +106,3 @@ const SignInForm = () => {
     </form>
   )
 }
-
-export default SignInForm

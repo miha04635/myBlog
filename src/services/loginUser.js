@@ -1,6 +1,8 @@
+import { getApi } from './apiBaseUrl'
+
 const loginUser = async ({ email, password }) => {
   try {
-    const response = await fetch('https://blog-platform.kata.academy/api/users/login', {
+    const response = await fetch(`${getApi}users/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

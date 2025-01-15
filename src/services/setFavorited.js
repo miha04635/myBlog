@@ -1,6 +1,8 @@
+import { getApi } from './apiBaseUrl'
+
 const setFavorited = async (slug, token) => {
   try {
-    const response = await fetch(`https://blog-platform.kata.academy/api/articles/${slug}/favorite`, {
+    const response = await fetch(`${getApi}articles/${slug}/favorite`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Token ${token}` },
     })

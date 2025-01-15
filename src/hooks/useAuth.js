@@ -10,12 +10,10 @@ function useAuth() {
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token')
-    if (storedToken) {
-      try {
-        dispatch(setAuth(storedToken))
-      } catch (error) {
-        dispatch(logout())
-      }
+    if (!storedToken) {
+      dispatch(logout())
+    } else {
+      dispatch(setAuth(storedToken))
     }
   }, [dispatch])
 

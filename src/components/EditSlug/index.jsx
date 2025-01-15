@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import ArticleForm from '../ArticleForm/ArticleForm'
+import { ArticleForm } from '../ArticleForm'
 import updateArticles from '../../services/updateArticle'
 
-const EditArticle = () => {
+export const EditArticle = () => {
   const { slug } = useParams()
   const navigate = useNavigate()
   const articles = useSelector(state => state.articles)
@@ -24,5 +24,3 @@ const EditArticle = () => {
 
   return <ArticleForm onSubmit={handleSubmit} initialData={article} isEdit />
 }
-
-export default EditArticle

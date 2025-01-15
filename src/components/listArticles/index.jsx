@@ -3,16 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Pagination } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
-import TagList from '../tagList/tagList'
+import { TagList } from '../tagList'
 import useGetArticles from '../../services/getArticles'
 import servicesDate from '../../services/servisesDate'
-import setFavorited from '../../services/setFavorited'
-import setDeleteFavorited from '../../services/deleteLikeArticle'
-import { likeArticle, deleteLikeArticle } from '../../actions/actions'
+import { setLiked } from '../../services/setLiked'
 
-import styles from './listArticles.module.css'
+import styles from './index.module.css'
 
-const ListArticles = () => {
+export const ListArticles = () => {
   const articles = useSelector(state => state.articles)
   const countArticles = useSelector(state => state.countArticles)
   const token = useSelector(state => state.token)
@@ -32,20 +30,6 @@ const ListArticles = () => {
     setCurrentPage(page)
   }
 
-  const setLiked = async (e, slug, favorited) => {
-    e.stopPropagation()
-
-    if (!favorited) {
-      const { data } = await setFavorited(slug, token)
-
-      dispatch(likeArticle(data.article))
-    }
-    if (favorited) {
-      const { data } = await setDeleteFavorited(slug, token)
-      dispatch(deleteLikeArticle(data.article))
-    }
-  }
-
   const renderArticles = article => {
     if (!article || !article.title || !article.body || !article.author) {
       return null
@@ -62,11 +46,11 @@ const ListArticles = () => {
     }
 
     return (
-      <div key={slug} className={styles.container} onClick={() => handleClick(slug)}>
+      <a key={slug} className={styles.container} onClick={() => handleClick(slug)}>
         <div className={styles.containerText}>
           <div className={styles.containerTitle}>
             <div className={styles.title}>{truncatedText(title)}</div>
-            <button onClick={e => setLiked(e, slug, favorited)} className={styles.heartContainer}>
+            <button onClick={e => setLiked(e, slug, favorited, token, dispatch)} className={styles.heartContainer}>
               <div className={!favorited ? styles.heartImg : styles.HeartImgRed}></div>
               <span className={styles.heartCount}>{favoritesCount}</span>
             </button>
@@ -82,7 +66,7 @@ const ListArticles = () => {
           </div>
           <img src={image} alt="avatar" className={styles.avatarImg} />
         </div>
-      </div>
+      </a>
     )
   }
 
@@ -101,5 +85,3 @@ const ListArticles = () => {
     </>
   )
 }
-
-export default ListArticles

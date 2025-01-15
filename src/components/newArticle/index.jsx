@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 
-import ArticleForm from '../ArticleForm/ArticleForm'
+import { ArticleForm } from '../ArticleForm'
 import postArticles from '../../services/postArticle'
 
-const NewArticle = () => {
+export const NewArticle = () => {
   const navigate = useNavigate()
 
   const handleSubmit = async data => {
@@ -14,5 +14,3 @@ const NewArticle = () => {
 
   return <ArticleForm onSubmit={handleSubmit} />
 }
-
-export default NewArticle

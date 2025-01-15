@@ -1,6 +1,8 @@
+import { getApi } from './apiBaseUrl'
+
 const postArticles = async ({ description, body, title }, token, tagList) => {
   try {
-    const response = await fetch('https://blog-platform.kata.academy/api/articles', {
+    const response = await fetch(`${getApi}articles`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Token ${token}` },
       body: JSON.stringify({

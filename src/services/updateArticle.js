@@ -1,6 +1,8 @@
+import { getApi } from './apiBaseUrl'
+
 const updateArticle = async (slug, data, token) => {
   try {
-    const response = await fetch(`https://blog-platform.kata.academy/api/articles/${slug}`, {
+    const response = await fetch(`${getApi}articles/${slug}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

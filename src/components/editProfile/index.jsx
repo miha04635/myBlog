@@ -6,9 +6,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { saveEditProfile } from '../../actions/actions'
 import putUserEdit from '../../services/putUserEdit'
 
-import styles from './editProfile.module.css'
+import styles from './index.module.css'
 
-const EditProfile = () => {
+export const EditProfile = () => {
   const dispatch = useDispatch()
   const token = useSelector(state => state.token)
   const { handleSubmit, register, setError } = useForm({
@@ -113,5 +113,3 @@ const EditProfile = () => {
     </form>
   )
 }
-
-export default EditProfile

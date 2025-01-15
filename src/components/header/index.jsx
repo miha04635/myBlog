@@ -6,9 +6,9 @@ import useAuth from '../../hooks/useAuth'
 import getUser from '../../services/getUser'
 import { setGetUser } from '../../actions/actions'
 
-import styles from './header.module.css'
+import styles from './index.module.css'
 
-const Header = () => {
+export const Header = () => {
   const { clearAuth } = useAuth()
   const isAuthenticated = useSelector(state => state.isAuthenticated)
   const name = useSelector(state => state.username)
@@ -32,7 +32,7 @@ const Header = () => {
       }
       fetchUser()
     }
-  }, [])
+  }, [dispatch])
 
   const handleLogOut = () => {
     clearAuth()
@@ -51,7 +51,7 @@ const Header = () => {
             </Link>
             <Link to="/EditProfile" className={styles.author}>
               <button className={styles.editProfile}>{name}</button>
-              <img className={styles.avatarImg} src={avatarImg} alt="logo" />
+              <img className={styles.avatarImg} src={avatarImg} />
             </Link>
             <button className={styles.logOut} onClick={handleLogOut}>
               Log out
@@ -71,5 +71,3 @@ const Header = () => {
     </div>
   )
 }
-
-export default Header

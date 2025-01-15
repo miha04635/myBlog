@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import registerUsers from '../../services/registerUser'
 
-import styles from './signUpForm.module.css'
+import styles from './index.module.css'
 
 const {
   signUpForm,
@@ -23,7 +23,7 @@ const {
   errorAll,
 } = styles
 
-const SignUpForm = () => {
+export const SignUpForm = () => {
   const { login } = useAuth()
   const navigate = useNavigate()
 
@@ -166,5 +166,3 @@ const SignUpForm = () => {
     </form>
   )
 }
-
-export default SignUpForm

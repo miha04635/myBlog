@@ -1,20 +1,22 @@
 import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import ReactMarkdown from 'react-markdown'
 
+import { setLiked } from '../../services/setLiked'
 import deleteArticles from '../../services/deleteArticles'
-import TagList from '../tagList/tagList'
+import { TagList } from '../tagList'
 import formatDate from '../../services/servisesDate'
 
-import styles from './ArticleDetails.module.css'
+import styles from './index.module.css'
 
-const ArticleDetails = () => {
+export const ArticleDetails = () => {
   const { slug } = useParams()
   const articles = useSelector(state => state.articles)
   const user = useSelector(state => state.username)
   const token = useSelector(state => state.token)
 
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const article = articles.find(el => el.slug === slug)
@@ -44,7 +46,17 @@ const ArticleDetails = () => {
     <div className={styles.container}>
       <div className={styles.containerFlex}>
         <div className={styles.containerTitle}>
-          <h1 className={styles.title}>{article.title}</h1>
+          <div className={styles.titleLiked}>
+            <h1 className={styles.title}>{article.title}</h1>
+            <button
+              onClick={e => setLiked(e, slug, article.favorited, token, dispatch)}
+              className={styles.heartContainer}
+            >
+              <div className={!article.favorited ? styles.heartImg : styles.HeartImgRed}></div>
+              <span className={styles.heartCount}>{article.favoritesCount}</span>
+            </button>
+          </div>
+
           <TagList tagList={article.tagList} />
         </div>
 
@@ -72,5 +84,3 @@ const ArticleDetails = () => {
     </div>
   )
 }
-
-export default ArticleDetails

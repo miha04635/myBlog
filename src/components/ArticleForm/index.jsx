@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import styles from './ArticleForm.module.css'
+import styles from './index.module.css'
 
-const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
+export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
   const [tags, setTags] = useState(initialData.tags || [])
   const [tagInput, setTagInput] = useState('')
 
@@ -96,5 +96,3 @@ const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
     </form>
   )
 }
-
-export default ArticleForm

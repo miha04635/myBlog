@@ -1,17 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import GetArticles from '../../services/getArticles'
-import SignUpForm from '../signUpForm/signUpform'
-import SignInForm from '../signInForm/signInForm'
-import EditProfile from '../editProfile/editProfile'
-import NewArticle from '../newArticle/newArticle'
-import Header from '../header/header'
-import ListArticles from '../listArticles/listArticles'
-import ArticleDetails from '../ArticleDetails/ArticleDetails'
-import ArticleForm from '../ArticleForm/ArticleForm'
-import EditSlug from '../EditSlug/EditSlug'
+import { SignUpForm } from '../signUpForm'
+import { SignInForm } from '../signInForm'
+import { EditProfile } from '../editProfile'
+import { NewArticle } from '../newArticle'
+import { Header } from '../header'
+import { ListArticles } from '../listArticles'
+import { EditArticle } from '../EditSlug'
+import { ArticleDetails } from '../ArticleDetails'
 
-import styles from './app.module.css'
+import styles from './index.module.css'
 import './reset.css'
 
 function App() {
@@ -26,13 +24,12 @@ function App() {
             <Route path="/signUp" element={<SignUpForm />} />
             <Route path="/SignIn" element={<SignInForm />} />
             <Route path="/EditProfile" element={<EditProfile />} />
-            <Route path="/articles/:slug/edit" element={<EditSlug />} />
+            <Route path="/articles/:slug/edit" element={<EditArticle />} />
 
             <Route path="/NewArticle" element={<NewArticle />} />
           </Routes>
         </div>
       </Router>
-      <GetArticles />
     </div>
   )
 }

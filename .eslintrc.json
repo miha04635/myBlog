@@ -21,13 +21,23 @@
   },
   "plugins": ["react", "prettier", "import"],
   "rules": {
+    "import/prefer-default-export": "off",
+    "import/no-unresolved": ["error", { "caseSensitive": true }],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
     "no-param-reassign": [
       "error",
       {
         "props": true,
-        "ignorePropertyModificationsFor": [
-          "state" // for Redux toolkit state management
-        ]
+        "ignorePropertyModificationsFor": ["state"]
       }
     ],
     "class-methods-use-this": "off",

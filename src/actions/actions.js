@@ -11,9 +11,9 @@ export const saveDataCountArticles = countArticles => ({
 })
 
 export const SET_AUTH = 'SET_AUTH'
-export const setAuth = (token, username) => ({
+export const setAuth = token => ({
   type: SET_AUTH,
-  payload: { token, username },
+  payload: token,
 })
 
 export const LOGOUT = 'LOGOUT'
