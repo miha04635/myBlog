@@ -16,7 +16,7 @@ const updateArticle = async (slug, data, token) => {
       return { success: false, errors }
     }
 
-    return { success: true }
+    return { success: true, data }
   } catch (error) {
     return { success: false, errors: { general: 'Network error. Please try again.' } }
   }

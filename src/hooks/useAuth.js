@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
+import Cookies from 'js-cookie'
 
 import { setAuth, logout } from '../actions/actions'
 
@@ -9,7 +10,7 @@ function useAuth() {
   const token = useSelector(state => state.token)
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token')
+    const storedToken = Cookies.get('token')
     if (!storedToken) {
       dispatch(logout())
     } else {
@@ -19,12 +20,15 @@ function useAuth() {
 
   const login = (tokenUser, username) => {
     dispatch(setAuth(tokenUser, username))
-    localStorage.setItem('token', tokenUser)
+    Cookies.set('token', tokenUser, {
+      expires: 7,
+      secure: true,
+      sameSite: 'strict',
+    })
   }
   const clearAuth = () => {
     dispatch(logout())
-    localStorage.removeItem('user')
-    localStorage.removeItem('token')
+    Cookies.remove('token')
   }
   return { user, login, clearAuth, token }
 }

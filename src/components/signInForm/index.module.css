@@ -102,3 +102,7 @@ p {
   margin-bottom: 48px;
   color: rgba(140, 140, 140, 1);
 }
+
+.errorAll {
+  color: #f5222d;
+}

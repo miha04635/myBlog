@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactMarkdown from 'react-markdown'
+import { Modal } from 'antd'
 
 import { setLiked } from '../../services/setLiked'
 import deleteArticles from '../../services/deleteArticles'
@@ -11,6 +12,10 @@ import formatDate from '../../services/servicesDate'
 import styles from './index.module.css'
 
 export const ArticleDetails = () => {
+  const [isModalVisible, setModalVisible] = useState(false)
+  const [modalStyle, setModalStyle] = useState({})
+  const buttonRef = useRef(null)
+
   const { slug } = useParams()
   const articles = useSelector(state => state.articles)
   const user = useSelector(state => state.username)
@@ -25,6 +30,29 @@ export const ArticleDetails = () => {
 
   const { username, image } = article.author
 
+  const showModal = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect()
+      setModalStyle({
+        position: 'absolute',
+        top: rect.bottom + window.scrollY - 35,
+        left: rect.left + window.scrollX + 90,
+        width: 246,
+        hight: 108,
+      })
+    }
+    setModalVisible(true)
+  }
+
+  const handleOk = () => {
+    deleteArticles(article.slug, token)
+    navigate('/')
+  }
+
+  const handleCancel = () => {
+    setModalVisible(false)
+  }
+
   if (!article) {
     return <div> Article not found</div>
   }
@@ -32,14 +60,7 @@ export const ArticleDetails = () => {
   const handleEdit = () => {
     navigate(`/articles/${article.slug}/edit`)
   }
-  const handleDelete = () => {
-    const isConfirmed = window.confirm('Вы уверены, что хотите удалить эту статью?')
-    if (!isConfirmed) {
-      return
-    }
-    deleteArticles(article.slug, token)
-    navigate('/')
-  }
+
   const isAuthor = username === user
 
   return (
@@ -58,29 +79,45 @@ export const ArticleDetails = () => {
           </div>
 
           <TagList tagList={article.tagList} />
+          <div className={styles.description}>{article.description}</div>
         </div>
-
-        <div className={styles.containerАuthor}>
-          <div className={styles.containerFlexAuthor}>
-            <div className={styles.name}>{username}</div>
-            <div className={styles.dateCreate}>{date}</div>
+        <div className={styles.authorButton}>
+          <div className={styles.containerАuthor}>
+            <div className={styles.containerFlexAuthor}>
+              <div className={styles.name}>{username}</div>
+              <div className={styles.dateCreate}>{date}</div>
+            </div>
+            <img src={image} alt="avatar" className={styles.avatarImg} />
           </div>
-          <img src={image} alt="avatar" className={styles.avatarImg} />
+          {isAuthor && (
+            <div className={styles.buttons}>
+              <button className={styles.deleteButton} onClick={showModal} ref={buttonRef}>
+                Delete
+              </button>
+              <button className={styles.editButton} onClick={handleEdit}>
+                Edit
+              </button>
+            </div>
+          )}
         </div>
       </div>
-
-      <div className={styles.description}>{article.description}</div>
-      <ReactMarkdown className={styles.body}>{article.body}</ReactMarkdown>
-      {isAuthor && (
-        <div className={styles.buttons}>
-          <button className={styles.editButton} onClick={handleEdit}>
-            Edit
-          </button>
-          <button className={styles.deleteButton} onClick={handleDelete}>
-            Delete
-          </button>
-        </div>
+      {isModalVisible && (
+        <Modal
+          open={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          okText="Yes"
+          cancelText="No"
+          mask={false}
+          closeIcon={null}
+          style={modalStyle}
+          className={styles.modalContainer}
+        >
+          <div className={styles.triangle}></div> {/* Треугольник */}
+          <p>Are you sure to delete this article?</p>
+        </Modal>
       )}
+      <ReactMarkdown className={styles.body}>{article.body}</ReactMarkdown>
     </div>
   )
 }

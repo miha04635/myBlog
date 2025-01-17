@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
+import Cookies from 'js-cookie'
 
 import useAuth from '../../hooks/useAuth'
 import getUser from '../../services/getUser'
@@ -18,7 +19,7 @@ export const Header = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const tok = window.localStorage.getItem('token')
+    const tok = Cookies.get('token')
 
     if (tok) {
       const fetchUser = async () => {

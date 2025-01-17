@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import Cookies from 'js-cookie'
 
 import { ArticleForm } from '../ArticleForm'
 import updateArticles from '../../services/updateArticle'
@@ -16,10 +17,16 @@ export const EditArticle = () => {
   }
 
   const handleSubmit = async data => {
-    const token = window.localStorage.getItem('token')
-    await updateArticles(slug, data, token)
+    const token = Cookies.get('token')
 
-    navigate('/')
+    try {
+      const update = await updateArticles(slug, data, token)
+      console.log(update)
+
+      navigate(`/${slug}`)
+    } catch (error) {
+      console.error('Ошибка при обновлении статьи:', error)
+    }
   }
 
   return <ArticleForm onSubmit={handleSubmit} initialData={article} isEdit />

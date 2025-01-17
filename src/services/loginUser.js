@@ -16,6 +16,7 @@ const loginUser = async ({ email, password }) => {
     })
 
     const data = await response.json()
+
     if (!response.ok) {
       return { success: false, errors: data.errors }
     }

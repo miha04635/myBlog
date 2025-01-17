@@ -1,6 +1,6 @@
 import { getApi } from './apiBaseUrl'
 
-const postArticles = async ({ description, body, title }, token, tagList) => {
+const postArticles = async ({ description, body, title, tags }, token) => {
   try {
     const response = await fetch(`${getApi}articles`, {
       method: 'POST',
@@ -10,7 +10,7 @@ const postArticles = async ({ description, body, title }, token, tagList) => {
           title,
           description,
           body,
-          tagList,
+          tagList: tags,
         },
       }),
     })

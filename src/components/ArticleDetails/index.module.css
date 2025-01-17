@@ -55,6 +55,8 @@ h3 {
   line-height: 22px;
   text-align: left;
   color: rgba(0, 0, 0, 0.5);
+  max-width: 682px;
+  word-break: break-all;
 }
 
 .title {
@@ -72,6 +74,7 @@ h3 {
 .containerАuthor {
   display: flex;
   align-items: center;
+  margin-bottom: 30px;
 }
 
 .containerFlexAuthor {
@@ -99,21 +102,17 @@ h3 {
   color: rgba(0, 0, 0, 0.5);
 }
 
-.buttons {
+.authorButton {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  position: absolute;
-  top: 100px;
-  right: 20px;
-  z-index: 10;
+  align-items: flex-end;
+  margin-bottom: 30px;
 }
-
 .editButton,
 .deleteButton {
   color: #fff;
   border: none;
-  padding: 10px 20px;
+  padding: 6px 17px 5px 17px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
@@ -123,11 +122,17 @@ h3 {
 }
 
 .deleteButton {
+  position: relative;
+  width: 78px;
+  height: 31px;
   background-color: white;
   color: rgba(245, 34, 45, 1);
   border: 1px solid rgba(245, 34, 45, 1);
+  margin-right: 12px;
 }
 .editButton {
+  width: 65px;
+  height: 31px;
   color: rgba(82, 196, 26, 1);
   border: 1px solid rgba(82, 196, 26, 1);
   background-color: white;
@@ -166,4 +171,18 @@ h3 {
 
 .heartContainer {
   display: flex;
+}
+.modalContainer {
+  position: relative;
+}
+
+.triangle {
+  position: absolute;
+  top: 10px; /* Настраивайте отступ сверху */
+  left: -8px; /* Смещение влево */
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 12px 10px 10px 0;
+  border-color: transparent white transparent transparent;
 }

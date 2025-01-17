@@ -21,6 +21,10 @@ const {
   alreadyHaveAccount,
   signInLink,
   errorAll,
+  containerUsername,
+  containerEmailAddress,
+  containerPassword,
+  containerPasswordAgain,
 } = styles
 
 export const SignUpForm = () => {
@@ -68,17 +72,17 @@ export const SignUpForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} className={signUpForm}>
       <div className={newAccount}>Create new account</div>
       <div className={loginDetails}>
-        <div className={userName}>
+        <div className={containerUsername}>
           <div>Username</div>
           <input
             className={userName}
             type="text"
             placeholder="Username"
             {...register('username', {
-              required: 'Введите имя пользователя',
+              required: 'Write username',
               pattern: {
                 value: /^[a-zA-Z0-9]{0,20}$/,
-                message: 'только латинские буквы, цифры. До 20 символов',
+                message: 'Only Latin letters and numbers. Up to 20 characters',
               },
             })}
           />
@@ -86,7 +90,7 @@ export const SignUpForm = () => {
           {userNameError && <p className={errorAll}>{userNameError}</p>}
         </div>
 
-        <div className={emailAddress}>
+        <div className={containerEmailAddress}>
           <div>Email address</div>
           <input
             className={emailAddress}
@@ -103,7 +107,7 @@ export const SignUpForm = () => {
           {emailError && <p className={errorAll}>{emailError}</p>}
         </div>
 
-        <div className={`${password} `}>
+        <div className={containerPassword}>
           <div>Password</div>
           <input
             className={password}
@@ -113,11 +117,11 @@ export const SignUpForm = () => {
               required: 'Filed password',
               minLength: {
                 value: 6,
-                message: 'Минимум 6 символов',
+                message: 'Your password needs to be at least 6 characters.',
               },
               maxLength: {
                 value: 48,
-                message: 'Максимум 48 символов',
+                message: 'Maximum of 48 characters',
               },
             })}
           />
@@ -125,7 +129,7 @@ export const SignUpForm = () => {
           {passwordError && <p className={errorAll}>{passwordError}</p>}
         </div>
 
-        <div className={`${passwordAgain} `}>
+        <div className={containerPasswordAgain}>
           <div>Repeat Password</div>
           <input
             className={passwordAgain}
@@ -133,7 +137,7 @@ export const SignUpForm = () => {
             placeholder="Repeat Password"
             {...register('passwordRepeat', {
               required: 'Please confirm your password',
-              validate: value => value === getValues('password') || 'Пароли не совпадают',
+              validate: value => value === getValues('password') || 'Passwords must match',
             })}
           />
           {errors.passwordRepeat && <p className={errorAll}>{errors.passwordRepeat.message}</p>}
@@ -144,7 +148,7 @@ export const SignUpForm = () => {
               type="checkbox"
               className={agreementCheckbox}
               {...register('agreement', {
-                required: 'Нажми на чекбокс Черт.',
+                required: 'Click on the checkbox',
               })}
             />
             I agree to the processing of my personal information

@@ -85,3 +85,15 @@ p {
   line-height: 22px;
   color: rgba(38, 38, 38, 1);
 }
+
+.username,
+.emailAddress,
+.password,
+.avatarImg {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  color: rgba(245, 34, 45, 1);
+}

@@ -18,7 +18,7 @@ const putUserEdit = async ({ username, email, password, image }, token) => {
     const data = await response.json()
 
     if (!response.ok) {
-      return { success: false, errors: data.errors }
+      return { success: false, err: data.errors }
     }
 
     return { success: true, user: data.user }

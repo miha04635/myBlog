@@ -41,7 +41,14 @@
 .password,
 .passwordAgain {
   width: 100%;
-  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.containerUsername,
+.containerEmailAddress,
+.containerPassword,
+.containerPasswordAgain {
+  margin-bottom: 12px;
 }
 
 .userName div,
@@ -129,13 +136,13 @@ p {
 }
 
 .error {
-  border: 1px solid tomato;
+  border: 1px solid #f5222d;
 }
 
 .errorMessage.errorMessage {
-  color: tomato;
+  color: #f5222d;
 }
 
 .errorAll.errorAll {
-  color: tomato;
+  color: #f5222d;
 }

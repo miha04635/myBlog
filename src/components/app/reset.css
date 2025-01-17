@@ -36,3 +36,7 @@ button {
   background-color: transparent;
   cursor: pointer;
 }
+
+.ant-modal-content {
+  width: 246px;
+}

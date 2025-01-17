@@ -11,21 +11,26 @@ import styles from './index.module.css'
 export const EditProfile = () => {
   const dispatch = useDispatch()
   const token = useSelector(state => state.token)
-  const { handleSubmit, register, setError } = useForm({
+  const {
+    handleSubmit,
+    register,
+    setError,
+    formState: { errors },
+  } = useForm({
     mode: 'onChange',
   })
 
   const navigate = useNavigate()
   const submit = async data => {
     try {
-      const { errors, success, user } = await putUserEdit(data, token)
+      const { err, success, user } = await putUserEdit(data, token)
 
       if (success) {
         dispatch(saveEditProfile(user))
 
         navigate('/')
-      } else if (errors) {
-        Object.entries(errors).forEach(([field, messages]) => {
+      } else if (err) {
+        Object.entries(err).forEach(([field, messages]) => {
           setError(field, {
             type: 'server',
             message: Array.isArray(messages) ? messages.join(', ') : String(messages),
@@ -33,7 +38,6 @@ export const EditProfile = () => {
         })
       }
     } catch (error) {
-      console.error('Ошибка сети:', error)
       setError('server', {
         type: 'server',
         message: 'Не удалось зарегистрироваться. Попробуйте позже.',
@@ -46,10 +50,11 @@ export const EditProfile = () => {
       <div className={styles.edit}>Edit Profile</div>
 
       <div className={styles.editProfileDetails}>
-        <div className={styles.emailAddress}>
+        <div className={styles.username}>
           <div>Username</div>
           <input
             {...register('username', {
+              required: 'Username is required',
               pattern: {
                 value: /^[a-zA-Z0-9]{0,20}$/,
                 message: 'только латинские буквы, цифры. До 20 символов',
@@ -58,12 +63,14 @@ export const EditProfile = () => {
             type="text"
             placeholder="Username"
           />
+          {errors.username && <span className={styles.error}>{errors.username.message}</span>}
         </div>
 
         <div className={styles.emailAddress}>
           <div>Email address</div>
           <input
             {...register('email', {
+              required: 'Email is required',
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                 message: 'Invalid email address',
@@ -72,6 +79,7 @@ export const EditProfile = () => {
             type="text"
             placeholder="Email address"
           />
+          {errors.email && <span className={styles.error}>{errors.email.message}</span>}
         </div>
 
         <div className={styles.password}>
@@ -80,16 +88,17 @@ export const EditProfile = () => {
             {...register('password', {
               minLength: {
                 value: 6,
-                message: 'Минимум 6 символов',
+                message: 'Minimum 6 characters',
               },
               maxLength: {
                 value: 48,
-                message: 'Максимум 48 символов',
+                message: 'Maximum 48 characters',
               },
             })}
             type="password"
             placeholder="New Password"
           />
+          {errors.password && <span className={styles.error}>{errors.password.message}</span>}
         </div>
 
         <div className={styles.avatarImg}>
@@ -98,12 +107,13 @@ export const EditProfile = () => {
             {...register('image', {
               pattern: {
                 value: /^(ftp|http|https):\/\/[^ "]+$/,
-                message: 'Введите корректный URL',
+                message: 'Please enter a valid URL',
               },
             })}
             type="text"
             placeholder="Avatar image"
           />
+          {errors.image && <span className={styles.error}>{errors.image.message}</span>}
         </div>
       </div>
 

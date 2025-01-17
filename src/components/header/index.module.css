@@ -68,6 +68,11 @@
 
 .author {
   display: flex;
-  padding-right: 16px;
   text-decoration: none;
+  margin-right: 27px;
+  margin-left: 27px;
+}
+
+.signIn {
+  margin-right: 48px;
 }

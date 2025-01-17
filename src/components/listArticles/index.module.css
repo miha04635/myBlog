@@ -108,5 +108,6 @@
 
 .containerTitle {
   display: flex;
+
   align-items: baseline;
 }

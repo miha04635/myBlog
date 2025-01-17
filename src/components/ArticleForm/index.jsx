@@ -4,13 +4,14 @@ import { useForm } from 'react-hook-form'
 import styles from './index.module.css'
 
 export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
-  const [tags, setTags] = useState(initialData.tags || [])
+  const [tags, setTags] = useState(initialData.tagList || []) // Используем tagList
   const [tagInput, setTagInput] = useState('')
 
   const {
     handleSubmit,
     register,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm({
     defaultValues: initialData,
@@ -25,16 +26,22 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
       } else {
         setTags([...tags, tagInput.trim()])
         setTagInput('')
+        clearErrors('tag')
       }
     }
   }
 
   const handleDeleteTag = indexToDelete => {
     setTags(tags.filter((_, index) => index !== indexToDelete))
+    clearErrors('tag')
   }
 
   const handleFormSubmit = data => {
-    onSubmit({ ...data, tags })
+    if (isEdit) {
+      onSubmit({ ...data, tagList: tags }) // Для редактирования используем tagList
+    } else {
+      onSubmit({ ...data, tags }) // Для создания используем tags
+    }
   }
 
   return (

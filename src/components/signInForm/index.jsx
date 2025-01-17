@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import Cookies from 'js-cookie'
 
 import useAuth from '../../hooks/useAuth'
 import loginUser from '../../services/loginUser'
@@ -31,6 +32,7 @@ export const SignInForm = () => {
   })
 
   const navigate = useNavigate()
+
   const onSubmit = async data => {
     const result = await loginUser(data)
 
@@ -43,7 +45,7 @@ export const SignInForm = () => {
       if (error) {
         setError('password', {
           type: 'server',
-          message: 'Неверный email или пароль',
+          message: 'Invalid email or password',
         })
       }
     }
@@ -59,10 +61,10 @@ export const SignInForm = () => {
             type="email"
             placeholder="Email address"
             {...register('email', {
-              required: 'Поле email обязательно',
+              required: 'The email field is required',
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Некорректный email',
+                message: 'Incorrect email address',
               },
             })}
           />
@@ -81,11 +83,11 @@ export const SignInForm = () => {
 
               minLength: {
                 value: 6,
-                message: 'Минимум 6 символов',
+                message: 'Minimum of 6 characters',
               },
               maxLength: {
                 value: 40,
-                message: 'Максимум 40 символов',
+                message: 'Maximum of 40 characters',
               },
             })}
           />

@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Pagination } from 'antd'
+import { Pagination, ConfigProvider } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
 import { TagList } from '../tagList'
 import useGetArticles from '../../services/getArticles'
 import servicesDate from '../../services/servicesDate'
 import { setLiked } from '../../services/setLiked'
-import avatar from '../../img/imgAvatar/avatar.png'
 
 import styles from './index.module.css'
 
@@ -21,14 +20,22 @@ export const ListArticles = () => {
 
   const [currentPage, setCurrentPage] = useState(1)
 
-  const handleClick = slug => {
-    navigate(`/${slug}`)
+  useEffect(() => {
+    const savedPage = localStorage.getItem('currentPage')
+    if (savedPage) {
+      setCurrentPage(Number(savedPage))
+    }
+  }, [])
+
+  const handlePageChange = page => {
+    setCurrentPage(page)
+    localStorage.setItem('currentPage', page)
   }
 
   useGetArticles((currentPage - 1) * 20)
 
-  const handlePageChange = page => {
-    setCurrentPage(page)
+  const handleClick = slug => {
+    navigate(`/${slug}`)
   }
 
   const renderArticles = article => {
@@ -48,7 +55,7 @@ export const ListArticles = () => {
     }
 
     return (
-      <div key={slug} className={styles.container} onClick={() => handleClick(slug)}>
+      <a key={slug} className={styles.container} onClick={() => handleClick(slug)}>
         <div className={styles.containerText}>
           <div className={styles.containerTitle}>
             <div className={styles.title}>{truncatedText(title)}</div>
@@ -68,22 +75,34 @@ export const ListArticles = () => {
           </div>
           <img src={image} alt="avatar" className={styles.avatarImg} />
         </div>
-      </div>
+      </a>
     )
   }
 
   return (
     <>
       {articles.map(article => renderArticles(article))}
-      <Pagination
-        current={currentPage}
-        total={countArticles}
-        pageSize={20}
-        className={styles.paginationArticles}
-        onChange={handlePageChange}
-        align="center"
-        showSizeChanger={false}
-      />
+      <ConfigProvider
+        theme={{
+          components: {
+            Pagination: {
+              itemActiveColor: '#fff', // Цвет текста активного элемента
+              itemActiveBg: '#1890FF', // Фон активного элемента
+              itemBg: 'none', // Фон для неактивных элементов
+            },
+          },
+        }}
+      >
+        <Pagination
+          current={currentPage}
+          total={countArticles}
+          pageSize={20}
+          className={styles.paginationArticles}
+          onChange={handlePageChange}
+          align="center"
+          showSizeChanger={false}
+        />
+      </ConfigProvider>
     </>
   )
 }
