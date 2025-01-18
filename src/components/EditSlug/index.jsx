@@ -8,9 +8,7 @@ import updateArticles from '../../services/updateArticle'
 export const EditArticle = () => {
   const { slug } = useParams()
   const navigate = useNavigate()
-  const articles = useSelector(state => state.articles)
-
-  const article = articles.find(el => el.slug === slug)
+  const article = useSelector(state => state.article)
 
   if (!article) {
     return <div>Article not found</div>

@@ -40,3 +40,7 @@ button {
 .ant-modal-content {
   width: 246px;
 }
+
+.ant-pagination-item-active.ant-pagination-item-active a {
+  color: white;
+}

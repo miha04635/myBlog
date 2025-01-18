@@ -35,7 +35,7 @@ export const ListArticles = () => {
   useGetArticles((currentPage - 1) * 20)
 
   const handleClick = slug => {
-    navigate(`/${slug}`)
+    navigate(`articleDetail/${slug}`)
   }
 
   const renderArticles = article => {
@@ -73,7 +73,14 @@ export const ListArticles = () => {
             <div className={styles.name}>{username}</div>
             <div className={styles.dateCreate}>{createDate}</div>
           </div>
-          <img src={image} alt="avatar" className={styles.avatarImg} />
+          <img
+            src={image}
+            alt="avatar"
+            className={styles.avatarImg}
+            onError={e => {
+              e.target.src = 'https://static.productionready.io/images/smiley-cyrus.jpg'
+            }}
+          />
         </div>
       </a>
     )
@@ -86,9 +93,9 @@ export const ListArticles = () => {
         theme={{
           components: {
             Pagination: {
-              itemActiveColor: '#fff', // Цвет текста активного элемента
-              itemActiveBg: '#1890FF', // Фон активного элемента
-              itemBg: 'none', // Фон для неактивных элементов
+              itemActiveColor: '#fff',
+              itemActiveBg: '#1890FF',
+              itemBg: 'none',
             },
           },
         }}

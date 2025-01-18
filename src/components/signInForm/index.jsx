@@ -1,6 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import Cookies from 'js-cookie'
 
 import useAuth from '../../hooks/useAuth'
 import loginUser from '../../services/loginUser'

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import styles from './index.module.css'
 
 export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
-  const [tags, setTags] = useState(initialData.tagList || []) // Используем tagList
+  const [tags, setTags] = useState(initialData.tagList || [])
   const [tagInput, setTagInput] = useState('')
 
   const {
@@ -38,9 +38,9 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
 
   const handleFormSubmit = data => {
     if (isEdit) {
-      onSubmit({ ...data, tagList: tags }) // Для редактирования используем tagList
+      onSubmit({ ...data, tagList: tags })
     } else {
-      onSubmit({ ...data, tags }) // Для создания используем tags
+      onSubmit({ ...data, tags })
     }
   }
 

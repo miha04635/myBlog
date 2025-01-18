@@ -37,7 +37,7 @@
       }
     ],
     "no-param-reassign": [
-      "error",
+      "warn",
       {
         "props": true,
         "ignorePropertyModificationsFor": ["state"]

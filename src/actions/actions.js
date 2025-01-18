@@ -44,3 +44,9 @@ export const setGetUser = ({ username, image, email, token }) => ({
   type: SET_GET_USER,
   payload: { username, image, email, token },
 })
+
+export const SAVE_AN_ARTICLES = 'SAVE_AN_ARTICLES'
+export const saveAnArticles = articles => ({
+  type: SAVE_AN_ARTICLES,
+  payload: articles,
+})

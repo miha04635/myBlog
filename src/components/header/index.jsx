@@ -39,6 +39,7 @@ export const Header = () => {
     clearAuth()
     navigate('/')
   }
+
   return (
     <div className={styles.header}>
       <Link to={'/'} className={styles.blog}>
@@ -52,7 +53,13 @@ export const Header = () => {
             </Link>
             <Link to="/EditProfile" className={styles.author}>
               <button className={styles.editProfile}>{name}</button>
-              <img className={styles.avatarImg} src={avatarImg} />
+              <img
+                className={styles.avatarImg}
+                src={avatarImg || 'https://static.productionready.io/images/smiley-cyrus.jpg'}
+                onError={e => {
+                  e.target.src = 'https://static.productionready.io/images/smiley-cyrus.jpg'
+                }}
+              />
             </Link>
             <button className={styles.logOut} onClick={handleLogOut}>
               Log out

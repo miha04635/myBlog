@@ -1,6 +1,8 @@
 import { getApi } from './apiBaseUrl'
 
 const updateArticle = async (slug, data, token) => {
+  console.log(data)
+
   try {
     const response = await fetch(`${getApi}articles/${slug}`, {
       method: 'PUT',

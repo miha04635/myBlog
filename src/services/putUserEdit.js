@@ -23,7 +23,6 @@ const putUserEdit = async ({ username, email, password, image }, token) => {
 
     return { success: true, user: data.user }
   } catch (err) {
-    console.error('Network error:', err)
     return { success: false, errors: { general: 'Network error. Please try again.' } }
   }
 }

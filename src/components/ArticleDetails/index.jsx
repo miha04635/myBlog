@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactMarkdown from 'react-markdown'
@@ -8,6 +8,8 @@ import { setLiked } from '../../services/setLiked'
 import deleteArticles from '../../services/deleteArticles'
 import { TagList } from '../tagList'
 import formatDate from '../../services/servicesDate'
+import apiGetAnArticles from '../../services/useGetAnArticle'
+import { saveAnArticles } from '../../actions/actions'
 
 import styles from './index.module.css'
 
@@ -17,15 +19,31 @@ export const ArticleDetails = () => {
   const buttonRef = useRef(null)
 
   const { slug } = useParams()
-  const articles = useSelector(state => state.articles)
-  const user = useSelector(state => state.username)
-  const token = useSelector(state => state.token)
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const article = articles.find(el => el.slug === slug)
+  useEffect(() => {
+    const handleArticlesFetch = async () => {
+      const articlesData = await apiGetAnArticles(slug)
+      if (!articlesData.success) {
+        navigate('/notFound')
+      } else {
+        dispatch(saveAnArticles(articlesData))
+      }
+    }
 
+    handleArticlesFetch()
+  }, [dispatch, slug])
+
+  const article = useSelector(state => state.article)
+  const articles = useSelector(state => state.articles)
+
+  const user = useSelector(state => state.username)
+  const token = useSelector(state => state.token)
+
+  if (!article) {
+    return null
+  }
   const date = formatDate(article.updatedAt)
 
   const { username, image } = article.author
@@ -70,7 +88,7 @@ export const ArticleDetails = () => {
           <div className={styles.titleLiked}>
             <h1 className={styles.title}>{article.title}</h1>
             <button
-              onClick={e => setLiked(e, slug, article.favorited, token, dispatch)}
+              onClick={e => setLiked(e, slug, articles.favorited, token, dispatch)}
               className={styles.heartContainer}
             >
               <div className={!article.favorited ? styles.heartImg : styles.HeartImgRed}></div>
@@ -113,7 +131,7 @@ export const ArticleDetails = () => {
           style={modalStyle}
           className={styles.modalContainer}
         >
-          <div className={styles.triangle}></div> {/* Треугольник */}
+          <div className={styles.triangle}></div>
           <p>Are you sure to delete this article?</p>
         </Modal>
       )}

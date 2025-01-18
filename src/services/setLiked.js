@@ -4,8 +4,6 @@ import setFavorited from './setFavorited'
 import setDeleteFavorited from './deleteLikeArticle'
 
 export const setLiked = async (e, slug, favorited, token, dispatch) => {
-  console.log(e, slug, favorited, token, dispatch)
-
   e.stopPropagation()
 
   if (!favorited) {

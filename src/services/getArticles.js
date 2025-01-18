@@ -14,7 +14,6 @@ const apiGet = async offset => {
     const data = await response.json()
     return data
   } catch (error) {
-    console.error('Error fetching articles:', error)
     return null
   }
 }

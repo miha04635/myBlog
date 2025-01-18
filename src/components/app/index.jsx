@@ -8,6 +8,7 @@ import { Header } from '../header'
 import { ListArticles } from '../listArticles'
 import { EditArticle } from '../EditSlug'
 import { ArticleDetails } from '../ArticleDetails'
+import { NotFound } from '../NotFound'
 
 import styles from './index.module.css'
 import './reset.css'
@@ -20,13 +21,14 @@ function App() {
         <div className={styles.container}>
           <Routes>
             <Route path="/" element={<ListArticles />} />
-            <Route path="/:slug" element={<ArticleDetails />} />
+            <Route path="/articleDetail/:slug" element={<ArticleDetails />} />
             <Route path="/signUp" element={<SignUpForm />} />
             <Route path="/SignIn" element={<SignInForm />} />
             <Route path="/EditProfile" element={<EditProfile />} />
             <Route path="/articles/:slug/edit" element={<EditArticle />} />
-
             <Route path="/NewArticle" element={<NewArticle />} />
+            <Route path="/notFound" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </Router>

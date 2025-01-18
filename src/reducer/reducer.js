@@ -7,6 +7,7 @@ import {
   LIKE_ARTICLE,
   DELETE_LIKE_ARTICLE,
   SET_GET_USER,
+  SAVE_AN_ARTICLES,
 } from '../actions/actions'
 
 const initialState = {
@@ -76,6 +77,12 @@ const reducer = (state = initialState, actions = {}) => {
         email: actions.payload.email,
         image: actions.payload.image,
         token: actions.payload.token,
+      }
+    }
+    case SAVE_AN_ARTICLES: {
+      return {
+        ...state,
+        article: actions.payload.data.article,
       }
     }
     default:
