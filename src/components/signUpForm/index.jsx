@@ -46,21 +46,23 @@ export const SignUpForm = () => {
 
   const onSubmit = async data => {
     try {
-      const result = await registerUsers(data)
+      const { success, user, errors: serverErrors } = await registerUsers(data)
 
-      if (result.success) {
-        login(result.user.token)
-
+      if (success) {
+        login(user.token)
         navigate('/')
-      } else if (result.errors) {
-        Object.entries(result.errors).forEach(([field, messages]) => {
+        return
+      }
+
+      if (serverErrors) {
+        Object.entries(serverErrors).forEach(([field, messages]) =>
           setError(field, {
             type: 'server',
             message: Array.isArray(messages) ? messages.join(', ') : String(messages),
           })
-        })
+        )
       }
-    } catch (error) {
+    } catch {
       setError('server', {
         type: 'server',
         message: 'Не удалось зарегистрироваться. Попробуйте позже.',
@@ -73,7 +75,7 @@ export const SignUpForm = () => {
       <div className={newAccount}>Create new account</div>
       <div className={loginDetails}>
         <div className={containerUsername}>
-          <div>Username</div>
+          <p>Username</p>
           <input
             className={userName}
             type="text"
@@ -91,7 +93,7 @@ export const SignUpForm = () => {
         </div>
 
         <div className={containerEmailAddress}>
-          <div>Email address</div>
+          <p>Email address</p>
           <input
             className={emailAddress}
             type="email"
@@ -108,7 +110,7 @@ export const SignUpForm = () => {
         </div>
 
         <div className={containerPassword}>
-          <div>Password</div>
+          <p>Password</p>
           <input
             className={password}
             type="password"
@@ -130,7 +132,7 @@ export const SignUpForm = () => {
         </div>
 
         <div className={containerPasswordAgain}>
-          <div>Repeat Password</div>
+          <p>Repeat Password</p>
           <input
             className={passwordAgain}
             type="password"

@@ -1,7 +1,8 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import Cookies from 'js-cookie'
 
 import { saveEditProfile } from '../../actions/actions'
 import putUserEdit from '../../services/putUserEdit'
@@ -10,7 +11,9 @@ import styles from './index.module.css'
 
 export const EditProfile = () => {
   const dispatch = useDispatch()
-  const token = useSelector(state => state.token)
+
+  const token = Cookies.get('token')
+
   const {
     handleSubmit,
     register,

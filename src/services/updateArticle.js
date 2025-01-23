@@ -1,10 +1,10 @@
-import { getApi } from './apiBaseUrl'
+import { baseUrl } from './BaseUrl'
 
 const updateArticle = async (slug, data, token) => {
   console.log(data)
 
   try {
-    const response = await fetch(`${getApi}articles/${slug}`, {
+    const response = await fetch(`${baseUrl}articles/${slug}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

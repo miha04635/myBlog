@@ -1,8 +1,8 @@
-import { getApi } from './apiBaseUrl'
+import { baseUrl } from './BaseUrl'
 
 const getUser = async token => {
   try {
-    const response = await fetch(`${getApi}user`, {
+    const response = await fetch(`${baseUrl}user`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json', Authorization: `Token ${token}` },
       token,

@@ -1,8 +1,8 @@
-import { getApi } from './apiBaseUrl'
+import { baseUrl } from './BaseUrl'
 
 const postArticles = async ({ description, body, title, tags }, token) => {
   try {
-    const response = await fetch(`${getApi}articles`, {
+    const response = await fetch(`${baseUrl}articles`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Token ${token}` },
       body: JSON.stringify({

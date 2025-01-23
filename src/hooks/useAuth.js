@@ -11,10 +11,10 @@ function useAuth() {
 
   useEffect(() => {
     const storedToken = Cookies.get('token')
-    if (!storedToken) {
-      dispatch(logout())
-    } else {
+    if (storedToken) {
       dispatch(setAuth(storedToken))
+    } else {
+      dispatch(logout())
     }
   }, [dispatch])
 
@@ -26,11 +26,11 @@ function useAuth() {
       sameSite: 'strict',
     })
   }
-  const clearAuth = () => {
+  const logOut = () => {
     dispatch(logout())
     Cookies.remove('token')
   }
-  return { user, login, clearAuth, token }
+  return { user, login, logOut, token }
 }
 
 export default useAuth

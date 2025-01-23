@@ -1,8 +1,8 @@
-import { getApi } from './apiBaseUrl'
+import { baseUrl } from './BaseUrl'
 
-const apiGetAnArticles = async slug => {
+export const apiGetAnArticles = async slug => {
   try {
-    const response = await fetch(`${getApi}articles/${slug}`, {
+    const response = await fetch(`${baseUrl}articles/${slug}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -18,5 +18,3 @@ const apiGetAnArticles = async slug => {
     return { success: false, errors: { general: 'Network error. Please try again.' } }
   }
 }
-
-export default apiGetAnArticles

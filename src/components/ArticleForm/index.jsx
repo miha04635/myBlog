@@ -20,17 +20,18 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
 
   const handleAddTag = e => {
     e.preventDefault()
-    if (tagInput.trim()) {
-      if (tags.includes(tagInput.trim())) {
-        setError('tag', { type: 'duplicate', message: 'Tag already exists' })
-      } else {
-        setTags([...tags, tagInput.trim()])
-        setTagInput('')
-        clearErrors('tag')
-      }
+    const trimmedTag = tagInput.trim()
+
+    if (!trimmedTag) return
+
+    if (tags.includes(trimmedTag)) {
+      setError('tag', { type: 'duplicate', message: 'Tag already exists' })
+    } else {
+      setTags(prevTags => [...prevTags, trimmedTag])
+      setTagInput('')
+      clearErrors('tag')
     }
   }
-
   const handleDeleteTag = indexToDelete => {
     setTags(tags.filter((_, index) => index !== indexToDelete))
     clearErrors('tag')

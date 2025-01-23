@@ -18,6 +18,7 @@ export const SignInForm = () => {
     signInLink,
     password,
     errorAll,
+    buttonLogin,
   } = styles
 
   const {
@@ -38,24 +39,23 @@ export const SignInForm = () => {
     if (result.success) {
       login(result.user.token, result.user.username)
       navigate('/')
-    } else {
-      const error = result.errors
+    }
 
-      if (error) {
-        setError('password', {
-          type: 'server',
-          message: 'Invalid email or password',
-        })
-      }
+    if (result.errors) {
+      setError('password', {
+        type: 'server',
+        message: 'Invalid email or password',
+      })
     }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={signInForm}>
-      <div className={loginAccount}>Sign In</div>
+      <p className={loginAccount}>Sign In</p>
       <div className={SignInDetails}>
         <div className={emailAddress}>
-          <div>Email address</div>
+          <p>Email address</p>
+
           <input
             type="email"
             placeholder="Email address"
@@ -73,7 +73,7 @@ export const SignInForm = () => {
         </div>
 
         <div className={password}>
-          <div>Password</div>
+          <p>Password</p>
           <input
             type="password"
             placeholder="Password"
@@ -95,7 +95,7 @@ export const SignInForm = () => {
       </div>
 
       <button type="submit" className={BthLogin}>
-        Login
+        <p className={buttonLogin}>Login</p>
       </button>
 
       <p className={alreadyHaveAccount}>

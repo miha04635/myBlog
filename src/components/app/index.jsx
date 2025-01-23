@@ -6,7 +6,7 @@ import { EditProfile } from '../editProfile'
 import { NewArticle } from '../newArticle'
 import { Header } from '../header'
 import { ListArticles } from '../listArticles'
-import { EditArticle } from '../EditSlug'
+import { EditArticle } from '../EditArticle'
 import { ArticleDetails } from '../ArticleDetails'
 import { NotFound } from '../NotFound'
 

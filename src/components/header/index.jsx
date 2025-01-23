@@ -10,7 +10,7 @@ import { setGetUser } from '../../actions/actions'
 import styles from './index.module.css'
 
 export const Header = () => {
-  const { clearAuth } = useAuth()
+  const { logOut } = useAuth()
   const isAuthenticated = useSelector(state => state.isAuthenticated)
   const name = useSelector(state => state.username)
   const avatarImg = useSelector(state => state.image)
@@ -36,7 +36,7 @@ export const Header = () => {
   }, [dispatch])
 
   const handleLogOut = () => {
-    clearAuth()
+    logOut()
     navigate('/')
   }
 

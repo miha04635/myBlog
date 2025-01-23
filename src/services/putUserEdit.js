@@ -1,8 +1,8 @@
-import { getApi } from './apiBaseUrl'
+import { baseUrl } from './BaseUrl'
 
 const putUserEdit = async ({ username, email, password, image }, token) => {
   try {
-    const response = await fetch(`${getApi}user`, {
+    const response = await fetch(`${baseUrl}user`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', Authorization: `Token ${token}` },
       body: JSON.stringify({

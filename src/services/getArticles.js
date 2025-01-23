@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux'
 
 import { saveDataArticles, saveDataCountArticles } from '../actions/actions'
 
-import { getApi } from './apiBaseUrl'
+import { baseUrl } from './BaseUrl'
 
 const apiGet = async offset => {
   try {
-    const response = await fetch(`${getApi}/articles?limit=20&offset=${offset}`)
+    const response = await fetch(`${baseUrl}/articles?limit=20&offset=${offset}`)
     if (!response.ok) {
       throw new Error('Failed to fetch articles')
     }

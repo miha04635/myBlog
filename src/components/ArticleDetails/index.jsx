@@ -3,12 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactMarkdown from 'react-markdown'
 import { Modal } from 'antd'
+import Cookies from 'js-cookie'
 
 import { setLiked } from '../../services/setLiked'
-import deleteArticles from '../../services/deleteArticles'
+import { deleteArticles } from '../../services/deleteArticles'
 import { TagList } from '../tagList'
-import formatDate from '../../services/servicesDate'
-import apiGetAnArticles from '../../services/useGetAnArticle'
+import { formatDate } from '../../utility/FormatDate'
+import { apiGetAnArticles } from '../../services/useGetAnArticle'
 import { saveAnArticles } from '../../actions/actions'
 
 import styles from './index.module.css'
@@ -39,11 +40,12 @@ export const ArticleDetails = () => {
   const articles = useSelector(state => state.articles)
 
   const user = useSelector(state => state.username)
-  const token = useSelector(state => state.token)
+  const token = Cookies.get('token')
 
   if (!article) {
     return null
   }
+
   const date = formatDate(article.updatedAt)
 
   const { username, image } = article.author

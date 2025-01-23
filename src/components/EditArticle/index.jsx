@@ -21,7 +21,7 @@ export const EditArticle = () => {
       const update = await updateArticles(slug, data, token)
       console.log(update)
 
-      navigate(`/${slug}`)
+      navigate(`/articleDetail/${slug}`)
     } catch (error) {
       console.error('Ошибка при обновлении статьи:', error)
     }

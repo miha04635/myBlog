@@ -1,8 +1,8 @@
-import { getApi } from './apiBaseUrl'
+import { baseUrl } from './BaseUrl'
 
 const setFavorited = async (slug, token) => {
   try {
-    const response = await fetch(`${getApi}articles/${slug}/favorite`, {
+    const response = await fetch(`${baseUrl}articles/${slug}/favorite`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Token ${token}` },
     })

@@ -1,8 +1,8 @@
-import { getApi } from './apiBaseUrl'
+import { baseUrl } from './BaseUrl'
 
 const registerUsers = async ({ username, password, email }) => {
   try {
-    const response = await fetch(`${getApi}users`, {
+    const response = await fetch(`${baseUrl}users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

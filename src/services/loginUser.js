@@ -1,8 +1,8 @@
-import { getApi } from './apiBaseUrl'
+import { baseUrl } from './BaseUrl'
 
 const loginUser = async ({ email, password }) => {
   try {
-    const response = await fetch(`${getApi}users/login`, {
+    const response = await fetch(`${baseUrl}users/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

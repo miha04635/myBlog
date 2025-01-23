@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Pagination, ConfigProvider } from 'antd'
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 import { TagList } from '../tagList'
 import useGetArticles from '../../services/getArticles'
-import servicesDate from '../../services/servicesDate'
+import { formatDate } from '../../utility/FormatDate'
 import { setLiked } from '../../services/setLiked'
 
 import styles from './index.module.css'
@@ -13,7 +14,7 @@ import styles from './index.module.css'
 export const ListArticles = () => {
   const articles = useSelector(state => state.articles)
   const countArticles = useSelector(state => state.countArticles)
-  const token = useSelector(state => state.token)
+  const token = Cookies.get('token')
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -46,7 +47,7 @@ export const ListArticles = () => {
 
     const { username, image } = author
 
-    const createDate = servicesDate(createdAt)
+    const createDate = formatDate(createdAt)
     const truncatedText = text => {
       if (!text) {
         return null
