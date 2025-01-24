@@ -15,13 +15,14 @@ import { saveAnArticles } from '../../actions/actions'
 import styles from './index.module.css'
 
 export const ArticleDetails = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const [isModalVisible, setModalVisible] = useState(false)
   const [modalStyle, setModalStyle] = useState({})
   const buttonRef = useRef(null)
 
   const { slug } = useParams()
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   useEffect(() => {
     const handleArticlesFetch = async () => {
@@ -38,8 +39,8 @@ export const ArticleDetails = () => {
 
   const article = useSelector(state => state.article)
   const articles = useSelector(state => state.articles)
-
   const user = useSelector(state => state.username)
+
   const token = Cookies.get('token')
 
   if (!article) {

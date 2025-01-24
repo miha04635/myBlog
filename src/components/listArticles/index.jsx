@@ -50,7 +50,7 @@ export const ListArticles = () => {
   }
 
   const renderArticles = article => {
-    if (!article || !article.title || !article.body || !article.author) {
+    if (!article) {
       return null
     }
     const { title, tagList, body, slug, author, createdAt, favoritesCount, favorited } = article
