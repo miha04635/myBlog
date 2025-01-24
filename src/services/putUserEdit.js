@@ -1,6 +1,6 @@
 import { baseUrl } from './BaseUrl'
 
-const putUserEdit = async ({ username, email, password, image }, token) => {
+export const putUserEdit = async ({ username, email, password, image }, token) => {
   try {
     const response = await fetch(`${baseUrl}user`, {
       method: 'PUT',
@@ -26,5 +26,3 @@ const putUserEdit = async ({ username, email, password, image }, token) => {
     return { success: false, errors: { general: 'Network error. Please try again.' } }
   }
 }
-
-export default putUserEdit

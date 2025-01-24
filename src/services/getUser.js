@@ -1,6 +1,6 @@
 import { baseUrl } from './BaseUrl'
 
-const getUser = async token => {
+export const getUser = async token => {
   try {
     const response = await fetch(`${baseUrl}user`, {
       method: 'GET',
@@ -19,5 +19,3 @@ const getUser = async token => {
     return { success: false, errors: { general: 'Network error. Please try again.' } }
   }
 }
-
-export default getUser

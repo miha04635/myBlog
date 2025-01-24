@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 
 import useAuth from '../../hooks/useAuth'
-import registerUsers from '../../services/registerUser'
+import { registerUsers } from '../../services/registerUser'
 
 import styles from './index.module.css'
 

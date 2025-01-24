@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 import { ArticleForm } from '../ArticleForm'
-import postArticles from '../../services/postArticle'
+import { postArticles } from '../../services/postArticle'
 
 export const NewArticle = () => {
   const navigate = useNavigate()

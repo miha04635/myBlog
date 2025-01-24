@@ -1,6 +1,6 @@
 import { baseUrl } from './BaseUrl'
 
-const setFavorited = async (slug, token) => {
+export const setFavorited = async (slug, token) => {
   try {
     const response = await fetch(`${baseUrl}articles/${slug}/favorite`, {
       method: 'POST',
@@ -18,5 +18,3 @@ const setFavorited = async (slug, token) => {
     return { success: false, errors: { general: 'Network error. Please try again.' } }
   }
 }
-
-export default setFavorited

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import Cookies from 'js-cookie'
 
 import { ArticleForm } from '../ArticleForm'
-import updateArticles from '../../services/updateArticle'
+import { updateArticle } from '../../services/updateArticle'
 
 export const EditArticle = () => {
   const { slug } = useParams()
@@ -18,7 +18,7 @@ export const EditArticle = () => {
     const token = Cookies.get('token')
 
     try {
-      const update = await updateArticles(slug, data, token)
+      const update = await updateArticle(slug, data, token)
       console.log(update)
 
       navigate(`/articleDetail/${slug}`)

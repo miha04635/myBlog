@@ -1,6 +1,6 @@
 import { baseUrl } from './BaseUrl'
 
-const loginUser = async ({ email, password }) => {
+export const loginUser = async ({ email, password }) => {
   try {
     const response = await fetch(`${baseUrl}users/login`, {
       method: 'POST',
@@ -26,5 +26,3 @@ const loginUser = async ({ email, password }) => {
     return { success: false, errors: { general: 'Network error. Please try again.' } }
   }
 }
-
-export default loginUser

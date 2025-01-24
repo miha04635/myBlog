@@ -1,6 +1,6 @@
 import { baseUrl } from './BaseUrl'
 
-const registerUsers = async ({ username, password, email }) => {
+export const registerUsers = async ({ username, password, email }) => {
   try {
     const response = await fetch(`${baseUrl}users`, {
       method: 'POST',
@@ -27,5 +27,3 @@ const registerUsers = async ({ username, password, email }) => {
     return { success: false, errors: { general: 'Network error. Please try again.' } }
   }
 }
-
-export default registerUsers

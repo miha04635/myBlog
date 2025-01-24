@@ -2,7 +2,7 @@ import { message } from 'antd'
 
 import { likeArticle, deleteLikeArticle } from '../actions/actions'
 
-import setFavorited from './setFavorited'
+import { setFavorited } from './setFavorited'
 import { setDeleteFavorited } from './setDeleteFavorited'
 
 export const setLiked = async (e, slug, favorited, token, dispatch) => {

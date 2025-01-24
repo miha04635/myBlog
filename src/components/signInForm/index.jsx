@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 
 import useAuth from '../../hooks/useAuth'
-import loginUser from '../../services/loginUser'
+import { loginUser } from '../../services/loginUser'
 
 import styles from './index.module.css'
 
@@ -49,47 +49,41 @@ export const SignInForm = () => {
     }
   }
 
+  const registerEmail = {
+    required: 'The email field is required',
+    pattern: {
+      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+      message: 'Incorrect email address',
+    },
+  }
+
+  const registerPassword = {
+    required: 'Filed password',
+
+    minLength: {
+      value: 6,
+      message: 'Minimum of 6 characters',
+    },
+    maxLength: {
+      value: 40,
+      message: 'Maximum of 40 characters',
+    },
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={signInForm}>
       <p className={loginAccount}>Sign In</p>
       <div className={SignInDetails}>
         <div className={emailAddress}>
           <p>Email address</p>
-
-          <input
-            type="email"
-            placeholder="Email address"
-            {...register('email', {
-              required: 'The email field is required',
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Incorrect email address',
-              },
-            })}
-          />
-
+          <input type="email" placeholder="Email address" {...register('email', registerEmail)} />
           {errors.general && <p className={errorAll}>{errors.general.message}</p>}
           {errors.email && <p className={errorAll}>{errors.email.message}</p>}
         </div>
 
         <div className={password}>
           <p>Password</p>
-          <input
-            type="password"
-            placeholder="Password"
-            {...register('password', {
-              required: 'Filed password',
-
-              minLength: {
-                value: 6,
-                message: 'Minimum of 6 characters',
-              },
-              maxLength: {
-                value: 40,
-                message: 'Maximum of 40 characters',
-              },
-            })}
-          />
+          <input type="password" placeholder="Password" {...register('password', registerPassword)} />
           {errors.password && <p className={errorAll}>{errors.password.message}</p>}
         </div>
       </div>

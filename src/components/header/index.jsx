@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import Cookies from 'js-cookie'
 
 import useAuth from '../../hooks/useAuth'
-import getUser from '../../services/getUser'
+import { getUser } from '../../services/getUser'
 import { setGetUser } from '../../actions/actions'
 
 import styles from './index.module.css'

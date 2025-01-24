@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Pagination, ConfigProvider } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 import { TagList } from '../tagList'
-import useGetArticles from '../../services/getArticles'
+import { apiGet } from '../../services/getArticles'
 import { formatDate } from '../../utility/FormatDate'
 import { setLiked } from '../../services/setLiked'
 
 import styles from './index.module.css'
 
 export const ListArticles = () => {
-  const articles = useSelector(state => state.articles)
-  const countArticles = useSelector(state => state.countArticles)
-  const token = Cookies.get('token')
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  const [articles, setTestArticles] = useState([])
+  const [countArticles, setCountArticles] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
+
+  const token = Cookies.get('token')
 
   useEffect(() => {
     const savedPage = localStorage.getItem('currentPage')
@@ -28,12 +28,22 @@ export const ListArticles = () => {
     }
   }, [])
 
+  useEffect(() => {
+    const handleArticlesFetch = async () => {
+      const articlesData = await apiGet((currentPage - 1) * 20)
+      if (articlesData) {
+        setTestArticles(articlesData.articles)
+        setCountArticles(articlesData.articlesCount)
+      }
+    }
+
+    handleArticlesFetch()
+  }, [currentPage])
+
   const handlePageChange = page => {
     setCurrentPage(page)
     localStorage.setItem('currentPage', page)
   }
-
-  useGetArticles((currentPage - 1) * 20)
 
   const handleClick = slug => {
     navigate(`articleDetail/${slug}`)
@@ -61,7 +71,7 @@ export const ListArticles = () => {
           <div className={styles.containerTitle}>
             <div className={styles.title}>{truncatedText(title)}</div>
             <button onClick={e => setLiked(e, slug, favorited, token, dispatch)} className={styles.heartContainer}>
-              <div className={!favorited ? styles.heartImg : styles.HeartImgRed}></div>
+              <div className={favorited ? styles.HeartImgRed : styles.heartImg}></div>
               <span className={styles.heartCount}>{favoritesCount}</span>
             </button>
           </div>
@@ -86,7 +96,9 @@ export const ListArticles = () => {
       </a>
     )
   }
-
+  if (!articles.length) {
+    return null
+  }
   return (
     <>
       {articles.map(article => renderArticles(article))}

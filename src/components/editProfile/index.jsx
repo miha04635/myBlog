@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import Cookies from 'js-cookie'
 
 import { saveEditProfile } from '../../actions/actions'
-import putUserEdit from '../../services/putUserEdit'
+import { putUserEdit } from '../../services/putUserEdit'
 
 import styles from './index.module.css'
 

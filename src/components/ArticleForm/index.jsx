@@ -45,6 +45,8 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
     }
   }
 
+  const required = { required: 'Required field' }
+
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className={styles.articleForm}>
       <div className={styles.article}>{isEdit ? 'Edit Article' : 'Create New Article'}</div>
@@ -52,23 +54,19 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
       <div className={styles.container}>
         <div className={styles.title}>
           <div>Title</div>
-          <input type="text" placeholder="Title" {...register('title', { required: 'Title is required' })} />
+          <input type="text" placeholder="Title" {...register('title', { required })} />
           {errors.title && <span className={styles.error}>{errors.title.message}</span>}
         </div>
 
         <div className={styles.shortDescription}>
           <div>Short description</div>
-          <input
-            type="text"
-            placeholder="Short description"
-            {...register('description', { required: 'Short description is required' })}
-          />
+          <input type="text" placeholder="Short description" {...register('description', { required })} />
           {errors.description && <span className={styles.error}>{errors.description.message}</span>}
         </div>
 
         <div className={styles.text}>
           <div>Text</div>
-          <textarea placeholder="Text" {...register('body', { required: 'Text is required' })} />
+          <textarea placeholder="Text" {...register('body', { required })} />
           {errors.body && <span className={styles.error}>{errors.body.message}</span>}
         </div>
 

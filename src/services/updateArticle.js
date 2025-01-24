@@ -1,8 +1,6 @@
 import { baseUrl } from './BaseUrl'
 
-const updateArticle = async (slug, data, token) => {
-  console.log(data)
-
+export const updateArticle = async (slug, data, token) => {
   try {
     const response = await fetch(`${baseUrl}articles/${slug}`, {
       method: 'PUT',
@@ -23,5 +21,3 @@ const updateArticle = async (slug, data, token) => {
     return { success: false, errors: { general: 'Network error. Please try again.' } }
   }
 }
-
-export default updateArticle

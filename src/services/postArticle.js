@@ -1,6 +1,6 @@
 import { baseUrl } from './BaseUrl'
 
-const postArticles = async ({ description, body, title, tags }, token) => {
+export const postArticles = async ({ description, body, title, tags }, token) => {
   try {
     const response = await fetch(`${baseUrl}articles`, {
       method: 'POST',
@@ -26,5 +26,3 @@ const postArticles = async ({ description, body, title, tags }, token) => {
     return { success: false, errors: { general: 'Network error. Please try again.' } }
   }
 }
-
-export default postArticles
