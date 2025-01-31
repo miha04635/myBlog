@@ -1,11 +1,10 @@
-import { baseUrl } from './BaseUrl'
+import { baseUrl } from '../constants/BaseUrl'
 
 export const getUser = async token => {
   try {
     const response = await fetch(`${baseUrl}user`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json', Authorization: `Token ${token}` },
-      token,
     })
 
     const data = await response.json()

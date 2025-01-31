@@ -1,36 +1,36 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
 
-import { setAuth, logout } from '../actions/actions'
+import { getUser } from '../services/getUser'
 
-function useAuth() {
-  const dispatch = useDispatch()
-  const user = useSelector(state => state.username)
-  const token = useSelector(state => state.token)
+export default function useAuth() {
+  const [user, setUser] = useState(null)
+  const [token, setToken] = useState(Cookies.get('token') || null)
+
+  const logOut = () => {
+    Cookies.remove('token')
+    setUser(null)
+    setToken(null)
+  }
 
   useEffect(() => {
-    const storedToken = Cookies.get('token')
-    if (storedToken) {
-      dispatch(setAuth(storedToken))
-    } else {
-      dispatch(logout())
+    if (token) {
+      const fetchUser = async () => {
+        const userData = await getUser(token)
+        if (userData.success) {
+          setUser(userData.data.user)
+        } else {
+          logOut()
+        }
+      }
+      fetchUser()
     }
-  }, [dispatch])
+  }, [token])
 
-  const login = (tokenUser, username) => {
-    dispatch(setAuth(tokenUser, username))
-    Cookies.set('token', tokenUser, {
-      expires: 7,
-      secure: true,
-      sameSite: 'strict',
-    })
+  const login = tokenUser => {
+    Cookies.set('token', tokenUser, { expires: 7, secure: true, sameSite: 'strict' })
+    setToken(tokenUser)
   }
-  const logOut = () => {
-    dispatch(logout())
-    Cookies.remove('token')
-  }
+
   return { user, login, logOut, token }
 }
-
-export default useAuth

@@ -1,4 +1,4 @@
-import { baseUrl } from './BaseUrl'
+import { baseUrl } from '../constants/BaseUrl'
 
 export const postArticles = async ({ description, body, title, tags }, token) => {
   try {

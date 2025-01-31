@@ -1,17 +1,14 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import Cookies from 'js-cookie'
 
-import { saveEditProfile } from '../../actions/actions'
 import { putUserEdit } from '../../services/putUserEdit'
+import { REGISTER_OPTIONS } from '../../constants/registerOptions'
 
 import styles from './index.module.css'
 
 export const EditProfile = () => {
-  const dispatch = useDispatch()
-
   const token = Cookies.get('token')
 
   const {
@@ -26,11 +23,8 @@ export const EditProfile = () => {
   const navigate = useNavigate()
   const submit = async data => {
     try {
-      const { err, success, user } = await putUserEdit(data, token)
-
+      const { err, success } = await putUserEdit(data, token)
       if (success) {
-        dispatch(saveEditProfile(user))
-
         navigate('/')
       } else if (err) {
         Object.entries(err).forEach(([field, messages]) => {
@@ -55,67 +49,25 @@ export const EditProfile = () => {
       <div className={styles.editProfileDetails}>
         <div className={styles.username}>
           <div>Username</div>
-          <input
-            {...register('username', {
-              required: 'Username is required',
-              pattern: {
-                value: /^[a-zA-Z0-9]{0,20}$/,
-                message: 'только латинские буквы, цифры. До 20 символов',
-              },
-            })}
-            type="text"
-            placeholder="Username"
-          />
+          <input {...register('username', REGISTER_OPTIONS.username)} type="text" placeholder="Username" />
           {errors.username && <span className={styles.error}>{errors.username.message}</span>}
         </div>
 
         <div className={styles.emailAddress}>
           <div>Email address</div>
-          <input
-            {...register('email', {
-              required: 'Email is required',
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Invalid email address',
-              },
-            })}
-            type="text"
-            placeholder="Email address"
-          />
+          <input {...register('email', REGISTER_OPTIONS.email)} type="text" placeholder="Email address" />
           {errors.email && <span className={styles.error}>{errors.email.message}</span>}
         </div>
 
         <div className={styles.password}>
           <div>New Password</div>
-          <input
-            {...register('password', {
-              minLength: {
-                value: 6,
-                message: 'Minimum 6 characters',
-              },
-              maxLength: {
-                value: 48,
-                message: 'Maximum 48 characters',
-              },
-            })}
-            type="password"
-            placeholder="New Password"
-          />
+          <input {...register('password', REGISTER_OPTIONS.password)} type="password" placeholder="New Password" />
           {errors.password && <span className={styles.error}>{errors.password.message}</span>}
         </div>
 
         <div className={styles.avatarImg}>
           <div>Avatar image (url)</div>
-          <input
-            {...register('image', {
-              pattern: {
-                value: /^(ftp|http|https):\/\/[^ "]+$/,
-                message: 'Please enter a valid URL',
-              },
-            })}
-            type="text"
-            placeholder="Avatar image"
-          />
+          <input {...register('image', REGISTER_OPTIONS.image)} type="text" placeholder="Avatar image" />
           {errors.image && <span className={styles.error}>{errors.image.message}</span>}
         </div>
       </div>

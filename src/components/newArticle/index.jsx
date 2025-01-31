@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 
 import { ArticleForm } from '../ArticleForm'
 import { postArticles } from '../../services/postArticle'
+import { filedBody, filedDescription, filedTitle } from '../../constants/fields'
 
 export const NewArticle = () => {
   const navigate = useNavigate()
@@ -13,5 +14,5 @@ export const NewArticle = () => {
     navigate('/')
   }
 
-  return <ArticleForm onSubmit={handleSubmit} />
+  return <ArticleForm onSubmit={handleSubmit} fields={[filedTitle, filedDescription, filedBody]} />
 }

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import { SignUpForm } from '../signUpForm'
-import { SignInForm } from '../signInForm'
+import { SignUp } from '../signUpForm'
+import { SignIn } from '../signInForm'
 import { EditProfile } from '../editProfile'
 import { NewArticle } from '../newArticle'
 import { Header } from '../header'
@@ -22,8 +22,8 @@ function App() {
           <Routes>
             <Route path="/" element={<ListArticles />} />
             <Route path="/articleDetail/:slug" element={<ArticleDetails />} />
-            <Route path="/signUp" element={<SignUpForm />} />
-            <Route path="/SignIn" element={<SignInForm />} />
+            <Route path="/signUp" element={<SignUp />} />
+            <Route path="/SignIn" element={<SignIn />} />
             <Route path="/EditProfile" element={<EditProfile />} />
             <Route path="/articles/:slug/edit" element={<EditArticle />} />
             <Route path="/NewArticle" element={<NewArticle />} />

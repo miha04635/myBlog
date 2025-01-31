@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
 .articleForm {
   display: flex;
   flex-direction: column;
@@ -15,7 +13,6 @@
   color: rgba(38, 38, 38, 1);
   border-radius: 6px;
   border: 1px solid rgba(217, 217, 217, 1);
-
   box-shadow:
     0px 0.61px 2.93px 0px rgba(0, 0, 0, 0.0197),
     0px 1.46px 7.05px 0px rgba(0, 0, 0, 0.0283),
@@ -34,72 +31,27 @@
   margin-bottom: 21px;
 }
 
-.title,
-.shortDescription,
-.text {
-  margin-bottom: 16px;
-}
-
-.container input {
+.inputContainer input,
+.inputContainer textarea {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   width: 874px;
-}
-
-.text {
-  position: relative;
-}
-.text textarea {
   box-sizing: border-box;
-  padding: 6px;
-  border: 1px solid rgba(217, 217, 217, 1);
-  border-radius: 4px;
-  font-size: 16px;
-  font-family: 'Roboto', sans-serif;
-  line-height: 24px;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.75);
-  resize: none;
-  width: 874px;
+  margin-bottom: 10px;
 }
 
-.text textarea::placeholder {
-  color: rgba(191, 191, 191, 1);
-  font-size: 14px;
+.inputContainer textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
-.text textarea:focus {
+.inputContainer input:focus,
+.inputContainer textarea:focus {
+  border-color: #007bff;
   outline: none;
-  border-color: rgba(150, 150, 150, 1);
-}
-
-input:focus {
-  outline: none;
-  border-color: rgba(150, 150, 150, 1);
-}
-
-.title div,
-.shortDescription div,
-.text div {
-  margin-bottom: 8px;
-  margin-top: 2px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 22px;
-  text-align: left;
-  margin-bottom: 4px;
-}
-
-input {
-  border: 1px solid rgba(217, 217, 217, 1);
-  border-radius: 4px;
-  font-size: 16px;
-  font-family: 'Roboto', sans-serif;
-  line-height: 24px;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.75);
-}
-
-::placeholder {
-  color: rgba(191, 191, 191, 1);
 }
 
 .send {
@@ -116,34 +68,12 @@ input {
   margin-top: 21px;
 }
 
-p {
-  font-size: 14px;
-  line-height: 22px;
-  color: rgba(38, 38, 38, 1);
-}
-
-.containerTags {
-  display: flex;
+.error {
+  color: red;
 }
 
 .tags input {
   width: 300px;
-}
-
-.buttonDel {
-  border: 1px solid rgba(245, 34, 45, 1);
-  color: rgba(245, 34, 45, 1);
-  padding: 8px 16px 8px 16px;
-  margin: 5px 17px 5px 17px;
-  border-radius: 4px;
-}
-
-.buttonAddTag {
-  border: 1px solid rgba(24, 144, 255, 1);
-  color: rgba(24, 144, 255, 1);
-  padding: 8px 16px 8px 16px;
-
-  border-radius: 4px;
 }
 
 .buttonDel {
@@ -156,6 +86,7 @@ p {
   cursor: pointer;
   width: 120px;
   height: 40px;
+  margin-left: 17px;
 }
 
 .buttonDel:hover {
@@ -180,14 +111,8 @@ p {
   background: #1890ff;
   color: white;
 }
-.error {
-  color: red;
-  padding-top: 8px;
-}
 
-.title,
-.shortDescription,
-.text {
+.inputContainer {
   display: flex;
   flex-direction: column;
 }

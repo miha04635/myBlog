@@ -1,4 +1,4 @@
-import { baseUrl } from './BaseUrl'
+import { baseUrl } from '../constants/BaseUrl'
 
 export const deleteArticles = async (slug, token) => {
   try {

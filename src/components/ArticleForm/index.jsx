@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import styles from './index.module.css'
 
-export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
+export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false, fields }) => {
   const [tags, setTags] = useState(initialData.tagList || [])
   const [tagInput, setTagInput] = useState('')
 
@@ -45,30 +45,22 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
     }
   }
 
-  const required = { required: 'Required field' }
-
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className={styles.articleForm}>
       <div className={styles.article}>{isEdit ? 'Edit Article' : 'Create New Article'}</div>
 
       <div className={styles.container}>
-        <div className={styles.title}>
-          <div>Title</div>
-          <input type="text" placeholder="Title" {...register('title', { required })} />
-          {errors.title && <span className={styles.error}>{errors.title.message}</span>}
-        </div>
-
-        <div className={styles.shortDescription}>
-          <div>Short description</div>
-          <input type="text" placeholder="Short description" {...register('description', { required })} />
-          {errors.description && <span className={styles.error}>{errors.description.message}</span>}
-        </div>
-
-        <div className={styles.text}>
-          <div>Text</div>
-          <textarea placeholder="Text" {...register('body', { required })} />
-          {errors.body && <span className={styles.error}>{errors.body.message}</span>}
-        </div>
+        {fields.map(({ name, label, type, validation, placeholder }) => (
+          <div key={name} className={styles.inputContainer}>
+            <div>{label}</div>
+            {type === 'textarea' ? (
+              <textarea placeholder={placeholder} {...register(name, validation)} className={styles.input} />
+            ) : (
+              <input type={type} placeholder={placeholder} {...register(name, validation)} className={styles.input} />
+            )}
+            {errors[name] && <span className={styles.error}>{errors[name].message}</span>}
+          </div>
+        ))}
 
         <div className={styles.tags}>
           <div className={styles.containerTags}>Tags</div>
@@ -94,7 +86,6 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false }) => {
           </div>
           {errors.tag && <span className={styles.error}>{errors.tag.message}</span>}
         </div>
-
         <button type="submit" className={styles.send}>
           {isEdit ? 'Save' : 'Send'}
         </button>

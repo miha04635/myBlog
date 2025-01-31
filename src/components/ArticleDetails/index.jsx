@@ -1,21 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 import ReactMarkdown from 'react-markdown'
 import { Modal } from 'antd'
 import Cookies from 'js-cookie'
 
-import { setLiked } from '../../services/setLiked'
 import { deleteArticles } from '../../services/deleteArticles'
 import { TagList } from '../tagList'
 import { formatDate } from '../../utility/FormatDate'
 import { apiGetAnArticles } from '../../services/useGetAnArticle'
-import { saveAnArticles } from '../../actions/actions'
+import { setFavorited } from '../../services/setFavorited'
+import useAuth from '../../hooks/useAuth'
 
 import styles from './index.module.css'
 
 export const ArticleDetails = () => {
-  const dispatch = useDispatch()
+  const { user } = useAuth()
+
+  const [article, setArticle] = useState()
+
   const navigate = useNavigate()
 
   const [isModalVisible, setModalVisible] = useState(false)
@@ -24,32 +26,47 @@ export const ArticleDetails = () => {
 
   const { slug } = useParams()
 
+  const [error, setError] = useState(null)
+
   useEffect(() => {
     const handleArticlesFetch = async () => {
-      const articlesData = await apiGetAnArticles(slug)
-      if (!articlesData.success) {
-        navigate('/notFound')
-      } else {
-        dispatch(saveAnArticles(articlesData))
+      try {
+        const articlesData = await apiGetAnArticles(slug)
+        if (!articlesData.success) {
+          navigate('/notFound')
+        } else {
+          setArticle(articlesData.data.article)
+        }
+      } catch (err) {
+        setError('Failed to load the article. Please try again later.')
       }
     }
 
     handleArticlesFetch()
-  }, [dispatch, slug])
-
-  const article = useSelector(state => state.article)
-  const articles = useSelector(state => state.articles)
-  const user = useSelector(state => state.username)
+  }, [slug])
 
   const token = Cookies.get('token')
 
+  if (error) {
+    return <div>{error}</div>
+  }
   if (!article) {
     return null
   }
-
   const date = formatDate(article.updatedAt)
 
   const { username, image } = article.author
+
+  const handleClickFavorited = async e => {
+    e.stopPropagation()
+
+    const action = article.favorited ? 'unlike' : 'like'
+    const updatedArticle = await setFavorited(action, slug, token)
+
+    if (updatedArticle) {
+      setArticle(updatedArticle.article)
+    }
+  }
 
   const showModal = () => {
     if (buttonRef.current) {
@@ -74,15 +91,11 @@ export const ArticleDetails = () => {
     setModalVisible(false)
   }
 
-  if (!article) {
-    return <div> Article not found</div>
-  }
-
   const handleEdit = () => {
     navigate(`/articles/${article.slug}/edit`)
   }
 
-  const isAuthor = username === user
+  const isAuthor = user && username === user.username
 
   return (
     <div className={styles.container}>
@@ -90,10 +103,7 @@ export const ArticleDetails = () => {
         <div className={styles.containerTitle}>
           <div className={styles.titleLiked}>
             <h1 className={styles.title}>{article.title}</h1>
-            <button
-              onClick={e => setLiked(e, slug, articles.favorited, token, dispatch)}
-              className={styles.heartContainer}
-            >
+            <button onClick={e => handleClickFavorited(e, slug)} className={styles.heartContainer}>
               <div className={!article.favorited ? styles.heartImg : styles.HeartImgRed}></div>
               <span className={styles.heartCount}>{article.favoritesCount}</span>
             </button>

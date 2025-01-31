@@ -1,39 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import Cookies from 'js-cookie'
 
 import useAuth from '../../hooks/useAuth'
-import { getUser } from '../../services/getUser'
-import { setGetUser } from '../../actions/actions'
 
 import styles from './index.module.css'
 
 export const Header = () => {
-  const { logOut } = useAuth()
-  const isAuthenticated = useSelector(state => state.isAuthenticated)
-  const name = useSelector(state => state.username)
-  const avatarImg = useSelector(state => state.image)
-
-  const dispatch = useDispatch()
+  const { logOut, user } = useAuth()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    const tok = Cookies.get('token')
-
-    if (tok) {
-      const fetchUser = async () => {
-        try {
-          const user = await getUser(tok)
-
-          dispatch(setGetUser(user.data.user))
-        } catch (error) {
-          console.error('Error fetching user:', error)
-        }
-      }
-      fetchUser()
-    }
-  }, [dispatch])
+  const username = user?.username || 'User'
+  const image = user?.image || 'https://static.productionready.io/images/smiley-cyrus.jpg'
 
   const handleLogOut = () => {
     logOut()
@@ -46,16 +22,16 @@ export const Header = () => {
         Realworld Blog
       </Link>
       <div className={styles.userAuth}>
-        {isAuthenticated ? (
+        {user ? (
           <>
             <Link to="/NewArticle">
               <button className={styles.createArticle}>Create Article</button>
             </Link>
             <Link to="/EditProfile" className={styles.author}>
-              <button className={styles.editProfile}>{name}</button>
+              <button className={styles.editProfile}>{username}</button>
               <img
                 className={styles.avatarImg}
-                src={avatarImg || 'https://static.productionready.io/images/smiley-cyrus.jpg'}
+                src={image}
                 onError={e => {
                   e.target.src = 'https://static.productionready.io/images/smiley-cyrus.jpg'
                 }}
