@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
-import { Modal } from 'antd'
+import { Modal, message } from 'antd'
 import Cookies from 'js-cookie'
 
 import { deleteArticles } from '../../services/deleteArticles'
@@ -14,6 +14,7 @@ import useAuth from '../../hooks/useAuth'
 import styles from './index.module.css'
 
 export const ArticleDetails = () => {
+  const token = Cookies.get('token')
   const { user } = useAuth()
 
   const [article, setArticle] = useState()
@@ -43,9 +44,7 @@ export const ArticleDetails = () => {
     }
 
     handleArticlesFetch()
-  }, [slug])
-
-  const token = Cookies.get('token')
+  }, [slug, navigate])
 
   if (error) {
     return <div>{error}</div>
@@ -59,7 +58,10 @@ export const ArticleDetails = () => {
 
   const handleClickFavorited = async e => {
     e.stopPropagation()
-
+    if (!token) {
+      message.error('You must be logged in to like')
+      return
+    }
     const action = article.favorited ? 'unlike' : 'like'
     const updatedArticle = await setFavorited(action, slug, token)
 

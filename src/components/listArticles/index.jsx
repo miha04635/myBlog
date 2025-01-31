@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Pagination, ConfigProvider } from 'antd'
+import { Pagination, ConfigProvider, message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
@@ -49,6 +49,12 @@ export const ListArticles = () => {
 
   const handleClickFavorited = async (e, slug) => {
     e.stopPropagation()
+
+    if (!token) {
+      message.error('You must be logged in to like')
+      return
+    }
+
     const currentArticle = articles.find(article => article.slug === slug)
     const action = currentArticle.favorited ? 'unlike' : 'like'
     const updatedArticle = await setFavorited(action, slug, token)
