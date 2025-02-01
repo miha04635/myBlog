@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 
 import useAuth from '../../hooks/useAuth'
 import { loginUser } from '../../services/loginUser'
-import { AuthForm } from '../AuthForm'
+import { AuthForm } from '../authForm'
 import { filedEmail, filedPassword } from '../../constants/fields'
 
 export const SignIn = () => {

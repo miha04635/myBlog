@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 
 import useAuth from '../../hooks/useAuth'
 import { registerUsers } from '../../services/registerUser'
-import { AuthForm } from '../AuthForm'
+import { AuthForm } from '../authForm'
 import { filedEmail, filedPassword, filedRepeatPassword, filedUsername } from '../../constants/fields'
 
 export const SignUp = () => {

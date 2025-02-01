@@ -7,7 +7,7 @@ import Cookies from 'js-cookie'
 import { deleteArticles } from '../../services/deleteArticles'
 import { TagList } from '../tagList'
 import { formatDate } from '../../utility/FormatDate'
-import { apiGetAnArticles } from '../../services/useGetAnArticle'
+import { getAnArticles } from '../../services/getAnArticles'
 import { setFavorited } from '../../services/setFavorited'
 import useAuth from '../../hooks/useAuth'
 
@@ -32,7 +32,7 @@ export const ArticleDetails = () => {
   useEffect(() => {
     const handleArticlesFetch = async () => {
       try {
-        const articlesData = await apiGetAnArticles(slug)
+        const articlesData = await getAnArticles(slug)
         if (!articlesData.success) {
           navigate('/notFound')
         } else {

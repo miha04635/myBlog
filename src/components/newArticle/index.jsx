@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
-import { ArticleForm } from '../ArticleForm'
+import { ArticleForm } from '../articleForm'
 import { postArticles } from '../../services/postArticle'
 import { filedBody, filedDescription, filedTitle } from '../../constants/fields'
 

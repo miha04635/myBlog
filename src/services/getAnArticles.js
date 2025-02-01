@@ -1,6 +1,6 @@
 import { baseUrl } from '../constants/BaseUrl'
 
-export const apiGetAnArticles = async slug => {
+export const getAnArticles = async slug => {
   try {
     const response = await fetch(`${baseUrl}articles/${slug}`, {
       method: 'GET',

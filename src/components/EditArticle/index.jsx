@@ -2,9 +2,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { useState, useEffect } from 'react'
 
-import { ArticleForm } from '../ArticleForm'
+import { ArticleForm } from '../articleForm'
 import { updateArticle } from '../../services/updateArticle'
-import { apiGetAnArticles } from '../../services/useGetAnArticle'
+import { getAnArticles } from '../../services/getAnArticles'
 import { filedBody, filedDescription, filedTitle } from '../../constants/fields'
 
 export const EditArticle = () => {
@@ -15,7 +15,7 @@ export const EditArticle = () => {
 
   useEffect(() => {
     const handleArticlesFetch = async () => {
-      const articlesData = await apiGetAnArticles(slug)
+      const articlesData = await getAnArticles(slug)
       if (!articlesData.success) {
         navigate('/notFound')
       } else {
