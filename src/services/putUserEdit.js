@@ -1,8 +1,8 @@
-import { baseUrl } from '../constants/BaseUrl'
+import { baseUrl } from '../constants/baseUrl'
 
 export const putUserEdit = async ({ username, email, password, image }, token) => {
   try {
-    const response = await fetch(`${baseUrl}user`, {
+    const response = await fetch(`${baseUrl}/user`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', Authorization: `Token ${token}` },
       body: JSON.stringify({

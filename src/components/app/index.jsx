@@ -8,7 +8,7 @@ import { Header } from '../header'
 import { ListArticles } from '../listArticles'
 import { ArticleDetails } from '../articleDetails'
 import { NotFound } from '../notFound'
-import { EditArticle } from '../editArticleTemp'
+import { EditArticle } from '../editArticles'
 
 import styles from './index.module.css'
 import './reset.css'

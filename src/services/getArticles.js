@@ -1,4 +1,4 @@
-import { baseUrl } from '../constants/BaseUrl'
+import { baseUrl } from '../constants/baseUrl'
 
 export const apiGet = async offset => {
   try {

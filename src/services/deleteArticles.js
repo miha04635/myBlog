@@ -1,8 +1,8 @@
-import { baseUrl } from '../constants/BaseUrl'
+import { baseUrl } from '../constants/baseUrl'
 
 export const deleteArticles = async (slug, token) => {
   try {
-    const response = await fetch(`${baseUrl}articles/${slug}`, {
+    const response = await fetch(`${baseUrl}/articles/${slug}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json', Authorization: `Token ${token}` },
     })

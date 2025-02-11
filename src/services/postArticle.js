@@ -1,8 +1,8 @@
-import { baseUrl } from '../constants/BaseUrl'
+import { baseUrl } from '../constants/baseUrl'
 
 export const postArticles = async ({ description, body, title, tags }, token) => {
   try {
-    const response = await fetch(`${baseUrl}articles`, {
+    const response = await fetch(`${baseUrl}/articles`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Token ${token}` },
       body: JSON.stringify({

@@ -1,8 +1,8 @@
-import { baseUrl } from '../constants/BaseUrl'
+import { baseUrl } from '../constants/baseUrl'
 
 export const setFavorited = async (action, slug, token) => {
   const method = action === 'like' ? 'POST' : 'DELETE'
-  const url = `${baseUrl}articles/${slug}/favorite`
+  const url = `${baseUrl}/articles/${slug}/favorite`
 
   const response = await fetch(url, {
     method,

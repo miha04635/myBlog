@@ -1,8 +1,8 @@
-import { baseUrl } from '../constants/BaseUrl'
+import { baseUrl } from '../constants/baseUrl'
 
 export const registerUsers = async ({ username, password, email }) => {
   try {
-    const response = await fetch(`${baseUrl}users`, {
+    const response = await fetch(`${baseUrl}/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

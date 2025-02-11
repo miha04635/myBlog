@@ -1,8 +1,8 @@
-import { baseUrl } from '../constants/BaseUrl'
+import { baseUrl } from '../constants/baseUrl'
 
 export const setDeleteFavorited = async (slug, token) => {
   try {
-    const response = await fetch(`${baseUrl}articles/${slug}/favorite`, {
+    const response = await fetch(`${baseUrl}/articles/${slug}/favorite`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json', Authorization: `Token ${token}` },
     })
