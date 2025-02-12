@@ -10,9 +10,11 @@ export const NewArticle = () => {
 
   const handleSubmit = async data => {
     const token = Cookies.get('token')
-    await postArticles(data, token)
-    navigate('/')
-  }
+    const response = await postArticles(data, token)
 
+    if (response && response.user && response.user.article && response.user.article.slug) {
+      navigate(`/articleDetail/${response.user.article.slug}`)
+    }
+  }
   return <ArticleForm onSubmit={handleSubmit} fields={[filedTitle, filedDescription, filedBody]} />
 }

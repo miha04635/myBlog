@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Pagination, ConfigProvider, message } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { Pagination, ConfigProvider, message, Spin } from 'antd'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 import { TagList } from '../tagList'
@@ -12,35 +12,30 @@ import styles from './index.module.css'
 
 export const ListArticles = () => {
   const navigate = useNavigate()
+  const token = Cookies.get('token')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const currentPage = Number(searchParams.get('page')) || 1
 
   const [articles, setArticles] = useState([])
   const [countArticles, setCountArticles] = useState(0)
-  const [currentPage, setCurrentPage] = useState(1)
-
-  const token = Cookies.get('token')
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const savedPage = localStorage.getItem('currentPage')
-    if (savedPage) {
-      setCurrentPage(Number(savedPage))
-    }
-  }, [])
-
-  useEffect(() => {
-    const handleArticlesFetch = async () => {
+    const fetchArticles = async () => {
+      setLoading(true)
       const articlesData = await apiGet((currentPage - 1) * 20)
       if (articlesData) {
         setArticles(articlesData.articles)
         setCountArticles(articlesData.articlesCount)
       }
+      setLoading(false)
     }
 
-    handleArticlesFetch()
+    fetchArticles()
   }, [currentPage])
 
   const handlePageChange = page => {
-    setCurrentPage(page)
-    localStorage.setItem('currentPage', page)
+    setSearchParams({ page })
   }
 
   const handleClick = slug => {
@@ -67,79 +62,65 @@ export const ListArticles = () => {
   }
 
   const renderArticles = article => {
-    if (!article) {
-      return null
-    }
+    if (!article) return null
     const { title, tagList, body, slug, author, createdAt, favoritesCount, favorited } = article
-
     const { username, image } = author
-
-    const createDate = formatDate(createdAt)
-    const truncatedText = text => {
-      if (!text) {
-        return null
-      }
-      return text.length > 150 ? `${text.substring(0, 150)}...` : text
-    }
 
     return (
       <a key={slug} className={styles.container} onClick={() => handleClick(slug)}>
         <div className={styles.containerText}>
           <div className={styles.containerTitle}>
-            <div className={styles.title}>{truncatedText(title)}</div>
+            <div className={styles.title}>{title}</div>
             <button onClick={e => handleClickFavorited(e, slug)} className={styles.heartContainer}>
               <div className={favorited ? styles.HeartImgRed : styles.heartImg}></div>
               <span className={styles.heartCount}>{favoritesCount}</span>
             </button>
           </div>
 
-          <TagList tagList={truncatedText(tagList)} />
-          <div className={styles.text}>{truncatedText(body)}</div>
+          <TagList tagList={tagList} />
+          <div className={styles.text}>{body}</div>
         </div>
         <div className={styles.containerAuthor}>
           <div className={styles.containerFlex}>
             <div className={styles.name}>{username}</div>
-            <div className={styles.dateCreate}>{createDate}</div>
+            <div className={styles.dateCreate}>{formatDate(createdAt)}</div>
           </div>
-          <img
-            src={image}
-            alt="avatar"
-            className={styles.avatarImg}
-            onError={e => {
-              e.target.src = 'https://static.productionready.io/images/smiley-cyrus.jpg'
-            }}
-          />
+          <img src={image} alt="avatar" className={styles.avatarImg} />
         </div>
       </a>
     )
   }
-  if (!articles.length) {
-    return null
-  }
+
   return (
     <>
-      {articles.map(article => renderArticles(article))}
-      <ConfigProvider
-        theme={{
-          components: {
-            Pagination: {
-              itemActiveColor: '#fff',
-              itemActiveBg: '#1890FF',
-              itemBg: 'none',
-            },
-          },
-        }}
-      >
-        <Pagination
-          current={currentPage}
-          total={countArticles}
-          pageSize={20}
-          className={styles.paginationArticles}
-          onChange={handlePageChange}
-          align="center"
-          showSizeChanger={false}
-        />
-      </ConfigProvider>
+      {loading ? (
+        <Spin size="large" fullscreen="true" />
+      ) : (
+        <>
+          {articles.map(article => renderArticles(article))}
+          <ConfigProvider
+            theme={{
+              components: {
+                Pagination: {
+                  itemActiveColor: '#fff',
+                  itemActiveBg: '#1890FF',
+                  itemBg: 'none',
+                },
+              },
+            }}
+          >
+            <Pagination
+              current={currentPage}
+              total={countArticles}
+              pageSize={20}
+              className={styles.paginationArticles}
+              onChange={handlePageChange}
+              align="center"
+              showSizeChanger={false}
+            />
+          </ConfigProvider>
+        </>
+      )}
     </>
   )
 }

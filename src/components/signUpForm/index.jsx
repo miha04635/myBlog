@@ -7,6 +7,7 @@ import { filedEmail, filedPassword, filedRepeatPassword, filedUsername } from '.
 
 export const SignUp = () => {
   const { login } = useAuth()
+
   const navigate = useNavigate()
 
   const handleSignUp = async (data, setError) => {

@@ -32,6 +32,7 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false, fields
       clearErrors('tag')
     }
   }
+
   const handleDeleteTag = indexToDelete => {
     setTags(tags.filter((_, index) => index !== indexToDelete))
     clearErrors('tag')

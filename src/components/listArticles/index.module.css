@@ -27,6 +27,16 @@
 .text {
   max-width: 682px;
   color: rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+  word-wrap: break-word;
+  white-space: normal;
+}
+.text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .title {

@@ -6,9 +6,8 @@ import { AuthForm } from '../authForm'
 import { filedEmail, filedPassword } from '../../constants/fields'
 
 export const SignIn = () => {
-  console.log(filedEmail)
-
   const { login } = useAuth()
+
   const navigate = useNavigate()
 
   const handleSignIn = async (data, setError) => {

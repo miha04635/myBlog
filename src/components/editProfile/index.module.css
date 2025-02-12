@@ -69,7 +69,7 @@ input {
 .save {
   color: rgba(255, 255, 255, 1);
   background-color: rgba(24, 144, 255, 1);
-  width: 319px;
+  width: 320px;
   height: 40px;
   padding: 8px 16px;
   gap: 4px;
@@ -90,8 +90,7 @@ p {
 .emailAddress,
 .password,
 .avatarImg {
-  display: flex;
-  flex-direction: column;
+  width: 320px;
 }
 
 .error {

@@ -9,9 +9,9 @@ import { filedBody, filedDescription, filedTitle } from '../../constants/fields'
 
 export const EditArticle = () => {
   const { slug } = useParams()
-
   const navigate = useNavigate()
   const [article, setArticle] = useState()
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const handleArticlesFetch = async () => {
@@ -38,11 +38,14 @@ export const EditArticle = () => {
 
       navigate(`/articleDetail/${slug}`)
       return update
-    } catch (error) {
-      console.error('Ошибка при обновлении статьи:', error)
+    } catch (err) {
+      setError('Failed to load the article. Please try again later')
     }
   }
 
+  if (error) {
+    return <div>{error}</div>
+  }
   return (
     <ArticleForm
       onSubmit={handleSubmit}

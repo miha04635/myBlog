@@ -3,7 +3,7 @@ export const REGISTER_OPTIONS = {
     required: 'Username is required',
     pattern: {
       value: /^[a-zA-Z0-9]{0,20}$/,
-      message: 'Только латинские буквы, цифры. До 20 символов',
+      message: 'Only Latin letters and numbers. Up to 20 characters',
     },
   },
   email: {

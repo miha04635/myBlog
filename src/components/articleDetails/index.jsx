@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
-import { Modal, message } from 'antd'
+import { Modal, message, Spin } from 'antd'
 import Cookies from 'js-cookie'
 
 import { deleteArticles } from '../../services/deleteArticles'
@@ -14,20 +14,17 @@ import useAuth from '../../hooks/useAuth'
 import styles from './index.module.css'
 
 export const ArticleDetails = () => {
-  const token = Cookies.get('token')
   const { user } = useAuth()
+  const buttonRef = useRef(null)
+  const { slug } = useParams()
+  const navigate = useNavigate()
+  const token = Cookies.get('token')
 
   const [article, setArticle] = useState()
-
-  const navigate = useNavigate()
-
   const [isModalVisible, setModalVisible] = useState(false)
   const [modalStyle, setModalStyle] = useState({})
-  const buttonRef = useRef(null)
-
-  const { slug } = useParams()
-
   const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const handleArticlesFetch = async () => {
@@ -35,9 +32,9 @@ export const ArticleDetails = () => {
         const articlesData = await getAnArticles(slug)
         if (!articlesData.success) {
           navigate('/notFound')
-        } else {
-          setArticle(articlesData.data.article)
         }
+        setLoading(false)
+        return setArticle(articlesData.data.article)
       } catch (err) {
         setError('Failed to load the article. Please try again later.')
       }
@@ -46,15 +43,12 @@ export const ArticleDetails = () => {
     handleArticlesFetch()
   }, [slug, navigate])
 
-  if (error) {
-    return <div>{error}</div>
-  }
-  if (!article) {
-    return null
-  }
-  const date = formatDate(article.updatedAt)
+  if (loading) return <Spin size="large" fullscreen />
+  if (error) return <div>{error}</div>
+  if (!article) return null
 
   const { username, image } = article.author
+  const date = formatDate(article.updatedAt)
 
   const handleClickFavorited = async e => {
     e.stopPropagation()
