@@ -1,11 +1,14 @@
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import useAuth from '../../hooks/useAuth'
 import { loginUser } from '../../services/loginUser'
 import { AuthForm } from '../authForm'
 import { filedEmail, filedPassword } from '../../constants/fields'
+import { getUsername } from '../../actions'
 
 export const SignIn = () => {
+  const dispatch = useDispatch()
   const { login } = useAuth()
 
   const navigate = useNavigate()
@@ -14,6 +17,10 @@ export const SignIn = () => {
     const result = await loginUser(data)
 
     if (result.success) {
+      console.log(result)
+
+      dispatch(getUsername(result.user.username))
+
       login(result.user.token, result.user.username)
       navigate('/')
     } else {

@@ -1,17 +1,21 @@
 import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
 import useAuth from '../../hooks/useAuth'
+import { logOutUser } from '../../actions'
 
 import styles from './index.module.css'
 
 export const Header = () => {
   const { logOut, user } = useAuth()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const username = user?.username
+  const username = useSelector(state => state.username)
   const image = user?.image || 'https://static.productionready.io/images/smiley-cyrus.jpg'
 
   const handleLogOut = () => {
+    dispatch(logOutUser())
     logOut()
     navigate('/')
   }
@@ -22,7 +26,7 @@ export const Header = () => {
         Realworld Blog
       </Link>
       <div className={styles.userAuth}>
-        {!user ? (
+        {!username ? (
           <>
             <Link to="/SignIn">
               <button className={styles.signIn}>Sign in</button>
