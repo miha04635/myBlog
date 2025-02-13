@@ -17,8 +17,6 @@ export const SignIn = () => {
     const result = await loginUser(data)
 
     if (result.success) {
-      console.log(result)
-
       dispatch(getUsername(result.user.username))
 
       login(result.user.token, result.user.username)

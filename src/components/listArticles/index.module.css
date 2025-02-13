@@ -46,6 +46,11 @@
   color: rgba(24, 144, 255, 1);
 }
 
+.title {
+  word-break: break-word; /* Разрешает перенос длинных слов */
+  overflow-wrap: break-word; /* Альтернативный способ переноса */
+}
+
 .avatarImg {
   width: 46px;
   height: 46px;

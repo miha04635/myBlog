@@ -1,13 +1,15 @@
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import useAuth from '../../hooks/useAuth'
 import { registerUsers } from '../../services/registerUser'
 import { AuthForm } from '../authForm'
 import { filedEmail, filedPassword, filedRepeatPassword, filedUsername } from '../../constants/fields'
+import { getUsername } from '../../actions'
 
 export const SignUp = () => {
   const { login } = useAuth()
-
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleSignUp = async (data, setError) => {
@@ -15,6 +17,7 @@ export const SignUp = () => {
       const { success, user, errors: serverErrors } = await registerUsers(data)
 
       if (success) {
+        dispatch(getUsername(user.username))
         login(user.token)
         navigate('/')
       } else if (serverErrors) {
