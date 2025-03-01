@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { Spin, message } from 'antd'
+import { useState } from 'react'
 
 import styles from './index.module.css'
 
@@ -14,8 +16,22 @@ export const AuthForm = ({ title, fields, buttonText, onSubmit, linkText, linkPa
     mode: 'onChange',
   })
 
+  const [loading, setLoading] = useState(false)
+
+  const handleFormSubmit = async data => {
+    setLoading(true)
+
+    try {
+      await onSubmit(data, setError)
+    } catch (error) {
+      message.error('Ошибка входа')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
-    <form onSubmit={handleSubmit(data => onSubmit(data, setError))} className={styles.authForm}>
+    <form onSubmit={handleSubmit(handleFormSubmit)} className={styles.authForm}>
       <p className={styles.title}>{title}</p>
 
       {fields.map(({ name, label, type, validation, isPasswordRepeat }) => (
@@ -37,7 +53,7 @@ export const AuthForm = ({ title, fields, buttonText, onSubmit, linkText, linkPa
       ))}
 
       <button type="submit" className={styles.submitButton}>
-        {buttonText}
+        {loading ? <Spin /> : buttonText}
       </button>
 
       <p className={styles.linkText}>

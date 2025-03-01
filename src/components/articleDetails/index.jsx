@@ -79,8 +79,8 @@ export const ArticleDetails = () => {
         message.success('Post deleted successfully')
         navigate('/')
       })
-      .catch(err => {
-        message.error('Failed to delete post', err)
+      .catch(() => {
+        message.error('Ошибка удаления')
       })
   }
 
