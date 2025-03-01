@@ -76,18 +76,11 @@ export const ArticleDetails = () => {
   const handleOk = () => {
     deleteArticles(article.slug, token)
       .then(() => {
-<<<<<<< HEAD
-        navigate('/')
-      })
-      .catch(err => {
-        message.error('err')
-=======
         message.success('Post deleted successfully')
         navigate('/')
       })
       .catch(err => {
         message.error('Failed to delete post', err)
->>>>>>> 8c5811bf663fe245a7e99afb5a865b1e787eea9b
       })
   }
 

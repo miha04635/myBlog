@@ -43,7 +43,7 @@ function App() {
         dispatch(getUsername(userData.user.username))
       })
     }
-  }, [])
+  }, [dispatch])
 
   if (!isOnline) return <OfflinePage />
 
