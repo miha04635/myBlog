@@ -18,11 +18,12 @@ export const loginUser = async ({ email, password }) => {
     const data = await response.json()
 
     if (!response.ok) {
-      return { success: false, errors: data.errors }
+      throw new Error('Network error. Please try again.')
     }
 
-    return { success: true, user: data.user }
+    return data.user
   } catch (err) {
-    return { success: false, errors: { general: 'Network error. Please try again.' } }
+    console.error(err)
+    throw err
   }
 }

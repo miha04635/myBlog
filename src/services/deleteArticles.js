@@ -8,12 +8,12 @@ export const deleteArticles = async (slug, token) => {
     })
 
     if (!response.ok) {
-      const data = await response.json()
-      return { success: false, errors: data.errors }
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    return { success: true }
-  } catch {
-    return { success: false, errors: { general: 'Network error. Please try again.' } }
+    return response
+  } catch (err) {
+    console.error(err)
+    throw err
   }
 }

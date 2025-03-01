@@ -20,28 +20,25 @@ export default function useAuth() {
   }, [])
 
   useEffect(() => {
-    if (token) {
-      let isMounted = true
-
-      const fetchUser = async () => {
-        try {
-          const userData = await getUser(token)
-
-          if (isMounted && userData.success) {
-            setUser(userData.data.user)
-          } else {
-            logOut()
-          }
-        } catch (error) {
-          if (isMounted) logOut()
+    if (!token) return
+    let isMounted = true
+    const fetchUser = async () => {
+      try {
+        const userData = await getUser(token)
+        if (isMounted && userData.success) {
+          setUser(userData.data.user)
+        } else {
+          logOut()
         }
+      } catch (error) {
+        if (isMounted) logOut()
       }
+    }
 
-      fetchUser()
+    fetchUser()
 
-      return () => {
-        isMounted = false
-      }
+    return () => {
+      isMounted = false
     }
   }, [token, logOut])
 
