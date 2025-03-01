@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import { message, Spin } from 'antd'
 
 import { putUserEdit } from '../../services/putUserEdit'
 import { REGISTER_OPTIONS } from '../../constants/registerOptions'
@@ -9,6 +10,7 @@ import { REGISTER_OPTIONS } from '../../constants/registerOptions'
 import styles from './index.module.css'
 
 export const EditProfile = () => {
+  const [loading, setLoading] = useState(false)
   const token = Cookies.get('token')
 
   const {
@@ -21,30 +23,25 @@ export const EditProfile = () => {
   })
 
   const navigate = useNavigate()
+
   const submit = async data => {
+    setLoading(true)
     if (!token) {
       setError('server', {
         type: 'server',
         message: 'Ошибка аутентификации. Авторизуйтесь заново.',
       })
-      return
     }
 
-    const { err, success } = await putUserEdit(data, token)
-
-    if (success) {
-      navigate('/')
-      return
-    }
+    const err = await putUserEdit(data, token)
 
     if (err) {
-      Object.entries(err).forEach(([field, messages]) => {
-        setError(field, {
-          type: 'server',
-          message: Array.isArray(messages) ? messages.join(', ') : String(messages),
-        })
-      })
+      message.error('Ошибка аутентификации. Авторизуйтесь заново.')
+      return null
     }
+
+    setLoading(false)
+    navigate('/')
   }
 
   return (
@@ -78,7 +75,7 @@ export const EditProfile = () => {
       </div>
 
       <button type="submit" className={styles.save}>
-        Save
+        {loading ? <Spin /> : 'Save'}
       </button>
     </form>
   )

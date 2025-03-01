@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { message } from 'antd'
 
 import useAuth from '../../hooks/useAuth'
 import { registerUsers } from '../../services/registerUser'
@@ -12,21 +13,20 @@ export const SignUp = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const handleSignUp = async (data, setError) => {
+  const handleSignUp = async data => {
     try {
-      const { success, user, errors: serverErrors } = await registerUsers(data)
+      const { user, errors } = await registerUsers(data)
 
-      if (success) {
-        dispatch(getUsername(user.username))
-        login(user.token)
-        navigate('/')
-      } else if (serverErrors) {
-        Object.entries(serverErrors).forEach(([field, messages]) =>
-          setError(field, { type: 'server', message: Array.isArray(messages) ? messages.join(', ') : String(messages) })
-        )
+      if (errors) {
+        message.error('Не удалось зарегистрироваться. Попробуйте позже.')
+        return null
       }
-    } catch {
-      setError('server', { type: 'server', message: 'Не удалось зарегистрироваться. Попробуйте позже.' })
+
+      dispatch(getUsername(user.username))
+      login(user.token)
+      navigate('/')
+    } catch (err) {
+      message.error('Не удалось зарегистрироваться. Попробуйте позже.')
     }
   }
 

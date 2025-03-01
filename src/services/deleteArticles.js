@@ -8,7 +8,7 @@ export const deleteArticles = async (slug, token) => {
     })
 
     if (!response.ok) {
-      throw new Error('Ошибка сети')
+      throw new Error('Ошибка')
     }
   } catch (err) {
     console.error(err)

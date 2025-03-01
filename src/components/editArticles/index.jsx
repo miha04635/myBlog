@@ -33,23 +33,25 @@ export const EditArticle = () => {
     return null
   }
 
-  const handleSubmit = data => {
-    const token = Cookies.get('token')
-    updateArticle(slug, data, token)
-      .then(() => {
-        navigate(`/articleDetail/${slug}`)
-      })
-      .catch(() => {
-        message.error('Ops 0_o, Попробуйте позже')
-      })
+  const handleSubmit = async data => {
+    setLoading(true)
+    try {
+      const token = Cookies.get('token')
+      await updateArticle(slug, data, token)
+      navigate(`/articleDetail/${slug}`)
+    } catch (error) {
+      message.error('Ops 0_o, Попробуйте позже')
+    } finally {
+      setLoading(false)
+    }
   }
-
   return (
     <ArticleForm
       onSubmit={handleSubmit}
       initialData={article}
       isEdit
       fields={[filedTitle, filedDescription, filedBody]}
+      loading={loading}
     />
   )
 }

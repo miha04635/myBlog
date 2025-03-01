@@ -19,11 +19,11 @@ export const registerUsers = async ({ username, password, email }) => {
     const data = await response.json()
 
     if (!response.ok) {
-      return { success: false, errors: data.errors }
+      return data
     }
 
-    return { success: true, user: data.user }
+    return data
   } catch (err) {
-    return { success: false, errors: { general: 'Network error. Please try again.' } }
+    return err
   }
 }

@@ -18,11 +18,12 @@ export const postArticles = async ({ description, body, title, tags }, token) =>
     const data = await response.json()
 
     if (!response.ok) {
-      return { success: false, errors: data.errors }
+      throw new Error('Ошибка сети')
     }
 
-    return { success: true, user: data }
+    return data
   } catch (err) {
-    return { success: false, errors: { general: 'Network error. Please try again.' } }
+    console.error(err)
+    throw err
   }
 }

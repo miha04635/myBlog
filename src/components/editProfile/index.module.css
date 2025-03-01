@@ -52,7 +52,8 @@
   margin-bottom: 4px;
 }
 
-input {
+.editProfileDetails input {
+  box-sizing: border-box;
   border: 1px solid rgba(217, 217, 217, 1);
   border-radius: 4px;
   font-size: 16px;
@@ -60,6 +61,7 @@ input {
   line-height: 24px;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.75);
+  width: 320px;
 }
 
 ::placeholder {
@@ -95,4 +97,11 @@ p {
 
 .error {
   color: rgba(245, 34, 45, 1);
+}
+
+.ant-spin-dot {
+  color: red !important;
+}
+.ant-spin-dot i {
+  background-color: red !important;
 }

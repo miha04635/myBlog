@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Spin } from 'antd'
 
 import styles from './index.module.css'
 
-export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false, fields }) => {
+export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false, fields, loading }) => {
   const [tags, setTags] = useState(initialData.tagList || [])
   const [tagInput, setTagInput] = useState('')
 
@@ -39,12 +40,13 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false, fields
     clearErrors('tag')
   }
 
-  const handleFormSubmit = data => {
-    if (isEdit) {
-      onSubmit({ ...data, tagList: tags })
-    } else {
-      onSubmit({ ...data, tags })
-    }
+  const handleFormSubmit = async data => {
+    await onSubmit({ ...data, tagList: tags })
+  }
+
+  const renderButtonText = () => {
+    if (loading) return <Spin />
+    return isEdit ? 'Save' : 'Send'
   }
 
   return (
@@ -89,7 +91,7 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false, fields
           {errors.tag && <span className={styles.error}>{errors.tag.message}</span>}
         </div>
         <button type="submit" className={styles.send}>
-          {isEdit ? 'Save' : 'Send'}
+          {renderButtonText()}
         </button>
       </div>
     </form>

@@ -18,11 +18,11 @@ export const putUserEdit = async ({ username, email, password, image }, token) =
     const data = await response.json()
 
     if (!response.ok) {
-      return { success: false, err: data.errors }
+      return data
     }
 
-    return { success: true, user: data.user }
-  } catch (err) {
-    return { success: false, errors: { general: 'Network error. Please try again.' } }
+    return data
+  } catch {
+    return { errors: 'Network error. Please try again.' }
   }
 }
