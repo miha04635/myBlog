@@ -23,28 +23,23 @@ export const ArticleDetails = () => {
   const [article, setArticle] = useState()
   const [isModalVisible, setModalVisible] = useState(false)
   const [modalStyle, setModalStyle] = useState({})
-  const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const handleArticlesFetch = async () => {
-      try {
-        const articlesData = await getAnArticles(slug)
-        if (!articlesData.success) {
+    getAnArticles(slug)
+      .then(result => {
+        setLoading(false)
+        return setArticle(result.article)
+      })
+      .catch(err => {
+        if (err) {
           navigate('/notFound')
         }
-        setLoading(false)
-        return setArticle(articlesData.data.article)
-      } catch (err) {
-        setError('Failed to load the article. Please try again later.')
-      }
-    }
-
-    handleArticlesFetch()
+      })
   }, [slug, navigate])
 
   if (loading) return <Spin size="large" fullscreen />
-  if (error) return <div>{error}</div>
+
   if (!article) return null
 
   const { username, image } = article.author
@@ -81,10 +76,18 @@ export const ArticleDetails = () => {
   const handleOk = () => {
     deleteArticles(article.slug, token)
       .then(() => {
+<<<<<<< HEAD
         navigate('/')
       })
       .catch(err => {
         message.error('err')
+=======
+        message.success('Post deleted successfully')
+        navigate('/')
+      })
+      .catch(err => {
+        message.error('Failed to delete post', err)
+>>>>>>> 8c5811bf663fe245a7e99afb5a865b1e787eea9b
       })
   }
 

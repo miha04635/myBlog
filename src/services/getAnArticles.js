@@ -7,14 +7,14 @@ export const getAnArticles = async slug => {
       headers: { 'Content-Type': 'application/json' },
     })
 
-    const data = await response.json()
-
     if (!response.ok) {
-      return { success: false, errors: data.errors }
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    return { success: true, data }
+    const data = await response.json()
+    return data
   } catch (err) {
-    return { success: false, errors: { general: 'Network error. Please try again.' } }
+    console.error(err)
+    throw err
   }
 }

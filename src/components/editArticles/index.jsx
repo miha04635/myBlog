@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { useState, useEffect } from 'react'
+import { Spin, message } from 'antd'
 
 import { ArticleForm } from '../articleForm'
 import { updateArticle } from '../../services/updateArticle'
@@ -11,41 +12,38 @@ export const EditArticle = () => {
   const { slug } = useParams()
   const navigate = useNavigate()
   const [article, setArticle] = useState()
-  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const handleArticlesFetch = async () => {
-      const articlesData = await getAnArticles(slug)
-      if (!articlesData.success) {
-        navigate('/notFound')
-      } else {
-        setArticle(articlesData.data.article)
-      }
-    }
-
-    handleArticlesFetch()
+    getAnArticles(slug)
+      .then(result => {
+        setLoading(false)
+        return setArticle(result.article)
+      })
+      .catch(err => {
+        if (err) {
+          navigate('/notFound')
+        }
+      })
   }, [slug, navigate])
+
+  if (loading) return <Spin size="large" fullscreen />
 
   if (!article) {
     return null
   }
 
-  const handleSubmit = async data => {
+  const handleSubmit = data => {
     const token = Cookies.get('token')
-
-    try {
-      const update = await updateArticle(slug, data, token)
-
-      navigate(`/articleDetail/${slug}`)
-      return update
-    } catch (err) {
-      setError('Failed to load the article. Please try again later')
-    }
+    updateArticle(slug, data, token)
+      .then(() => {
+        navigate(`/articleDetail/${slug}`)
+      })
+      .catch(() => {
+        message.error('Ops 0_o, Попробуйте позже')
+      })
   }
 
-  if (error) {
-    return <div>{error}</div>
-  }
   return (
     <ArticleForm
       onSubmit={handleSubmit}

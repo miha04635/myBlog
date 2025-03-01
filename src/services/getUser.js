@@ -10,11 +10,12 @@ export const getUser = async token => {
     const data = await response.json()
 
     if (!response.ok) {
-      return { success: false, errors: data.errors }
+      throw new Error('Network error. Please try again.')
     }
 
-    return { success: true, data }
+    return data
   } catch (err) {
-    return { success: false, errors: { general: 'Network error. Please try again.' } }
+    console.error(err)
+    throw err
   }
 }

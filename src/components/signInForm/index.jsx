@@ -13,17 +13,16 @@ export const SignIn = () => {
 
   const navigate = useNavigate()
 
-  const handleSignIn = async (data, setError) => {
-    const result = await loginUser(data)
-
-    if (result.success) {
-      dispatch(getUsername(result.user.username))
-
-      login(result.user.token, result.user.username)
-      navigate('/')
-    } else {
-      setError('password', { type: 'server', message: 'Invalid email or password' })
-    }
+  const handleSignIn = (data, setError) => {
+    loginUser(data)
+      .then(result => {
+        dispatch(getUsername(result.username))
+        login(result.token, result.username)
+        navigate('/')
+      })
+      .catch(() => {
+        setError('password', { type: 'server', message: 'Invalid email or password' })
+      })
   }
 
   return (

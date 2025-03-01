@@ -12,12 +12,12 @@ export const updateArticle = async (slug, data, token) => {
     })
 
     if (!response.ok) {
-      const errors = await response.json()
-      return { success: false, errors }
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    return { success: true, data }
-  } catch (error) {
-    return { success: false, errors: { general: 'Network error. Please try again.' } }
+    return response
+  } catch (err) {
+    console.error(err)
+    throw err
   }
 }

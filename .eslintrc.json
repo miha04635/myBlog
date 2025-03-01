@@ -24,7 +24,7 @@
   "plugins": ["react", "prettier", "import"],
   "rules": {
     "import/prefer-default-export": "off",
-    "import/no-unresolved": ["error", { "caseSensitive": true }],
+    "import/no-unresolved": ["warn", { "caseSensitive": true }],
     "no-unused-vars": ["warn", { "vars": "all", "args": "none" }],
     "import/extensions": [
       "error",

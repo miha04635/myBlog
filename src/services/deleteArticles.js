@@ -8,11 +8,14 @@ export const deleteArticles = async (slug, token) => {
     })
 
     if (!response.ok) {
-      throw new Error('Network error. Please try again.')
+      const data = await response.json()
+      return { success: false, errors: data.errors }
     }
   } catch (err) {
     console.error(err)
 
-    throw err
+    return { success: true }
+  } catch {
+    return { success: false, errors: { general: 'Network error. Please try again.' } }
   }
 }
