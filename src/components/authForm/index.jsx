@@ -22,6 +22,7 @@ export const AuthForm = ({ title, fields, buttonText, onSubmit, linkText, linkPa
         <div key={name} className={styles.inputContainer}>
           <p>{label}</p>
           <input
+            className={styles.inputForm}
             type={type}
             placeholder={label}
             {...register(

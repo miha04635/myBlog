@@ -31,26 +31,24 @@ function App() {
     }
   }, [])
 
+  if (!isOnline) return <OfflinePage />
+
   return (
     <div className={styles.app}>
       <Router>
         <Header />
         <div className={styles.container}>
-          {isOnline ? (
-            <Routes>
-              <Route path="/" element={<ListArticles />} />
-              <Route path="/articleDetail/:slug" element={<ArticleDetails />} />
-              <Route path="/signUp" element={<SignUp />} />
-              <Route path="/SignIn" element={<SignIn />} />
-              <Route path="/EditProfile" element={<EditProfile />} />
-              <Route path="/articles/:slug/edit" element={<EditArticle />} />
-              <Route path="/NewArticle" element={<NewArticle />} />
-              <Route path="/notFound" element={<NotFound />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          ) : (
-            <OfflinePage />
-          )}
+          <Routes>
+            <Route path="/" element={<ListArticles />} />
+            <Route path="/articleDetail/:slug" element={<ArticleDetails />} />
+            <Route path="/signUp" element={<SignUp />} />
+            <Route path="/SignIn" element={<SignIn />} />
+            <Route path="/EditProfile" element={<EditProfile />} />
+            <Route path="/articles/:slug/edit" element={<EditArticle />} />
+            <Route path="/NewArticle" element={<NewArticle />} />
+            <Route path="/notFound" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </div>
       </Router>
     </div>

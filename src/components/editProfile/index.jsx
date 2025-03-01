@@ -22,22 +22,27 @@ export const EditProfile = () => {
 
   const navigate = useNavigate()
   const submit = async data => {
-    try {
-      const { err, success } = await putUserEdit(data, token)
-      if (success) {
-        navigate('/')
-      } else if (err) {
-        Object.entries(err).forEach(([field, messages]) => {
-          setError(field, {
-            type: 'server',
-            message: Array.isArray(messages) ? messages.join(', ') : String(messages),
-          })
-        })
-      }
-    } catch (error) {
+    if (!token) {
       setError('server', {
         type: 'server',
-        message: 'Не удалось зарегистрироваться. Попробуйте позже.',
+        message: 'Ошибка аутентификации. Авторизуйтесь заново.',
+      })
+      return
+    }
+
+    const { err, success } = await putUserEdit(data, token)
+
+    if (success) {
+      navigate('/')
+      return
+    }
+
+    if (err) {
+      Object.entries(err).forEach(([field, messages]) => {
+        setError(field, {
+          type: 'server',
+          message: Array.isArray(messages) ? messages.join(', ') : String(messages),
+        })
       })
     }
   }

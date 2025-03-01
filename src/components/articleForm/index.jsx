@@ -24,13 +24,14 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false, fields
 
     if (!trimmedTag) return
 
-    if (tags.includes(trimmedTag)) {
+    if (tags.some(tag => tag.toLowerCase() === trimmedTag.toLowerCase())) {
       setError('tag', { type: 'duplicate', message: 'Tag already exists' })
-    } else {
-      setTags(prevTags => [...prevTags, trimmedTag])
-      setTagInput('')
-      clearErrors('tag')
+      return
     }
+
+    setTags(prevTags => [...prevTags, trimmedTag])
+    setTagInput('')
+    clearErrors('tag')
   }
 
   const handleDeleteTag = indexToDelete => {

@@ -80,7 +80,12 @@ export const ArticleDetails = () => {
 
   const handleOk = () => {
     deleteArticles(article.slug, token)
-    navigate('/')
+      .then(() => {
+        navigate('/')
+      })
+      .catch(err => {
+        message.error('err')
+      })
   }
 
   const handleCancel = () => {
