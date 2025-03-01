@@ -1,4 +1,4 @@
-import { baseUrl } from '../constants/baseUrl'
+import { baseUrl } from './baseUrl'
 
 export const putUserEdit = async ({ username, email, password, image }, token) => {
   try {

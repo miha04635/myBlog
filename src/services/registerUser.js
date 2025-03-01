@@ -1,4 +1,4 @@
-import { baseUrl } from '../constants/baseUrl'
+import { baseUrl } from './baseUrl'
 
 export const registerUsers = async ({ username, password, email }) => {
   try {

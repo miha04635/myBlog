@@ -1,4 +1,4 @@
-import { baseUrl } from '../constants/baseUrl'
+import { baseUrl } from './baseUrl'
 
 export const getUser = async token => {
   try {

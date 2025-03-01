@@ -1,4 +1,4 @@
-import { baseUrl } from '../constants/baseUrl'
+import { baseUrl } from './baseUrl'
 
 export const setFavorited = async (action, slug, token) => {
   const method = action === 'like' ? 'POST' : 'DELETE'
