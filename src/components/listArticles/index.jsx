@@ -60,17 +60,23 @@ export const ListArticles = () => {
       )
     }
   }
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return `${text.substring(0, maxLength)}...`
+    }
+    return text
+  }
 
   const renderArticles = article => {
     if (!article) return null
     const { title, tagList, body, slug, author, createdAt, favoritesCount, favorited } = article
     const { username, image } = author
-
+    const titleTrim = truncateText(title, 50)
     return (
       <a key={slug} className={styles.container} onClick={() => handleClick(slug)}>
         <div className={styles.containerText}>
           <div className={styles.containerTitle}>
-            <div className={styles.title}>{title}</div>
+            <div className={styles.title}>{titleTrim}</div>
             <button onClick={e => handleClickFavorited(e, slug)} className={styles.heartContainer}>
               <div className={favorited ? styles.HeartImgRed : styles.heartImg}></div>
               <span className={styles.heartCount}>{favoritesCount}</span>
