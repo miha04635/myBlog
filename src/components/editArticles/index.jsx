@@ -29,15 +29,14 @@ export const EditArticle = () => {
 
   if (loading) return <Spin size="large" fullscreen />
 
-  if (!article) {
-    return null
-  }
+  if (!article) return null
 
   const handleSubmit = async data => {
     setLoading(true)
     try {
       const token = Cookies.get('token')
       await updateArticle(slug, data, token)
+
       navigate(`/articleDetail/${slug}`)
     } catch (error) {
       message.error('Ops 0_o, Попробуйте позже')

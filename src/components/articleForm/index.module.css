@@ -73,13 +73,20 @@
 }
 
 .tags input {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   width: 300px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
 }
 
 .buttonDel {
   background: none;
-  color: #ff4d4f;
   border: 1px solid #ff4d4f;
+  color: #ff4d4f;
   padding: 5px 10px;
   border-radius: 4px;
   font-size: 14px;
@@ -88,10 +95,17 @@
   height: 40px;
   margin-left: 17px;
 }
-
 .buttonDel:hover {
   background: #ff4d4f;
   color: white;
+}
+
+.buttonDel:hover p {
+  color: white;
+}
+
+.textButtonDel {
+  color: #ff4d4f;
 }
 
 .buttonAddTag {
@@ -111,8 +125,16 @@
   background: #1890ff;
   color: white;
 }
+.buttonAddTag:hover p {
+  background: #1890ff;
+  color: white;
+}
 
 .inputContainer {
   display: flex;
   flex-direction: column;
+}
+
+.textButtonAddTag {
+  color: #1890ff;
 }

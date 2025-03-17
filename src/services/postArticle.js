@@ -1,6 +1,6 @@
 import { baseUrl } from './baseUrl'
 
-export const postArticles = async ({ description, body, title, tags }, token) => {
+export const postArticles = async ({ description, body, title, tagList: tags }, token) => {
   try {
     const response = await fetch(`${baseUrl}/articles`, {
       method: 'POST',

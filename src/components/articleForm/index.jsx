@@ -7,6 +7,7 @@ import styles from './index.module.css'
 export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false, fields, loading }) => {
   const [tags, setTags] = useState(initialData.tagList || [])
   const [tagInput, setTagInput] = useState('')
+  console.log(fields)
 
   const {
     handleSubmit,
@@ -56,7 +57,7 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false, fields
       <div className={styles.container}>
         {fields.map(({ name, label, type, validation, placeholder }) => (
           <div key={name} className={styles.inputContainer}>
-            <div>{label}</div>
+            <p>{label}</p>
             {type === 'textarea' ? (
               <textarea placeholder={placeholder} {...register(name, validation)} className={styles.input} />
             ) : (
@@ -67,12 +68,12 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false, fields
         ))}
 
         <div className={styles.tags}>
-          <div className={styles.containerTags}>Tags</div>
+          <p className={styles.containerTags}>Tags</p>
           {tags.map((tag, index) => (
             <div key={tag} className={styles.tagRow}>
               <input type="text" value={tag} readOnly className={styles.tagInput} />
               <button type="button" className={styles.buttonDel} onClick={() => handleDeleteTag(index)}>
-                Delete
+                <p className={styles.textButtonDel}>Delete</p>
               </button>
             </div>
           ))}
@@ -85,7 +86,7 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false, fields
               className={styles.tagInput}
             />
             <button type="button" className={styles.buttonAddTag} onClick={handleAddTag}>
-              Add tag
+              <p className={styles.textButtonAddTag}>Add tag</p>
             </button>
           </div>
           {errors.tag && <span className={styles.error}>{errors.tag.message}</span>}
