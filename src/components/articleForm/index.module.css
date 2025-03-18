@@ -138,3 +138,10 @@
 .textButtonAddTag {
   color: #1890ff;
 }
+
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

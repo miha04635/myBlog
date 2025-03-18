@@ -46,7 +46,12 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false, fields
   }
 
   const renderButtonText = () => {
-    if (loading) return <Spin />
+    if (loading)
+      return (
+        <div className={styles.spinnerContainer}>
+          <Spin size="large" />
+        </div>
+      )
     return isEdit ? 'Save' : 'Send'
   }
 

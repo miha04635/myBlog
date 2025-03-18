@@ -75,7 +75,13 @@ export const EditProfile = () => {
       </div>
 
       <button type="submit" className={styles.save}>
-        {loading ? <Spin /> : 'Save'}
+        {loading ? (
+          <div className={styles.spinnerContainer}>
+            <Spin size="large" />
+          </div>
+        ) : (
+          'Save'
+        )}
       </button>
     </form>
   )

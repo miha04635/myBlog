@@ -100,7 +100,9 @@ export const ListArticles = () => {
   return (
     <>
       {loading ? (
-        <Spin size="large" fullscreen="true" />
+        <div className={styles.spinnerContainer}>
+          <Spin size="large" />
+        </div>
       ) : (
         <>
           {articles.map(article => renderArticles(article))}

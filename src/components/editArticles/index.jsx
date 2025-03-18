@@ -8,6 +8,8 @@ import { updateArticle } from '../../services/updateArticle'
 import { getAnArticles } from '../../services/getAnArticles'
 import { filedBody, filedDescription, filedTitle } from '../../constants/fields'
 
+import styles from './index.module.css'
+
 export const EditArticle = () => {
   const { slug } = useParams()
   const navigate = useNavigate()
@@ -27,7 +29,12 @@ export const EditArticle = () => {
       })
   }, [slug, navigate])
 
-  if (loading) return <Spin size="large" fullscreen />
+  if (loading)
+    return (
+      <div className={styles.spinnerContainer}>
+        <Spin size="large" />
+      </div>
+    )
 
   if (!article) return null
 

@@ -38,7 +38,12 @@ export const ArticleDetails = () => {
       })
   }, [slug, navigate])
 
-  if (loading) return <Spin size="large" fullscreen />
+  if (loading)
+    return (
+      <div className={styles.spinnerContainer}>
+        <Spin size="large" />
+      </div>
+    )
 
   if (!article) return null
 

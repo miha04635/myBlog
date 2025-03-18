@@ -53,7 +53,13 @@ export const AuthForm = ({ title, fields, buttonText, onSubmit, linkText, linkPa
       ))}
 
       <button type="submit" className={styles.submitButton}>
-        {loading ? <Spin /> : buttonText}
+        {loading ? (
+          <div className={styles.spinnerContainer}>
+            <Spin size="large" />
+          </div>
+        ) : (
+          buttonText
+        )}
       </button>
 
       <p className={styles.linkText}>
