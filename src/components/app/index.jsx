@@ -70,5 +70,3 @@ function App() {
 }
 
 export default App
-
-// edit profile исправить ошибку

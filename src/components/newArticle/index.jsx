@@ -15,7 +15,6 @@ export const NewArticle = () => {
     setLoading(true)
     try {
       const token = Cookies.get('token')
-      console.log('Article data:', data)
       const response = await postArticles(data, token)
 
       if (response && response.article && response.article.slug) {

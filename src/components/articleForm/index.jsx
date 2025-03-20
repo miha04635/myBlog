@@ -7,7 +7,6 @@ import styles from './index.module.css'
 export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false, fields, loading }) => {
   const [tags, setTags] = useState(initialData.tagList || [])
   const [tagInput, setTagInput] = useState('')
-  console.log(fields)
 
   const {
     handleSubmit,
