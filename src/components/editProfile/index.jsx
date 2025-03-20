@@ -29,14 +29,15 @@ export const EditProfile = () => {
     if (!token) {
       setError('server', {
         type: 'server',
-        message: 'Ошибка аутентификации. Авторизуйтесь заново.',
+        message: 'Error, try again later',
       })
     }
 
-    const err = await putUserEdit(data, token)
+    const result = await putUserEdit(data, token)
 
-    if (err) {
-      message.error('Ошибка аутентификации. Авторизуйтесь заново.')
+    if (result.errors) {
+      message.error('Error, try again later')
+      setLoading(false)
       return null
     }
 
