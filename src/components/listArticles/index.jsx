@@ -76,7 +76,7 @@ export const ListArticles = () => {
       <a key={slug} className={styles.container} onClick={() => handleClick(slug)}>
         <div className={styles.containerText}>
           <div className={styles.containerTitle}>
-            <div className={styles.title}>{titleTrim}</div>
+            <p className={styles.title}>{titleTrim}</p>
             <button onClick={e => handleClickFavorited(e, slug)} className={styles.heartContainer}>
               <div className={favorited ? styles.HeartImgRed : styles.heartImg}></div>
               <span className={styles.heartCount}>{favoritesCount}</span>
@@ -84,12 +84,12 @@ export const ListArticles = () => {
           </div>
 
           <TagList tagList={tagList} />
-          <div className={styles.text}>{body}</div>
+          <p className={styles.text}>{body}</p>
         </div>
         <div className={styles.containerAuthor}>
           <div className={styles.containerFlex}>
-            <div className={styles.name}>{username}</div>
-            <div className={styles.dateCreate}>{formatDate(createdAt)}</div>
+            <p className={styles.name}>{username}</p>
+            <p className={styles.dateCreate}>{formatDate(createdAt)}</p>
           </div>
           <img src={image} alt="avatar" className={styles.avatarImg} />
         </div>

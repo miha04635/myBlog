@@ -29,12 +29,10 @@ export const ArticleDetails = () => {
     getAnArticles(slug)
       .then(result => {
         setLoading(false)
-        return setArticle(result.article)
+        setArticle(result.article)
       })
-      .catch(err => {
-        if (err) {
-          navigate('/notFound')
-        }
+      .catch(() => {
+        navigate('/notFound')
       })
   }, [slug, navigate])
 
@@ -72,7 +70,7 @@ export const ArticleDetails = () => {
         top: rect.bottom + window.scrollY - 35,
         left: rect.left + window.scrollX + 90,
         width: 246,
-        hight: 108,
+        height: 108,
       })
     }
     setModalVisible(true)
@@ -97,8 +95,7 @@ export const ArticleDetails = () => {
     navigate(`/articles/${article.slug}/edit`)
   }
 
-  const isAuthor = user && username === user.username
-
+  const isAuthor = user?.username === username
   return (
     <div className={styles.container}>
       <div className={styles.containerFlex}>
@@ -106,29 +103,29 @@ export const ArticleDetails = () => {
           <div className={styles.titleLiked}>
             <h1 className={styles.title}>{article.title}</h1>
             <button onClick={e => handleClickFavorited(e, slug)} className={styles.heartContainer}>
-              <div className={!article.favorited ? styles.heartImg : styles.HeartImgRed}></div>
+              <div className={article.favorited ? styles.HeartImgRed : styles.heartImg}></div>
               <span className={styles.heartCount}>{article.favoritesCount}</span>
             </button>
           </div>
 
           <TagList tagList={article.tagList} />
-          <div className={styles.description}>{article.description}</div>
+          <p className={styles.description}>{article.description}</p>
         </div>
         <div className={styles.authorButton}>
           <div className={styles.containerАuthor}>
             <div className={styles.containerFlexAuthor}>
-              <div className={styles.name}>{username}</div>
-              <div className={styles.dateCreate}>{date}</div>
+              <p className={styles.name}>{username}</p>
+              <p className={styles.dateCreate}>{date}</p>
             </div>
             <img src={image} alt="avatar" className={styles.avatarImg} />
           </div>
           {isAuthor && (
             <div className={styles.buttons}>
               <button className={styles.deleteButton} onClick={showModal} ref={buttonRef}>
-                Delete
+                <span>Delete</span>
               </button>
               <button className={styles.editButton} onClick={handleEdit}>
-                Edit
+                <span>Edit</span>
               </button>
             </div>
           )}

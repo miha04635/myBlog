@@ -23,7 +23,7 @@ export const Header = () => {
   return (
     <div className={styles.header}>
       <Link to={'/'} className={styles.blog}>
-        Realworld Blog
+        <p>Realworld Blog</p>
       </Link>
       <div className={styles.userAuth}>
         {!username ? (
