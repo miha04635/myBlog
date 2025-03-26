@@ -90,7 +90,7 @@ export const ArticleForm = ({ onSubmit, initialData = {}, isEdit = false, fields
               className={styles.tagInput}
             />
             <button type="button" className={styles.buttonAddTag} onClick={handleAddTag}>
-              <p className={styles.textButtonAddTag}>Add tag</p>
+              Add tag
             </button>
           </div>
           {errors.tag && <span className={styles.error}>{errors.tag.message}</span>}

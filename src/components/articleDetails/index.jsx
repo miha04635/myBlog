@@ -122,10 +122,10 @@ export const ArticleDetails = () => {
           {isAuthor && (
             <div className={styles.buttons}>
               <button className={styles.deleteButton} onClick={showModal} ref={buttonRef}>
-                <span>Delete</span>
+                Delete
               </button>
               <button className={styles.editButton} onClick={handleEdit}>
-                <span>Edit</span>
+                Edit
               </button>
             </div>
           )}
